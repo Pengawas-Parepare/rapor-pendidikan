@@ -1,0 +1,2619 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pendampingan Sekolah Binaan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#182b22;
+    --ink-soft:#3f5347;
+    --paper:#f3f0e6;
+    --paper-2:#fbfaf5;
+    --line:#d8d2c0;
+    --line-strong:#b9b19a;
+    --pine:#1f4034;
+    --pine-2:#2c5a49;
+    --gold:#b9862f;
+    --gold-soft:#f1e3c4;
+    --berdaya:#2c5a49;
+    --berdaya-bg:#e2ede7;
+    --berkembang:#8a5a1e;
+    --berkembang-bg:#f4e6cd;
+    --utama:#7a2620;
+    --utama-bg:#f3e0dd;
+    --menengah:#8a5a1e;
+    --menengah-bg:#f4e6cd;
+    --akhir:#2c5a49;
+    --akhir-bg:#e2ede7;
+    --danger:#912e28;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Public Sans', -apple-system, sans-serif;
+    font-size:15px;
+    line-height:1.55;
+  }
+  h1,h2,h3,.serif{ font-family:'Source Serif 4', Georgia, serif; }
+  .app{ max-width:1180px; margin:0 auto; padding:0 24px 80px; }
+
+  /* top identity bar */
+  .masthead{
+    border-bottom:2px solid var(--pine);
+    padding:22px 0 16px;
+    display:flex; justify-content:space-between; align-items:flex-end; gap:24px; flex-wrap:wrap;
+  }
+  .masthead .mark{ display:flex; align-items:center; gap:14px; }
+  .mark .seal{
+    width:42px; height:42px; border-radius:50%; border:2px solid var(--pine);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Source Serif 4',serif; font-weight:600; color:var(--pine); font-size:15px;
+    flex:none;
+  }
+  .masthead h1{ font-size:22px; font-weight:600; margin:0; color:var(--pine); letter-spacing:.2px; }
+  .masthead .tagline{ margin:2px 0 0; font-size:13px; color:var(--ink-soft); }
+  .profil-btn{
+    background:none; border:1px solid var(--line-strong); color:var(--ink-soft);
+    font-family:'Public Sans',sans-serif; font-size:13px; padding:7px 14px; border-radius:3px; cursor:pointer;
+  }
+  .profil-btn:hover{ border-color:var(--pine); color:var(--pine); }
+
+  /* stepper nav */
+  .stepper{ display:flex; gap:2px; margin:22px 0 30px; border:1px solid var(--line); background:var(--paper-2); border-radius:4px; overflow:hidden; flex-wrap:wrap;}
+  .step-btn{
+    flex:1; min-width:150px; text-align:left; background:none; border:none; cursor:pointer;
+    padding:13px 16px; border-right:1px solid var(--line); font-family:'Public Sans',sans-serif;
+    color:var(--ink-soft);
+  }
+  .step-btn:last-child{ border-right:none; }
+  .step-btn .num{ font-size:11px; letter-spacing:.4px; display:block; margin-bottom:3px; color:var(--line-strong); }
+  .step-btn .lbl{ font-size:14px; font-weight:500; display:block; }
+  .step-btn.active{ background:var(--pine); color:#fff; }
+  .step-btn.active .num{ color:var(--gold-soft); }
+  .step-btn.active .lbl{ color:#fff; }
+  .step-btn:not(.active):hover{ background:var(--paper); }
+
+  /* panel */
+  .panel{ background:var(--paper-2); border:1px solid var(--line); border-radius:4px; padding:26px 30px; margin-bottom:22px; }
+  .panel h2{ font-size:19px; margin:0 0 4px; color:var(--pine); font-weight:600; }
+  .panel .sub{ color:var(--ink-soft); font-size:13.5px; margin:0 0 20px; max-width:640px; }
+  .section-divider{ border:none; border-top:1px solid var(--line); margin:26px 0; }
+
+  /* dashboard */
+  .metrics{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:14px; margin-bottom:26px; }
+  .metric{ background:var(--paper-2); border:1px solid var(--line); border-radius:4px; padding:16px 18px; }
+  .metric .n{ font-family:'Source Serif 4',serif; font-size:30px; color:var(--pine); font-weight:600; line-height:1; }
+  .metric .l{ font-size:12.5px; color:var(--ink-soft); margin-top:6px; }
+
+  table.roster{ width:100%; border-collapse:collapse; font-size:13.5px; }
+  table.roster th{ text-align:left; font-size:11.5px; letter-spacing:.3px; color:var(--ink-soft); font-weight:500; padding:8px 10px; border-bottom:1px solid var(--line-strong); }
+  table.roster td{ padding:11px 10px; border-bottom:1px solid var(--line); vertical-align:middle; }
+  table.roster tr:hover td{ background:var(--paper); cursor:pointer; }
+  .badge{ display:inline-block; padding:3px 10px; border-radius:3px; font-size:12px; font-weight:500; }
+  .badge.berdaya{ background:var(--berdaya-bg); color:var(--berdaya); }
+  .badge.berkembang{ background:var(--berkembang-bg); color:var(--berkembang); }
+  .badge.rendah{ background:var(--utama-bg); color:var(--utama); }
+  .badge.sedang{ background:var(--menengah-bg); color:var(--menengah); }
+  .badge.tinggi{ background:var(--akhir-bg); color:var(--akhir); }
+  .badge.prioritas-utama{ background:var(--utama-bg); color:var(--utama); }
+  .badge.prioritas-menengah{ background:var(--menengah-bg); color:var(--menengah); }
+  .badge.prioritas-akhir{ background:var(--akhir-bg); color:var(--akhir); }
+  .badge.muted{ background:#eae6d8; color:var(--ink-soft); }
+  .badge.baik{ background:var(--berdaya-bg); color:var(--berdaya); }
+  .badge.cukup{ background:var(--menengah-bg); color:var(--menengah); }
+  .badge.sedang.cap{ background:var(--menengah-bg); color:var(--menengah); }
+  .badge.kurang{ background:var(--utama-bg); color:var(--utama); }
+
+  .upload-box{ border:1.5px dashed var(--line-strong); border-radius:5px; padding:26px; text-align:center; background:var(--paper); }
+  .upload-box input[type=file]{ display:block; margin:12px auto 0; max-width:320px; }
+  .upload-box .fname{ margin-top:10px; font-size:12.5px; color:var(--ink-soft); }
+  .upload-msg{ font-size:13px; margin-top:10px; }
+  .upload-msg.ok{ color:var(--berdaya); }
+  .upload-msg.err{ color:var(--danger); }
+
+  table.indikator{ width:100%; border-collapse:collapse; font-size:13px; margin-bottom:18px; }
+  table.indikator th{ text-align:left; font-size:11px; color:var(--ink-soft); font-weight:500; padding:6px 8px; border-bottom:1px solid var(--line-strong); }
+  table.indikator td{ padding:8px 8px; border-bottom:1px solid var(--line); }
+  .dim-block-title{ font-size:12px; text-transform:uppercase; letter-spacing:.3px; color:var(--pine); font-weight:600; margin:18px 0 6px; }
+
+  .rekom-item{ border:1px solid var(--line-strong); border-radius:4px; padding:14px 16px; margin-bottom:10px; background:#fff; }
+  .rekom-item .rekom-head{ display:flex; justify-content:space-between; gap:12px; align-items:flex-start; }
+  .rekom-item .rekom-title{ font-size:13.5px; font-weight:500; }
+  .rekom-item .rekom-akar{ font-size:12px; color:var(--gold); margin-top:2px; }
+  .rekom-item .rekom-link{ font-size:12px; margin-top:8px; }
+  .rekom-item .rekom-link a{ color:var(--pine-2); }
+
+  .visit-item{ border:1px solid var(--line-strong); border-radius:4px; padding:14px 16px; margin-bottom:10px; background:#fff; }
+  .visit-item .visit-head{ display:flex; justify-content:space-between; align-items:flex-start; gap:12px; }
+  .visit-item .visit-date{ font-family:'Source Serif 4',serif; font-size:15px; color:var(--pine); font-weight:600; }
+  .visit-item .visit-jenis{ font-size:11.5px; color:var(--gold); text-transform:uppercase; letter-spacing:.3px; margin-top:2px; }
+  .visit-item .visit-body{ font-size:13.5px; color:var(--ink-soft); margin-top:8px; white-space:pre-wrap; }
+  .visit-item .visit-tl{ font-size:13px; margin-top:8px; padding-top:8px; border-top:1px solid var(--line); white-space:pre-wrap; }
+  .visit-item .visit-tl .lbl{ font-size:11px; color:var(--gold); text-transform:uppercase; letter-spacing:.3px; margin-bottom:3px; }
+
+  table.rkas{ width:100%; border-collapse:collapse; font-size:13px; }
+  table.rkas th{ text-align:left; font-size:11px; letter-spacing:.2px; color:var(--ink-soft); font-weight:500; padding:7px 8px; border-bottom:1px solid var(--line-strong); background:var(--paper); }
+  table.rkas td{ padding:5px 6px; border-bottom:1px solid var(--line); vertical-align:middle; }
+  table.rkas td.num{ text-align:right; }
+  table.rkas tfoot td{ font-weight:600; border-top:2px solid var(--line-strong); border-bottom:none; padding-top:8px; }
+  .rkas-cell-input{ width:100%; border:1px solid transparent; background:transparent; padding:5px 6px; font-family:'Public Sans',sans-serif; font-size:13px; border-radius:3px; }
+  .rkas-cell-input:hover{ border-color:var(--line); }
+  .rkas-cell-input:focus{ border-color:var(--pine-2); background:#fff; outline:none; }
+  select.rkas-cell-input{ padding:5px 4px; }
+  .rkas-source-tag{ font-size:10.5px; color:var(--gold); text-transform:uppercase; letter-spacing:.2px; display:block; margin-top:2px; }
+  .sumber-summary{ display:flex; gap:16px; flex-wrap:wrap; margin-top:16px; }
+  .sumber-summary .box{ background:var(--paper); border:1px solid var(--line); border-radius:4px; padding:10px 16px; min-width:140px; }
+  .sumber-summary .box .l{ font-size:11.5px; color:var(--ink-soft); }
+  .sumber-summary .box .v{ font-family:'Source Serif 4',serif; font-size:16px; color:var(--pine); font-weight:600; margin-top:2px; }
+
+  .year-select{ padding:6px 8px; font-size:12.5px; border:1px solid var(--line-strong); border-radius:3px; background:#fff; }
+  .rkjm-year-group{ margin-bottom:20px; }
+  .rkjm-year-title{ font-family:'Source Serif 4',serif; font-size:16px; color:var(--pine); border-bottom:2px solid var(--pine); padding-bottom:6px; margin-bottom:10px; }
+
+  /* buttons/forms */
+  .btn{ font-family:'Public Sans',sans-serif; font-size:13.5px; font-weight:500; padding:9px 18px; border-radius:3px; cursor:pointer; border:1px solid var(--pine); background:var(--pine); color:#fff; }
+  .btn:hover{ background:var(--pine-2); }
+  .btn.secondary{ background:none; color:var(--pine); }
+  .btn.secondary:hover{ background:var(--paper); }
+  .btn.ghost{ background:none; border-color:var(--line-strong); color:var(--ink-soft); }
+  .btn.ghost:hover{ border-color:var(--pine); color:var(--pine); }
+  .btn.danger{ background:none; border-color:var(--danger); color:var(--danger); }
+  .btn.danger:hover{ background:#fbecea; }
+  .btn:disabled{ opacity:.45; cursor:not-allowed; }
+  .btn-row{ display:flex; gap:10px; flex-wrap:wrap; margin-top:18px; }
+
+  label.field{ display:block; margin-bottom:14px; }
+  label.field span{ display:block; font-size:12.5px; color:var(--ink-soft); margin-bottom:5px; }
+  input[type=text], input[type=number], select, textarea{
+    width:100%; font-family:'Public Sans',sans-serif; font-size:14px; padding:9px 11px;
+    border:1px solid var(--line-strong); border-radius:3px; background:#fff; color:var(--ink);
+  }
+  textarea{ resize:vertical; min-height:64px; }
+  input:focus, select:focus, textarea:focus{ outline:2px solid var(--pine-2); outline-offset:1px; }
+  .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:0 20px; }
+  .error-text{ color:var(--danger); font-size:12.5px; margin:-8px 0 12px; }
+  .empty{ text-align:center; padding:50px 20px; color:var(--ink-soft); }
+  .empty .big{ font-family:'Source Serif 4',serif; font-size:19px; color:var(--pine); margin-bottom:6px; }
+
+  select.school-picker{ max-width:340px; }
+
+  /* reflection question card */
+  .question{ border-top:1px solid var(--line); padding:20px 0; }
+  .question:first-of-type{ border-top:none; }
+  .question .qnum{ font-size:11.5px; color:var(--gold); font-weight:600; letter-spacing:.3px; }
+  .question .qtext{ font-family:'Source Serif 4',serif; font-size:16.5px; margin:6px 0 14px; color:var(--ink); }
+  .opt{
+    display:flex; gap:12px; align-items:flex-start; padding:12px 14px; border:1px solid var(--line);
+    border-radius:4px; margin-bottom:8px; cursor:pointer; background:#fff;
+  }
+  .opt:hover{ border-color:var(--pine-2); }
+  .opt.selected{ border-color:var(--pine); background:var(--paper); }
+  .opt input{ margin-top:3px; flex:none; }
+  .opt .opt-lvl{ font-size:11.5px; font-weight:600; text-transform:uppercase; letter-spacing:.3px; display:block; margin-bottom:3px; }
+  .opt.selected .opt-lvl{ color:var(--pine); }
+  .opt .opt-text{ font-size:13.5px; color:var(--ink-soft); }
+
+  .result-strip{ display:flex; gap:24px; flex-wrap:wrap; align-items:center; background:var(--paper); border:1px solid var(--line); border-radius:4px; padding:16px 20px; margin-top:6px; }
+  .result-strip .item .l{ font-size:11.5px; color:var(--ink-soft); margin-bottom:3px; }
+
+  /* strategi */
+  .strategi-card{ border:1px solid var(--line-strong); border-radius:4px; overflow:hidden; }
+  .strategi-head{ background:var(--pine); color:#fff; padding:16px 22px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
+  .strategi-head h3{ margin:0; font-size:17px; font-weight:600; }
+  .strategi-body{ padding:18px 22px; background:#fff; }
+  .strategi-body p{ margin:0 0 12px; font-size:13.5px; color:var(--ink-soft); }
+  .kv-row{ display:flex; gap:30px; margin-bottom:14px; flex-wrap:wrap; }
+  .kv-row .kv .l{ font-size:11.5px; color:var(--ink-soft); }
+  .kv-row .kv .v{ font-family:'Source Serif 4',serif; font-size:15px; color:var(--pine); }
+
+  /* rkt library */
+  .dim-group{ margin-bottom:22px; }
+  .dim-title{ font-size:12px; letter-spacing:.3px; text-transform:uppercase; color:var(--gold); font-weight:600; margin-bottom:10px; }
+  .prog-item{ border:1px solid var(--line); border-radius:4px; padding:13px 16px; margin-bottom:8px; background:#fff; }
+  .prog-item .prog-head{ display:flex; justify-content:space-between; align-items:flex-start; gap:12px; cursor:pointer; }
+  .prog-item .prog-title{ font-size:14px; font-weight:500; color:var(--ink); }
+  .prog-item .steps{ margin:10px 0 0; padding-left:18px; font-size:13px; color:var(--ink-soft); }
+  .prog-item .steps li{ margin-bottom:4px; }
+  .chk{ flex:none; width:19px; height:19px; margin-top:2px; }
+
+  .selected-list .row{ display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid var(--line); gap:10px; }
+  .selected-list .row .t{ font-size:13.5px; }
+  .remove-x{ background:none; border:none; color:var(--ink-soft); cursor:pointer; font-size:16px; line-height:1; padding:4px; }
+  .remove-x:hover{ color:var(--danger); }
+
+  .report{ background:#fff; border:1px solid var(--line-strong); border-radius:4px; padding:30px 34px; font-family:'Source Serif 4',serif; font-size:14.5px; line-height:1.75; color:var(--ink); }
+  .report h3{ font-size:12.5px; text-transform:uppercase; letter-spacing:.5px; color:var(--gold); font-family:'Public Sans',sans-serif; font-weight:600; margin:22px 0 8px; }
+  .report h3:first-child{ margin-top:0; }
+  .report p{ margin:0 0 10px; }
+  .report ol{ margin:0 0 10px; padding-left:20px; }
+  .report .rpt-title{ font-size:19px; font-weight:600; margin-bottom:2px; }
+  .report .rpt-sub{ font-family:'Public Sans',sans-serif; font-size:12.5px; color:var(--ink-soft); margin-bottom:18px; }
+
+  .modal-overlay{ position:absolute; inset:0; background:rgba(24,43,34,.45); display:flex; align-items:flex-start; justify-content:center; padding:60px 20px; z-index:50; }
+  .modal{ background:#fff; border-radius:5px; padding:26px 28px; max-width:460px; width:100%; box-shadow:0 12px 30px rgba(0,0,0,.2); }
+  .modal h3{ margin:0 0 16px; font-size:17px; color:var(--pine); }
+  .rel-wrap{ position:relative; }
+
+  @media print{
+    .no-print{ display:none !important; }
+    body{ background:#fff; }
+    .panel{ border:none; padding:0; }
+    .tw-section{ page-break-before:always; }
+    .tw-section:first-of-type{ page-break-before:auto; }
+  }
+  @media (max-width:720px){
+    .grid2{ grid-template-columns:1fr; }
+    .kv-row{ gap:16px; }
+  }
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+(function(){
+
+var STORAGE_KEY = 'pendampingan-sekolah-binaan-app-data-v2-7m4x9p';
+
+var KESADARAN_Q = [
+  { id:'k1', pemantik:'Apakah kepala sekolah mengakui kelemahan satuan pendidikan apa adanya dan menjelaskan dampaknya terhadap kualitas pembelajaran?',
+    berkembang:'Belum mengakui kelemahan apa adanya dan belum menjelaskan dampaknya pada kualitas pembelajaran.',
+    berdaya:'Mengakui kelemahan apa adanya dan menjelaskan dampaknya pada kualitas pembelajaran.' },
+  { id:'k2', pemantik:'Apakah kepala sekolah mengetahui dan menunjukkan keinginan mengoptimalkan kekuatan satuan pendidikan?',
+    berkembang:'Belum mengetahui dan belum menunjukkan keinginan mengoptimalkan kekuatan satuan pendidikan.',
+    berdaya:'Mengetahui dan menunjukkan keinginan mengoptimalkan kekuatan satuan pendidikan.' }
+];
+
+var KAPASITAS_Q = [
+  { id:'p1', pemantik:'Bagaimana kepala sekolah menyusun program kerja dan anggaran satuan pendidikan?',
+    rendah:'Tidak melakukan perubahan program/kegiatan apa pun dalam 3 tahun terakhir (monoton).',
+    sedang:'Melakukan perubahan program/kegiatan dalam 3 tahun terakhir, tetapi belum efektif.',
+    tinggi:'Melakukan perubahan program/kegiatan dalam 3 tahun terakhir yang berdampak.' },
+  { id:'p2', pemantik:'Apakah perubahan program/kegiatan tersebut didasarkan pada perencanaan berbasis data?',
+    rendah:'Belum mampu menjelaskan perubahan berdasarkan perencanaan berbasis data.',
+    sedang:'Mampu menjelaskan perubahan berdasarkan perencanaan berbasis data.',
+    tinggi:'Mampu menjelaskan dan mencoba perubahan berdasarkan perencanaan berbasis data.' }
+];
+
+var MATRIX = {
+  'Berkembang|Rendah': { strategi:'Penyemai Perubahan', metode:'Training dan Konsulting', prioritas:'Prioritas Utama',
+    deskripsi:'Sesuai untuk sekolah yang baru mengawali pembentukan komitmen perubahan. Fokus area pendampingan terletak pada proses pembelajaran, dengan hasil yang diharapkan berupa perubahan praktik pembelajaran pada satuan pendidikan.' },
+  'Berdaya|Rendah': { strategi:'Perubahan Segera', metode:'Training dan Mentoring', prioritas:'Prioritas Menengah',
+    deskripsi:'Sesuai untuk sekolah pada tahap awal pembentukan komitmen perubahan. Fokus area pendampingan pada proses pembelajaran dan pengelolaan sekolah, dengan hasil yang diharapkan berupa perubahan praktik pembelajaran serta penguatan perencanaan dan pelaksanaan program satuan pendidikan.' },
+  'Berkembang|Sedang': { strategi:'Penguatan Perubahan', metode:'Training dan Fasilitasi', prioritas:'Prioritas Menengah',
+    deskripsi:'Sesuai untuk sekolah dengan komitmen perubahan yang tengah bertumbuh. Fokus area pendampingan pada proses pembelajaran, dengan hasil yang diharapkan berupa perubahan praktik pembelajaran pada satuan pendidikan.' },
+  'Berdaya|Sedang': { strategi:'Perubahan Berangsur', metode:'Fasilitasi dan Coaching', prioritas:'Prioritas Menengah',
+    deskripsi:'Sesuai untuk sekolah dengan komitmen perubahan yang telah tumbuh. Fokus area pendampingan pada proses pembelajaran dan pengelolaan sekolah, dengan hasil yang diharapkan berupa perubahan praktik pembelajaran serta penguatan perencanaan dan pelaksanaan program satuan pendidikan.' },
+  'Berkembang|Tinggi': { strategi:'Pemicu Perubahan', metode:'Coaching', prioritas:'Prioritas Menengah',
+    deskripsi:'Sesuai untuk sekolah dengan komitmen perubahan yang sudah cukup maju. Fokus area pendampingan pada proses pembelajaran, pengelolaan, dan pengembangan sekolah, dengan hasil yang diharapkan berupa perubahan praktik pembelajaran, perencanaan, pelaksanaan program, serta pengembangan sekolah.' },
+  'Berdaya|Tinggi': { strategi:'Perubahan Berkelanjutan', metode:'Fasilitasi', prioritas:'Prioritas Akhir',
+    deskripsi:'Sesuai untuk sekolah dengan komitmen perubahan yang lebih maju dan mandiri. Fokus area pendampingan pada proses pembelajaran, pengelolaan, dan pengembangan sekolah, dengan hasil yang diharapkan berupa perubahan praktik pembelajaran, perencanaan, pelaksanaan program, serta pengembangan sekolah.' }
+};
+
+var PRIORITAS_ORDER = { 'Prioritas Utama':0, 'Prioritas Menengah':1, 'Prioritas Akhir':2 };
+
+var RKT_LIBRARY = [
+  { dimensi:'Literasi', judul:'Peningkatan kompetensi guru dan kebijakan yang menunjang kompetensi membaca teks sastra', langkah:[
+    'Kepala satuan pendidikan dan pendidik mempelajari teks sastra sebagai bagian dari kemampuan literasi.',
+    'Pendidik mengimplementasikan pengetahuan tentang teks sastra untuk memperbaiki proses pembelajaran literasi peserta didik.',
+    'Kepala satuan pendidikan mendorong perbaikan kemampuan teks sastra melalui program, kebijakan, dan penganggaran.'] },
+  { dimensi:'Literasi', judul:'Penyusunan dan implementasi visi-misi sekolah yang menunjang literasi', langkah:[
+    'Kepala satuan pendidikan dan pendidik mempelajari perumusan, penyampaian, dan penerapan visi-misi sekolah untuk mendukung kemampuan literasi.',
+    'Kepala satuan pendidikan merumuskan visi-misi sekolah bersama seluruh warga sekolah untuk memperbaiki pembelajaran literasi peserta didik.',
+    'Kepala satuan pendidikan mendorong perbaikan visi-misi sekolah melalui program, kebijakan, dan penganggaran.'] },
+  { dimensi:'Numerasi', judul:'Peningkatan kompetensi GTK pada domain geometri', langkah:[
+    'Kepala satuan pendidikan dan pendidik mempelajari domain geometri sebagai bagian dari kemampuan numerasi.',
+    'Pendidik mengimplementasikan peningkatan kompetensi pada domain geometri untuk memperbaiki pembelajaran numerasi.',
+    'Kepala satuan pendidikan mendorong perbaikan kompetensi domain geometri melalui program, kebijakan, dan penganggaran.'] },
+  { dimensi:'Numerasi', judul:'Peningkatan kompetensi teks sastra yang menunjang numerasi', langkah:[
+    'Kepala satuan pendidikan dan pendidik mempelajari teks sastra untuk mendukung kemampuan numerasi.',
+    'Pendidik mengimplementasikan pengetahuan tentang teks sastra untuk memperbaiki pembelajaran numerasi peserta didik.',
+    'Kepala satuan pendidikan mendorong perbaikan kemampuan teks sastra melalui program, kebijakan, dan penganggaran.'] },
+  { dimensi:'Iklim Keamanan', judul:'Penguatan pemahaman dan sikap guru terhadap perundungan', langkah:[
+    'Kepala satuan pendidikan dan pendidik mempelajari pemahaman dan sikap terhadap perundungan serta pencegahan dan penanganannya.',
+    'Pendidik mengimplementasikan pengetahuan tersebut untuk memperbaiki proses pembelajaran peserta didik.',
+    'Kepala satuan pendidikan mendorong perbaikan penanganan perundungan melalui program, kebijakan, dan penganggaran.'] },
+  { dimensi:'Iklim Keamanan', judul:'Penyusunan visi-misi sekolah yang menunjang iklim keamanan', langkah:[
+    'Kepala satuan pendidikan dan pendidik mempelajari perumusan visi-misi sekolah untuk mendukung iklim keamanan satuan pendidikan.',
+    'Kepala satuan pendidikan merumuskan visi-misi bersama warga sekolah untuk mendukung keamanan satuan pendidikan.',
+    'Kepala satuan pendidikan mendorong perbaikan visi-misi sekolah melalui program, kebijakan, dan penganggaran.'] },
+  { dimensi:'Kualitas Pembelajaran', judul:'Peningkatan kompetensi GTK yang menunjang aktivasi kognitif', langkah:[
+    'Kepala satuan pendidikan dan pendidik mempelajari metode pembelajaran interaktif sebagai bagian dari kualitas pembelajaran.',
+    'Pendidik mengimplementasikan metode pembelajaran interaktif untuk memperbaiki proses pembelajaran.',
+    'Kepala satuan pendidikan mendorong perbaikan metode pembelajaran melalui program, kebijakan, dan penganggaran.'] },
+  { dimensi:'Kualitas Pembelajaran', judul:'Visi-misi sekolah yang menunjang kesehatan dan kualitas belajar', langkah:[
+    'Kepala satuan pendidikan merumuskan visi-misi sekolah bersama warga sekolah untuk memperbaiki proses pembelajaran peserta didik.',
+    'Kepala satuan pendidikan dan pendidik meningkatkan kesehatan peserta didik dari aspek gizi, fisik, dan cakupan imunisasi.',
+    'Kepala satuan pendidikan mendorong perbaikan dan implementasi visi-misi sekolah melalui program, kebijakan, dan penganggaran.'] },
+  { dimensi:'Iklim Kebinekaan', judul:'Penguatan sikap inklusif dan kesetaraan siswa', langkah:[
+    'Kepala satuan pendidikan dan pendidik mempelajari konsep dan praktik dukungan atas kesetaraan siswa sebagai bagian dari iklim kebinekaan.',
+    'Pendidik mengimplementasikan pengetahuan tersebut untuk memperbaiki proses pembelajaran peserta didik.',
+    'Kepala satuan pendidikan mendorong perbaikan penerapan kesetaraan siswa melalui program, kebijakan, dan penganggaran.'] },
+  { dimensi:'Iklim Kebinekaan', judul:'Pemahaman dan sikap warga sekolah terhadap kesetaraan gender', langkah:[
+    'Kepala satuan pendidikan dan pendidik mempelajari konsep, pemahaman, dan sikap warga sekolah terkait kesetaraan gender.',
+    'Pendidik mengintegrasikan pengetahuan tersebut untuk memperbaiki proses pembelajaran peserta didik.',
+    'Kepala satuan pendidikan mendorong perbaikan pemahaman kesetaraan gender melalui program, kebijakan, dan penganggaran.'] },
+  { dimensi:'Karakter', judul:'Penguatan sikap bernalar kritis (Profil Pelajar Pancasila)', langkah:[
+    'Kepala satuan pendidikan dan pendidik mempelajari dimensi Nalar Kritis dalam Profil Pelajar Pancasila.',
+    'Pendidik mengimplementasikan pembelajaran berbasis projek penguatan Profil Pelajar Pancasila dimensi Nalar Kritis.',
+    'Kepala satuan pendidikan mendorong penguatan dimensi Nalar Kritis melalui program, kebijakan, dan penganggaran.'] },
+  { dimensi:'Karakter', judul:'Visi-misi sekolah yang menunjang penguatan karakter', langkah:[
+    'Kepala satuan pendidikan dan pendidik mempelajari perumusan visi-misi sekolah untuk mendukung penguatan karakter peserta didik.',
+    'Kepala satuan pendidikan merumuskan visi-misi bersama warga sekolah untuk mendukung penguatan karakter.',
+    'Kepala satuan pendidikan mendorong perbaikan visi-misi sekolah melalui program, kebijakan, dan penganggaran.'] }
+];
+
+function uid(){ return 'id' + Date.now().toString(36) + Math.random().toString(36).slice(2,8); }
+
+var DIM_LABELS = {
+  'A':'A. Hasil belajar', 'B':'B. Pemerataan hasil belajar', 'C':'C. Mutu dan relevansi hasil belajar',
+  'D':'D. Mutu dan relevansi proses belajar mengajar', 'E':'E. Pemerataan pendidikan'
+};
+
+function fixSheetRange(sheet){
+  if(!sheet) return sheet;
+  var maxR = 0, maxC = 0;
+  Object.keys(sheet).forEach(function(key){
+    if(key.charAt(0) === '!') return;
+    var m = key.match(/^([A-Z]+)(\d+)$/);
+    if(!m) return;
+    var col = 0;
+    for(var i=0;i<m[1].length;i++){ col = col*26 + (m[1].charCodeAt(i)-64); }
+    col -= 1;
+    var row = parseInt(m[2],10) - 1;
+    if(row > maxR) maxR = row;
+    if(col > maxC) maxC = col;
+  });
+  sheet['!ref'] = XLSX.utils.encode_range({ s:{r:0,c:0}, e:{r:maxR,c:maxC} });
+  return sheet;
+}
+
+function findSheet(workbook, needle){
+  var names = workbook.SheetNames;
+  for(var i=0;i<names.length;i++){
+    if(names[i].toUpperCase().indexOf(needle) > -1) return fixSheetRange(workbook.Sheets[names[i]]);
+  }
+  return null;
+}
+
+function cellText(v){
+  if(v === undefined || v === null) return '';
+  return String(v).trim();
+}
+
+function parseIndikator(sheet){
+  if(!sheet) return [];
+  var rows = XLSX.utils.sheet_to_json(sheet, { header:1, defval:'' });
+  var out = [];
+  var codeRe = /^[A-Z]\.\d+$/;
+  rows.forEach(function(row){
+    var kode = cellText(row[0]);
+    if(!codeRe.test(kode)) return;
+    var namaFull = cellText(row[1]);
+    var nama = namaFull.split('\n')[0];
+    var capaian = cellText(row[2]);
+    var skor = cellText(row[3]);
+    if(!nama) return;
+    out.push({ kode:kode, dimensi:kode.charAt(0), nama:nama, capaian:capaian, skor:skor });
+  });
+  return out;
+}
+
+function splitLangkah(text){
+  if(!text) return [];
+  var parts = text.split(/\n\s*\n/).map(function(p){ return p.trim(); }).filter(Boolean);
+  return parts.map(function(p){
+    return p.replace(/^\d+\.\s*Inspirasi\s*\d+\s*:\s*/i, '').replace(/^\d+\.\s*/, '').trim();
+  });
+}
+
+function parseRekomendasi(sheet){
+  if(!sheet) return [];
+  var rows = XLSX.utils.sheet_to_json(sheet, { header:1, defval:'' });
+  var out = [];
+  var headerFound = false;
+  for(var i=0;i<rows.length;i++){
+    var row = rows[i];
+    var a = cellText(row[0]);
+    if(!headerFound){
+      if(a.toLowerCase() === 'no') headerFound = true;
+      continue;
+    }
+    if(a === '' && cellText(row[1]) === '') continue;
+    if(!/^\d+$/.test(a)) continue;
+    var indikator = cellText(row[1]);
+    var capaian = cellText(row[2]);
+    var skor = cellText(row[3]);
+    var akarLv1 = cellText(row[4]);
+    var akarLv2 = cellText(row[5]);
+    var benahi = cellText(row[6]);
+    var inspirasi = cellText(row[7]);
+    var link = cellText(row[8]);
+    var arkas = cellText(row[9]);
+    if(!indikator) continue;
+    out.push({
+      id:uid(), indikator:indikator, capaian:capaian, skor:skor,
+      akarMasalah: akarLv2 || akarLv1, benahi:benahi,
+      langkah: splitLangkah(inspirasi), link:link, arkas:arkas
+    });
+  }
+  return out;
+}
+
+function parseRaporWorkbook(workbook){
+  var lapSheet = findSheet(workbook, 'LAPORAN RAPOR');
+  var rekomSheet = findSheet(workbook, 'REKOM. PRIORITAS') || findSheet(workbook, 'REKOMENDASI PRIORITAS') || findSheet(workbook, 'REKOM PRIORITAS');
+  var indikator = parseIndikator(lapSheet);
+  var rekomendasi = parseRekomendasi(rekomSheet);
+  var tahun = '';
+  if(lapSheet){
+    var a1 = cellText(lapSheet['A1'] && lapSheet['A1'].v);
+    var m = a1.match(/TAHUN\s+(\d{4})/i);
+    if(m) tahun = m[1];
+  }
+  return { tahun:tahun, indikator:indikator, rekomendasi:rekomendasi, parsedAt:new Date().toISOString() };
+}
+
+function emptySchool(){
+  return { id:uid(), nama:'', kepsek:'', nip:'', kecamatan:'', npsn:'', jenjang:'', catatan:'',
+    kesadaranJawaban:{}, kapasitasJawaban:{}, strategiManual:null, rkt:[], rkjm:[], rkas:[], rapor:null, kunjungan:[] };
+}
+
+function sampleSchools(){
+  var s1 = emptySchool();
+  s1.nama = 'UPTD SD Negeri 12 Parepare';
+  s1.jenjang = 'SD';
+  s1.npsn = '40307746';
+  s1.rapor = {
+    tahun:'2025',
+    indikator:[
+      { kode:'A.1', dimensi:'A', nama:'Kemampuan literasi', capaian:'Baik (83,33% peserta didik sudah mencapai kompetensi minimum)', skor:'83,33%' },
+      { kode:'A.2', dimensi:'A', nama:'Kemampuan numerasi', capaian:'Sedang (70% peserta didik sudah mencapai kompetensi minimum)', skor:'70%' },
+      { kode:'A.3', dimensi:'A', nama:'Karakter', capaian:'Baik', skor:'63,1' },
+      { kode:'C.3', dimensi:'C', nama:'Pengalaman Pelatihan PTK', capaian:'Baik', skor:'71,7' },
+      { kode:'D.1', dimensi:'D', nama:'Kualitas pembelajaran', capaian:'Baik', skor:'67' },
+      { kode:'D.2', dimensi:'D', nama:'Refleksi dan perbaikan pembelajaran oleh guru', capaian:'Baik', skor:'67,61' },
+      { kode:'D.3', dimensi:'D', nama:'Kepemimpinan instruksional', capaian:'Baik', skor:'69,47' },
+      { kode:'D.4', dimensi:'D', nama:'Iklim keamanan satuan pendidikan', capaian:'Baik', skor:'79' },
+      { kode:'D.6', dimensi:'D', nama:'Iklim Kesetaraan Gender', capaian:'Baik', skor:'73' },
+      { kode:'D.8', dimensi:'D', nama:'Iklim Kebinekaan', capaian:'Baik', skor:'78' },
+      { kode:'D.10', dimensi:'D', nama:'Iklim Inklusivitas', capaian:'Baik', skor:'58' },
+      { kode:'E.1', dimensi:'E', nama:'Partisipasi warga satuan pendidikan', capaian:'Baik', skor:'78,37' },
+      { kode:'E.2', dimensi:'E', nama:'Proporsi pemanfaatan sumber daya sekolah untuk peningkatan mutu', capaian:'Kurang', skor:'20,9' },
+      { kode:'E.3', dimensi:'E', nama:'Pemanfaatan TIK untuk pengelolaan anggaran', capaian:'Baik', skor:'65,11' },
+      { kode:'E.5', dimensi:'E', nama:'Program dan kebijakan satuan pendidikan', capaian:'Baik', skor:'71' }
+    ],
+    rekomendasi:[
+      { id:uid(), indikator:'A.2 Kemampuan numerasi', capaian:'Sedang (70% peserta didik sudah mencapai kompetensi minimum)', skor:'70%',
+        akarMasalah:'A.2.4 Kompetensi pada domain Data dan Ketidakpastian', benahi:'Kemampuan untuk memahami  data dan ketidakpastian berkaitan erat dengan kemampuan numerasi siswa secara keseluruhan',
+        langkah:['Kepala satuan pendidikan dan pendidik meningkatkan kompetensi dengan mempelajari tentang domain data dan ketidakpastian sebagai bagian dari kemampuan numerasi melalui pelatihan, diskusi pada komunitas belajar, belajar mandiri memanfaatkan berbagai sumber belajar, dan kegiatan lain yang menunjang peningkatan kompetensi.', 'Kepala satuan pendidikan dan pendidik merencanakan pembelajaran dan mengimplementasikan pengetahuan tentang domain data dan ketidakpastian melalui intrakurikuler, kokurikuler, dan/atau ekstrakurikuler untuk meningkatkan minat baca serta memperbaiki proses pembelajaran numerasi peserta didik.', 'Kepala satuan pendidikan mendorong perbaikan kemampuan domain data dan ketidakpastian melalui program dan kebijakan di satuan pendidikan, baik yang membutuhkan anggaran dan yang tidak membutuhkan anggaran'],
+        link:'https://guru.dikdasmen.go.id/artikel/22', arkas:'Kegiatan BOS Reguler\n\n- Peningkatan kompetensi guru untuk memperkuat numerasi\n- Pengembangan kegiatan literasi dan numerasi\n- Peningkatan kompetensi guru untuk pembelajaran berorientasi pada peserta didik' },
+      { id:uid(), indikator:'A.2 Kemampuan numerasi', capaian:'Sedang (70% peserta didik sudah mencapai kompetensi minimum)', skor:'70%',
+        akarMasalah:'D.1.2 Dukungan psikologis', benahi:'Pembelajaran yang mendukung kenyamanan dan keamanan siswa di aspek psikologis berdampak pada pembelajaran siswa di kelas, salah satunya pada bagaimana siswa belajar numerasi.',
+        langkah:['Kepala satuan pendidikan dan pendidik meningkatkan kompetensi dalam memberikan dukungan afektif sebagai bagian dari peningkatan kemampuan numerasi peserta didik melalui pelatihan dan refleksi untuk menciptakan interaksi yang konstruktif.', 'Kepala satuan pendidikan dan pendidik merancang strategi pembelajaran yang mengintegrasikan perhatian, kepedulian, dan umpan balik pada kegiatan intrakurikuler, kokurikuler, dan/atau ekstrakurikuler untuk meningkatkan numerasi peserta didik.', 'Kepala satuan pendidikan menyusun kebijakan yang mendorong pendidik memberikan dukungan afektif kepada peserta didik melalui program yang membutuhkan anggaran maupun tanpa anggaran, sehingga kemampuan numerasi peserta didik meningkat.'],
+        link:'https://guru.dikdasmen.go.id/artikel/78', arkas:'Kegiatan BOS Reguler\n\n- Konsultasi peningkatan mutu pendidikan (konsultan & psikolog)\n- Penyelenggaraan program konseling untuk keberlanjutan pendidikan\n- Peningkatan kompetensi guru untuk memahami karakteristik dan cara belajar peserta didik' },
+      { id:uid(), indikator:'D.1 Kualitas pembelajaran', capaian:'Baik', skor:'67',
+        akarMasalah:'D.1.2 Dukungan psikologis', benahi:'Praktik pembelajaran yang memenuhi kebutuhan psikologis siswa untuk menumbuhkan kepercayaan diri dan perasaan diterima tanpa dibeda-bedakan mendukung peningkatan kualitas pembelajaran.',
+        langkah:['Kepala satuan pendidikan dan pendidik memperbaiki kualitas pembelajaran melalui peningkatan kualitas kompetensi dalam memberikan dukungan afektif melalui pelatihan dan refleksi, untuk menciptakan interaksi yang konstruktif untuk mendukung suasana kondusif', 'Kepala satuan pendidikan dan pendidik merancang dan mengimplementasikan strategi peningkatan kualitas pembelajaran yang mengintegrasikan dukungan perhatian, kepedulian, dan umpan balik pada kegiatan intrakurikuler, kokurikuler, dan/atau ekstrakurikuler.', 'Kepala satuan pendidikan menyusun kebijakan yang mendorong pendidik memberikan dukungan afektif kepada peserta didik melalui program yang membutuhkan anggaran maupun tanpa anggaran, untuk mendukung peningkatan kualitas pembelajaran yang terlihat dari meningkatnya kualitas interaksi antara pendidik, peserta didik, dan materi pembelajaran dalam proses pengajaran dan pembelajaran.'],
+        link:'https://guru.dikdasmen.go.id/artikel/78', arkas:'Kegiatan BOS Reguler\n\n- Konsultasi peningkatan mutu pendidikan (konsultan & psikolog)\n- Penyelenggaraan program konseling untuk keberlanjutan pendidikan\n- Peningkatan kompetensi guru untuk memahami karakteristik dan cara belajar peserta didik' },
+      { id:uid(), indikator:'D.1 Kualitas pembelajaran', capaian:'Baik', skor:'67',
+        akarMasalah:'D.2.3 Penerapan praktik inovatif', benahi:'Praktik inovasi pembelajaran berdasarkan refleksi yang dilakukan guru merupakan bagian dalam upaya meingkatkan kualitas pembelajaran',
+        langkah:['Kepala satuan pendidikan dan pendidik meningkatkan kompetensi dalam penerapan praktik inovatif melalui pelatihan dan diskusi untuk mendukung peningkatan kualitas pembelajaran.', 'Kepala satuan pendidikan dan pendidik merancang dan melaksanakan proses pembelajaran yang mengintegrasikan praktik inovatif untuk meningkatkan kualitas pembelajaran.', 'Kepala satuan pendidikan menyusun kebijakan yang mendorong penerapan praktik inovatif melalui program yang membutuhkan anggaran maupun tanpa anggaran untuk mendukung peningkatan kualitas pembelajaran.'],
+        link:'https://guru.dikdasmen.go.id/artikel/97', arkas:'Kegiatan BOS Reguler\n\n- Kegiatan komunitas belajar antar sekolah (termasuk KKG, MGMP, MGMPS, MGMPK, KKKS, atau MKKS)\n- Peningkatan kompetensi guru untuk memahami karakteristik dan cara belajar peserta didik\n- Peningkatan kompetensi guru untuk memahami konten pembelajaran dan cara mengajarkannya' },
+      { id:uid(), indikator:'D.4 Iklim keamanan satuan pendidikan', capaian:'Baik', skor:'79',
+        akarMasalah:'D.4.5 Pemahaman dan sikap terhadap hukuman fisik', benahi:'Pengalaman hukuman fisik oleh siswa dan serta pemahaman dan sikap guru tentang hukuman fisik merupakan salah satu faktor yang memengaruhi iklim keamanan di sekolah',
+        langkah:['Kepala satuan pendidikan dan pendidik meningkatkan kompetensi dan pengetahuan tentang berbagai bentuk hukumen fisik melalui pelatihan, diskusi pada komunitas belajar, belajar mandiri dengan memanfaatkan berbagai sumber belajar, dan kegiatan lain yang menunjang peningkatan kompetensi untuk menciptakan satuan pendidikan yang aman.', 'Kepala satuan pendidikan dan pendidik merancang pembelajaran bebas hukuman fisik dan mengedepankan disiplin positif dalam aktivitas intrakurikuler, kokurikuler, dan ekstrakurikuler.', 'Kepala satuan pendidikan mendorong penerapan disiplin positif melalui kegiatan, program, maupun pembuatan kebijakan, baik yang membutuhkan anggaran maupun yang tidak, yang bertujuan untuk mencegah dan menagani segala bentuk perundungan di satuan pendidikan.'],
+        link:'https://guru.dikdasmen.go.id/artikel/124', arkas:'Kegiatan BOS Reguler\n\n- Penerapan program pencegahan perundungan\n- Peningkatan kompetensi guru untuk memahami tentang perundungan, kekerasan, dan kekerasan seksual\n- Peningkatan kompetensi guru untuk memahami tentang disiplin positif (dan menghindari hukuman fisik)' },
+      { id:uid(), indikator:'D.4 Iklim keamanan satuan pendidikan', capaian:'Baik', skor:'79',
+        akarMasalah:'E.5.2 Program dan kebijakan satuan pendidikan tentang hukuman fisik', benahi:'Aktivitas peningkatan kompetensi guru dan kepala sekolah yang bertujuan mendukung terlaksananya program dan kebijakan sekolah terkait hukuman fisik untuk mencegah penggunaan hukuman yang mengakibatkan rasa sakit secara fisik bagi siswa yang melakukan pelanggaran yang berdampak pada iklim keamanan sekolah.',
+        langkah:['Kepala satuan pendidikan dan pendidik mempelajari tentang program dan kebijakan mengenai pencegahan dan penanganan hukuman fisik di satuan pendidikan yang mendukung iklim keamanan.', 'Kepala satuan pendidikan dan pendidik mengintegrasikan pengetahuan tentang program dan kebijakan mengenai pencegahan dan penanganan hukuman fisik di satuan pendidikan pada beragam aktivitas intrakurikuler, kokurikuler, dan/atau ekstrakurikuler untuk memperbaiki proses pembelajaran peserta didik.', 'Kepala satuan pendidikan mendorong perbaikan program, kebijakan mengenai pencegahan dan penanganan hukuman fisik di satuan pendidikan, baik yang membutuhkan anggaran maupun yang tidak membutuhkan anggaran'],
+        link:'https://guru.dikdasmen.go.id/artikel/124', arkas:'Kegiatan BOS Reguler\n\n- Pelaksanaan kegiatan orientasi siswa baru yang bersifat akademik dan pengenalan lingkungan tanpa kekerasan\n- Peningkatan kompetensi guru untuk memahami tentang disiplin positif (dan menghindari hukuman fisik)' },
+      { id:uid(), indikator:'A.3 Karakter', capaian:'Baik', skor:'63,1',
+        akarMasalah:'A.3.4 Nalar Kritis', benahi:'Kemauan dan kebiasaan mengambil siswa dalam keputusan secara logis berdasarkan berbagai bukti dan sudut pandang yang beragam mendukung kemampuan siswa dalam aspek karakter.',
+        langkah:['Kepala satuan pendidikan dan pendidik meningkatkan kompetensi dengan mempelajari tentang pendidikan karakter yang berkaitan dengan menumbuhkan kemauan dan kebiasaan mengambil keputusan secara logis berdasarkan berbagai bukti dan sudut pandang yang beragam pada diri peserta didik melalui pelatihan, diskusi pada komunitas belajar, belajar mandiri memanfaatkan berbagai sumber belajar, dan kegiatan lain yang menunjang peningkatan kompetensi.', 'Kepala satuan pendidikan dan pendidik merencanakan dan mengimplementasikan pembelajaran yang menumbuhkan sikap pengambilan keputusan secara logis melalui intrakurikuler, kokurikuler, dan/atau ekstrakurikuler untuk mendukung pengembangan pendidikan karakter', 'Kepala satuan pendidikan mendorong perbaikan dimensi Nalar Kritis melalui program dan kebijakan di satuan pendidikan, baik yang membutuhkan anggaran dan yang tidak membutuhkan anggaran untuk mendukung pengembangan pendidikan karakter'],
+        link:'https://guru.dikdasmen.go.id/artikel/34', arkas:'Kegiatan BOS Reguler\n\n- Pengembangan pembelajaran berbasis projek (termasuk P5)\n- Peningkatan kompetensi guru untuk keterlibatan orang tua/wali dan masyarakat dalam pembelajaran\n- Peningkatan kompetensi guru untuk pemahaman Profil Pelajar Pancasila: Nalar Kritis' },
+      { id:uid(), indikator:'A.3 Karakter', capaian:'Baik', skor:'63,1',
+        akarMasalah:'D.1.2 Dukungan psikologis', benahi:'Praktik pembelajaran yang memenuhi kebutuhan psikologis siswa untuk menumbuhkan kepercayaan diri dan perasaan diterima tanpa dibeda-bedakan mendukung kemampuan siswa dalam aspek karakter.',
+        langkah:['Kepala satuan pendidikan dan pendidik meningkatkan kompetensi dalam memberikan dukungan afektif melalui pelatihan dan refleksi, untuk menciptakan interaksi yang konstruktif dan mengembangkan karakter peserta didik yang bersifat holistik mencakup komponen pengetahuan, afektif, keterampilan, dan perwujudan dalam perilaku.', 'Kepala satuan pendidikan dan pendidik merancang dan mengimplementasikan strategi pembelajaran yang mengintegrasikan perhatian, kepedulian, dan umpan balik pada kegiatan intrakurikuler, kokurikuler, dan ekstrakurikuler untuk mengembangkan karakter peserta didik yang bersifat holistik mencakup komponen pengetahuan, afektif, keterampilan, dan perwujudan dalam perilaku.', 'Kepala satuan pendidikan menyusun kebijakan yang mendorong pendidik memberikan dukungan afektif kepada peserta didik melalui program yang membutuhkan anggaran maupun tanpa anggaran, untuk mengembangkan karakter peserta didik yang bersifat holistik mencakup komponen pengetahuan, afektif, keterampilan, dan perwujudan dalam perilaku.'],
+        link:'https://guru.dikdasmen.go.id/artikel/78', arkas:'Kegiatan BOS Reguler\n\n- Konsultasi peningkatan mutu pendidikan (konsultan & psikolog)\n- Penyelenggaraan program konseling untuk keberlanjutan pendidikan\n- Peningkatan kompetensi guru untuk memahami karakteristik dan cara belajar peserta didik' },
+      { id:uid(), indikator:'D.8 Iklim Kebinekaan', capaian:'Baik', skor:'78',
+        akarMasalah:'D.8.3 Toleransi dan kesetaraan peserta didik', benahi:'Aktivitas peningkatan kemapuan guru dan kepala sekolah yang bertujuan menunjang terciptanya sikap inklusif yang mendukung sikap menerima dan menghargai keragaman agama dan budaya di sekolah sehingga berdampak kepada iklim kebinekaan.',
+        langkah:['Kepala satuan pendidikan dan pendidik mempelajari konsep dan praktik terkait dukungan atas kesetaraan siswa sebagai bagian dari peningkatan kualitas iklim kebinekaan di satuan pendidikan', 'Kepala satuan pendidikan dan pendidik mengimplementasikan pengetahuan tentang dukungan atas kesetaraan peserta didik untuk meningkatkan proses pembelajaran peserta didik', 'Kepala satuan pendidikan mendorong perbaikan penerapan dukungan atas kesetaraan peserta didik di satuan pendidikan melalui program, kebijakan, baik itu yang membutuhkan anggaran maupun yang tidak membutuhkan anggaran.'],
+        link:'https://guru.dikdasmen.go.id/artikel/144', arkas:'Kegiatan BOS Reguler\n\n- Program pembinaan kesiswaan dan kepemimpinan siswa\n- Pengembangan kegiatan pelibatan orang tua/wali/keluarga di pembelajaran\n- Peningkatan kompetensi guru untuk memahami sikap inklusif, toleran, dan kesetaraan gender (termasuk pendidikan inklusif/disabilitas)' },
+      { id:uid(), indikator:'D.8 Iklim Kebinekaan', capaian:'Baik', skor:'78',
+        akarMasalah:'E.5.2 Program dan kebijakan satuan pendidikan tentang hukuman fisik', benahi:'Aktivitas peningkatan kompetensi guru dan kepala sekolah yang bertujuan mendukung ketersediaan dan penerapan program serta kebijakan yang mencegah penggunaan hukuman yang mengakibatkan rasa sakit secara fisik siswa pelaku pelanggaran yang berdampak pada iklim kebinekaan.',
+        langkah:['Kepala satuan pendidikan, pendidik, dan peserta didik meningkatkan kompetensi dalam pencegahan hukuman fisik melalui pelatihan dan refleksi untuk mendukung peningkatan iklim kebinekaan.', 'Kepala satuan pendidikan, pendidik, dan peserta didik merancang dan melaksanakan program intrakurikuler dan/atau kokurikuler, dan/atau ekstrakurikuler yang memiliki nilai-nilai praktik positif lingkungan satuan pendidikan tanpa hukuman fisik untuk menciptakan iklim kebinekaan.', 'Kepala satuan pendidikan menyusun kebijakan yang mendukung pencegahan hukuman fisik melalui program yang membutuhkan anggaran maupun tanpa anggaran untuk meningkatkan iklim kebinekaan.'],
+        link:'https://guru.dikdasmen.go.id/artikel/124', arkas:'Kegiatan BOS Reguler\n\n- Pelaksanaan kegiatan orientasi siswa baru yang bersifat akademik dan pengenalan lingkungan tanpa kekerasan\n- Peningkatan kompetensi guru untuk memahami tentang disiplin positif (dan menghindari hukuman fisik)' },
+      { id:uid(), indikator:'A.1 Kemampuan literasi', capaian:'Baik (83,33% peserta didik sudah mencapai kompetensi minimum)', skor:'83,33%',
+        akarMasalah:'A.1.2 Kompetensi membaca teks sastra', benahi:'Kemampuan untuk memahami teks sastra berkaitan erat dengan kemampuan literasi siswa secara keseluruhan',
+        langkah:['Kepala satuan pendidikan dan pendidik meningkatkan kompetensi dengan mempelajari tentang teks sastra sebagai bagian dari kemampuan literasi melalui pelatihan, diskusi pada komunitas belajar, belajar mandiri memanfaatkan berbagai sumber belajar, dan kegiatan lain yang menunjang peningkatan kompetensi.', 'Kepala satuan pendidikan dan pendidik merencanakan pembelajaran dan mengimplementasikan pengetahuan tentang teks sastra melalui intrakurikuler, kokurikuler, dan/atau ekstrakurikuler untuk meningkatkan minat baca serta memperbaiki proses pembelajaran literasi peserta didik.', 'Kepala satuan pendidikan mendorong perbaikan kemampuan teks sastra melalui program dan kebijakan di satuan pendidikan, baik yang membutuhkan anggaran dan yang tidak membutuhkan anggaran'],
+        link:'https://guru.dikdasmen.go.id/artikel/24', arkas:'Kegiatan BOS Reguler\n\n- Peningkatan kompetensi guru untuk memperkuat literasi\n- Pengembangan kegiatan literasi dan numerasi\n- Kegiatan pemberdayaan perpustakaan terutama untuk pengembangan minat baca peserta didik' },
+      { id:uid(), indikator:'A.1 Kemampuan literasi', capaian:'Baik (83,33% peserta didik sudah mencapai kompetensi minimum)', skor:'83,33%',
+        akarMasalah:'D.1.2 Dukungan psikologis', benahi:'Pembelajaran yang mendukung kenyamanan dan keamanan siswa di aspek psikologis berdampak pada pembelajaran siswa di kelas, salah satunya pada bagaimana siswa belajar literasi.',
+        langkah:['Kepala satuan pendidikan dan pendidik meningkatkan kompetensi dalam memberikan dukungan psikologis untuk menciptakan interaksi yang konstruktif dalam rangka mendukung kemampuan literasi peserta didik melalui pelatihan, diskusi pada komunitas belajar, belajar mandiri memanfaatkan berbagai sumber belajar, dan kegiatan lain yang menunjang peningkatan kompetensi.', 'Kepala satuan pendidikan dan pendidik merencanakan dan mengimplementasikan strategi pembelajaran yang mengintegrasikan perhatian, kepedulian, dan umpan balik konstruktif melalui intrakurikuler, kokurikuler, dan/atau ekstrakurikuler untuk mendukung kemampuan literasi peserta didik.', 'Kepala satuan pendidikan mendorong pendidik memberikan dukungan psikologis kepada peserta didik melalui program dan kebijakan di satuan pendidikan, baik yang membutuhkan anggaran dan yang tidak membutuhkan anggaran untuk mendukung kemampuan literasi peserta didik'],
+        link:'https://guru.dikdasmen.go.id/artikel/78', arkas:'Kegiatan BOS Reguler\n\n- Konsultasi peningkatan mutu pendidikan (konsultan & psikolog)\n- Penyelenggaraan program konseling untuk keberlanjutan pendidikan\n- Peningkatan kompetensi guru untuk memahami karakteristik dan cara belajar peserta didik' }
+    ],
+    parsedAt: new Date().toISOString()
+  };
+
+  var s2 = emptySchool();
+  s2.nama = 'UPTD SD Negeri 35 Parepare';
+  s2.jenjang = 'SD';
+  s2.npsn = '40307751';
+  s2.rapor = {
+    tahun:'2025',
+    indikator:[
+      { kode:'A.1', dimensi:'A', nama:'Kemampuan literasi', capaian:'Baik (85,71% peserta didik sudah mencapai kompetensi minimum)', skor:'85,71%' },
+      { kode:'A.2', dimensi:'A', nama:'Kemampuan numerasi', capaian:'Baik (75% peserta didik sudah mencapai kompetensi minimum)', skor:'75%' },
+      { kode:'A.3', dimensi:'A', nama:'Karakter', capaian:'Baik', skor:'55,24' },
+      { kode:'C.3', dimensi:'C', nama:'Pengalaman Pelatihan PTK', capaian:'Kurang', skor:'0' },
+      { kode:'D.1', dimensi:'D', nama:'Kualitas pembelajaran', capaian:'Sedang', skor:'56,79' },
+      { kode:'D.2', dimensi:'D', nama:'Refleksi dan perbaikan pembelajaran oleh guru', capaian:'Baik', skor:'65,86' },
+      { kode:'D.3', dimensi:'D', nama:'Kepemimpinan instruksional', capaian:'Baik', skor:'61,36' },
+      { kode:'D.4', dimensi:'D', nama:'Iklim keamanan satuan pendidikan', capaian:'Baik', skor:'72,92' },
+      { kode:'D.6', dimensi:'D', nama:'Iklim Kesetaraan Gender', capaian:'Sedang', skor:'65,53' },
+      { kode:'D.8', dimensi:'D', nama:'Iklim Kebinekaan', capaian:'Baik', skor:'63,26' },
+      { kode:'D.10', dimensi:'D', nama:'Iklim Inklusivitas', capaian:'Baik', skor:'54,12' },
+      { kode:'D.18', dimensi:'D', nama:'Kesiapsiagaan Bencana dan Perubahan Iklim', capaian:'Sedang', skor:'65,47' },
+      { kode:'D.19', dimensi:'D', nama:'Tujuh Kebiasaan Anak Indonesia Hebat', capaian:'Sedang', skor:'6,74' },
+      { kode:'E.1', dimensi:'E', nama:'Partisipasi warga satuan pendidikan', capaian:'Sedang', skor:'58,36' },
+      { kode:'E.2', dimensi:'E', nama:'Proporsi pemanfaatan sumber daya sekolah untuk peningkatan mutu', capaian:'Kurang', skor:'14,49' },
+      { kode:'E.3', dimensi:'E', nama:'Pemanfaatan TIK untuk pengelolaan anggaran', capaian:'Baik', skor:'70,44' },
+      { kode:'E.5', dimensi:'E', nama:'Program dan kebijakan satuan pendidikan', capaian:'Sedang', skor:'61,34' },
+      { kode:'E.6', dimensi:'E', nama:'Ketersediaan Buku Pendidikan', capaian:'Capaian Tidak Tersedia', skor:'Tidak Tersedia (Satdik Anda tidak menjawab pertanyaan untuk indikator ini)' },
+      { kode:'E.7', dimensi:'E', nama:'Indeks Fasilitas Satuan Pendidikan', capaian:'Sedang', skor:'64' }
+    ],
+    rekomendasi:[
+      { id:uid(), indikator:'D.1 Kualitas pembelajaran', capaian:'Sedang', skor:'56,79',
+        akarMasalah:'D.1.1 Manajemen kelas', benahi:'Pengelolaan kelas yang mendukung pembelajaran serta penerapan penghargaan dan sanksi secara proporsional mendukung peningkatan kualitas pembelajaran.',
+        langkah:['Kepala satuan pendidikan dan pendidik meningkatkan kompetensi manajemen kelas melalui pelatihan dan refleksi untuk mendukung suasana kondusif untuk mengembangkan kualitas pembelajaran yang dilihat dari meningkatnya kualitas interaksi antara pendidik, peserta didik, dan materi pembelajaran dalam proses pengajaran dan pembelajaran. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar PTK, standar proses, dan standar isi.', 'Kepala satuan pendidikan dan pendidik menyusun dan mengimplementasikan strategi manajemen kelas diterapkan melalui intrakurikuler, kokurikuler, dan/atau ekstrakurikuler untuk menciptakan suasana pembelajaran yang kondusif serta mengembangkan kualitas pembelajaran yang dilihat dari kualitas interaksi antara pendidik, peserta didik, dan materi pembelajaran dalam proses pengajaran dan pembelajaran. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar proses, standar isi, dan standar pengelolaan.', 'Kepala satuan pendidikan mendorong program dan kebijakan manajemen kelas, baik dengan anggaran maupun tanpa anggaran, untuk mendukung suasana kondusif serta mengembangkan kualitas pembelajaran yang dilihat dari kualitas interaksi antara pendidik, peserta didik, dan materi pembelajaran dalam proses pengajaran dan pembelajaran. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar pengelolaan dan standar pembiayaan.'],
+        link:'https://guru.kemendikdasmen.go.id/artikel/77', arkas:'Kegiatan BOS Reguler\n\n- Peningkatan kompetensi guru untuk memahami kurikulum dan cara mengajarkannya\n- Peningkatan kompetensi guru untuk pengembangan diri melalui kebiasaan refleksi\n- Peningkatan kompetensi guru untuk pembelajaran berorientasi pada peserta didik' },
+      { id:uid(), indikator:'D.1 Kualitas pembelajaran', capaian:'Sedang', skor:'56,79',
+        akarMasalah:'D.3.1 Visi-misi satuan pendidikan', benahi:'Perumusan, penyampaian dan penerapan visi-misi sekolah untuk meningkatkan kualitas pembelajaran merupakan upaya sekolah dalam meningkatkan kualitas pembelajaran.',
+        langkah:['Kepala satuan pendidikan dan pendidik meningkatkan kompetensi dalam mengintegrasikan visi-misi sekolah ke dalam proses pembelajaran melalui pelatihan dan refleksi untuk mendukung peningkatan kualitas pembelajaran. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar PTK dan  standar proses.', 'Kepala satuan pendidikan dan pendidik merancang dan melaksanakan proses pembelajaran yang selaras dengan visi-misi sekolah untuk memastikan peningkatan kualitas pembelajaran. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar proses, standar isi, dan standar pengelolaan', 'Kepala satuan pendidikan menyusun kebijakan yang mendukung penerapan visi-misi sekolah dalam proses pembelajaran melalui program yang membutuhkan anggaran maupun tanpa anggaran untuk meningkatkan kualitas pembelajaran. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar  standar pengelolaan dan standar pembiayaan.'],
+        link:'https://guru.kemendikdasmen.go.id/artikel/101', arkas:'Kegiatan BOS Reguler\n\n- Penyusunan perencanaan program satuan pendidikan (visi misi sekolah, RKJM, RKT, RKAS)\n- Peningkatan kompetensi kepala sekolah\n- Pengembangan dan pelaksanaan program kerja kepala sekolah' },
+      { id:uid(), indikator:'D.8 Iklim Kebinekaan', capaian:'Baik', skor:'63,26',
+        akarMasalah:'D.8.3 Toleransi dan kesetaraan peserta didik', benahi:'Aktivitas peningkatan kemapuan guru dan kepala sekolah yang bertujuan menunjang terciptanya sikap inklusif yang mendukung sikap menerima dan menghargai keragaman agama dan budaya di sekolah sehingga berdampak kepada iklim kebinekaan.',
+        langkah:['Kepala satuan pendidikan dan pendidik mempelajari konsep dan praktik terkait dukungan atas kesetaraan siswa sebagai bagian dari peningkatan kualitas iklim kebinekaan di satuan pendidikan. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar PTK dan standar proses.', 'Kepala satuan pendidikan dan pendidik mengimplementasikan pengetahuan tentang dukungan atas kesetaraan peserta didik untuk meningkatkan proses pembelajaran peserta didik. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar proses, standar isi, dan standar pengelolaan', 'Kepala satuan pendidikan mendorong perbaikan penerapan dukungan atas kesetaraan peserta didik di satuan pendidikan melalui program, kebijakan, baik itu yang membutuhkan anggaran maupun yang tidak membutuhkan anggaran. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar pengelolaan dan standar pembiayaan.'],
+        link:'https://guru.kemendikdasmen.go.id/artikel/144', arkas:'Kegiatan BOS Reguler\n\n- Program pembinaan kesiswaan dan kepemimpinan siswa\n- Pengembangan kegiatan pelibatan orang tua/wali/keluarga di pembelajaran\n- Peningkatan kompetensi guru untuk memahami sikap inklusif, toleran, dan kesetaraan gender (termasuk pendidikan inklusif/disabilitas)' },
+      { id:uid(), indikator:'D.8 Iklim Kebinekaan', capaian:'Baik', skor:'63,26',
+        akarMasalah:'E.5.1 Program dan kebijakan satuan pendidikan tentang perundungan', benahi:'Aktivitas peningkatan kompetensi guru dan kepala sekolah yang bertujuan mendukung ketersediaan dan penerapan program serta kebijakan untuk mencegah dan menanggulangi segala bentuk penindasan atau kekerasan yang dilakukan secara sengaja  di sekolah yang berdampak pada iklim kebinekaan.',
+        langkah:['Kepala satuan pendidikan dan pendidik mempelajari tentang program dan kebijakan mengenai pencegahan dan penanganan perundungan di satuan pendidikan untuk mendukung iklim kebinekaan. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar PTK dan standar proses.', 'Kepala satuan pendidikan dan pendidik mengintegrasikan pengetahuan tentang program dan kebijakan mengenai pencegahan dan penanganan perundungan di satuan pendidikan dengan penerapan melalui intrakurikuler, kokurikuler, dan/atau ekstrakurikuler untuk meningkatkan iklim kebinekaan. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar proses, standar isi, dan standar pengelolaan.', 'Kepala satuan pendidikan mendorong perbaikan program dan kebijakan mengenai pencegahan dan penanganan perundungan di satuan pendidikan, baik yang membutuhkan anggaran dan yang tidak membutuhkan anggaran. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar pengelolaan dan standar pembiayaan.'],
+        link:'https://guru.kemendikdasmen.go.id/artikel/120', arkas:'Kegiatan BOS Reguler\n\n- Pelaksanaan kegiatan orientasi siswa baru yang bersifat akademik dan pengenalan lingkungan tanpa kekerasan\n- Penerapan program pencegahan perundungan\n- Peningkatan kompetensi guru untuk memahami tentang perundungan, kekerasan, dan kekerasan seksual' },
+      { id:uid(), indikator:'A.3 Karakter', capaian:'Baik', skor:'55,24',
+        akarMasalah:'A.3.4 Nalar Kritis', benahi:'Kemauan dan kebiasaan mengambil siswa dalam keputusan secara logis berdasarkan berbagai bukti dan sudut pandang yang beragam mendukung kemampuan siswa dalam aspek karakter.',
+        langkah:['Kepala satuan pendidikan dan pendidik meningkatkan kompetensi dengan mempelajari tentang pendidikan karakter yang berkaitan dengan menumbuhkan kemauan dan kebiasaan mengambil keputusan secara logis berdasarkan berbagai bukti dan sudut pandang yang beragam pada diri peserta didik melalui pelatihan, diskusi pada komunitas belajar, belajar mandiri memanfaatkan berbagai sumber belajar, dan kegiatan lain yang menunjang peningkatan kompetensi. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar proses dan standar PTK', 'Kepala satuan pendidikan dan pendidik merencanakan dan mengimplementasikan pembelajaran yang menumbuhkan sikap pengambilan keputusan secara logis melalui intrakurikuler, kokurikuler, dan/atau ekstrakurikuler untuk mendukung pengembangan pendidikan karakter. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar proses dan standar pengelolaan', 'Kepala satuan pendidikan mendorong perbaikan dimensi Nalar Kritis melalui program dan kebijakan di satuan pendidikan, baik yang membutuhkan anggaran dan yang tidak membutuhkan anggaran untuk mendukung pengembangan pendidikan karakter. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar pengelolaan dan standar pembiayaan'],
+        link:'https://guru.kemendikdasmen.go.id/artikel/34', arkas:'Kegiatan BOS Reguler\n\n- Pengembangan pembelajaran berbasis projek (termasuk P5)\n- Peningkatan kompetensi guru untuk keterlibatan orang tua/wali dan masyarakat dalam pembelajaran\n- Peningkatan kompetensi guru untuk pemahaman Profil Pelajar Pancasila: Nalar Kritis' },
+      { id:uid(), indikator:'A.3 Karakter', capaian:'Baik', skor:'55,24',
+        akarMasalah:'D.1.1 Manajemen kelas', benahi:'Pengelolaan kelas yang mendukung pembelajaran serta penerapan penghargaan dan sanksi secara proporsional mendukung kemampuan siswa dalam aspek karakter.',
+        langkah:['Kepala satuan pendidikan dan pendidik meningkatkan kompetensi manajemen kelas melalui pelatihan dan refleksi untuk mendukung suasana kondusif yang mengembangkan karakter peserta didik yang bersifat holistik mencakup komponen pengetahuan, afektif, keterampilan, dan perwujudan dalam perilaku. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar PTK dan standar pengelolaan.', 'Kepala satuan pendidikan dan pendidik menyusun dan mengimplementasikan strategi manajemen kelas yang diterapkan melalui intrakurikuler, kokurikuler, dan/atau ekstrakurikuler untuk menciptakan suasana pembelajaran yang kondusif dan mengembangkan karakter peserta didik yang bersifat holistik mencakup komponen pengetahuan, afektif, keterampilan, dan perwujudan dalam perilaku. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar pengelolaan, standar proses dan standar isi', 'Kepala satuan pendidikan mendorong program dan kebijakan manajemen kelas, baik dengan anggaran maupun tanpa anggaran, untuk dapat mengembangkan karakter peserta didik yang bersifat holistik mencakup komponen pengetahuan, afektif, keterampilan, dan perwujudan dalam perilaku. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar pengelolaan dan standar pembiayaan'],
+        link:'https://guru.kemendikdasmen.go.id/artikel/77', arkas:'Kegiatan BOS Reguler\n\n- Peningkatan kompetensi guru untuk memahami kurikulum dan cara mengajarkannya\n- Peningkatan kompetensi guru untuk pengembangan diri melalui kebiasaan refleksi\n- Peningkatan kompetensi guru untuk pembelajaran berorientasi pada peserta didik' },
+      { id:uid(), indikator:'D.4 Iklim keamanan satuan pendidikan', capaian:'Baik', skor:'72,92',
+        akarMasalah:'D.4.7 Pemahaman dan sikap guru tentang kekerasan seksual', benahi:'Pengalaman dan pengetahuan siswa tentang kekerasan seksual dan serta pemahaman dan sikap guru tentang kekerasan seksual merupakan salah satu faktor yang memengaruhi iklim keamanan di sekolah.',
+        langkah:['Kepala satuan pendidikan dan pendidik mengadakan pelatihan intensif bagi GTK dalam memahami definisi, bentuk perilaku, dampak, serta strategi pencegahan dan penanganan kekerasan seksual dengan pendekatan ramah anak, sebagai bagian ikllm keamanan satuan pendidikan. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar PTK dan standar proses.', 'Pendidik mengimplementasikan pengetahuan mengenai identifikasi, pencegahan, dan penanganan kekerasan seksual di lingkungan satuan pendidikan dengan mengembangkan alat bantu dalam memonitoring dan evaluasi pembelajaran yang berorientasi pada kesadaran terhadap kekerasan seksual. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar pengelolaan, standar proses, dan standar isi.', 'Kepala satuan pendidikan merancang kebijakan satuan pendidikan dengan memberikan panduan resmi bagi seluruh warga sekolah mengenai langkah pencegahan, pelaporan, dan penanganan kasus kekerasan seksual dengan melibatkan GTK, siswa, dan wali peserta didik. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar pengelolaan dan standar pembiayaan'],
+        link:'https://guru.kemendikdasmen.go.id/artikel/128', arkas:'Kegiatan BOS Reguler\n\n- Pengembangan program pencegahan dan penanganan kekerasan dan kekerasan seksual di satuan pendidikan (termasuk program Roots)\n- Penerapan program pencegahan perundungan\n- Peningkatan kompetensi guru untuk memahami tentang perundungan, kekerasan, dan kekerasan seksual' },
+      { id:uid(), indikator:'D.4 Iklim keamanan satuan pendidikan', capaian:'Baik', skor:'72,92',
+        akarMasalah:'E.5.1 Program dan kebijakan satuan pendidikan tentang perundungan', benahi:'Aktivitas peningkatan kompetensi guru dan kepala sekolah yang bertujuan mendukung terlaksananya program dan kebijakan sekolah untuk mencegah dan menanggulangi segala bentuk penindasan atau kekerasan yang dilakukan secara sengaja oleh satu atau sekelompok orang yang lebih di sekolah yang berdampak pada iklim keamanan sekolah.',
+        langkah:['Kepala satuan pendidikan dan pendidik meningkatkan kompetensi yang bertujuan untuk memahami pemberian dukungan kepada pendidik untuk melakukan refleksi terhadap proses pembelajaran dalam rangka memperbaiki iklim keamanan satuan pendidikan melalui pelatihan, diskusi pada komunitas belajar, belajar mandiri dengan memanfaatkan berbagai sumber belajar, dan kegiatan lain yang menunjang peningkatan kompetensi. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar PTK dan standar proses.', 'Kepala satuan pendidikan dan pendidik mengintegrasikan pengetahuan tentang pemberian dukungan kepada pendidik untuk melakukan refleksi terhadap proses pembelajaran dan mengimplementasikannya dalam berbagai aktivitas untuk meningkatkan iklim keamanan satuan pendidikan. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar proses dan standar pengelolaan.', 'Kepala satuan pendidikan mendorong pemberian dukungan kepada pendidik untuk melakukan refleksi terhadap proses pembelajaran melalui implementasi kegiatan, program, maupun pembuatan kebijakan, baik yang membutuhkan anggaran maupun yang tidak membutuhkan anggaran. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar pengelolaan dan standar pembiayaan.'],
+        link:'https://guru.kemendikdasmen.go.id/artikel/120', arkas:'Kegiatan BOS Reguler\n\n- Pelaksanaan kegiatan orientasi siswa baru yang bersifat akademik dan pengenalan lingkungan tanpa kekerasan\n- Penerapan program pencegahan perundungan\n- Peningkatan kompetensi guru untuk memahami tentang perundungan, kekerasan, dan kekerasan seksual' },
+      { id:uid(), indikator:'A.2 Kemampuan numerasi', capaian:'Baik (75% peserta didik sudah mencapai kompetensi minimum)', skor:'75%',
+        akarMasalah:'A.2.1 Kompetensi pada domain Bilangan', benahi:'Kemampuan untuk memahami bilangan berkaitan erat dengan kemampuan numerasi siswa secara keseluruhan.',
+        langkah:['Kepala satuan pendidikan dan pendidik meningkatkan kompetensi dengan mempelajari tentang domain bilangan sebagai bagian dari kemampuan numerasi melalui pelatihan, diskusi pada komunitas belajar, belajar mandiri memanfaatkan berbagai sumber belajar, dan kegiatan lain yang menunjang peningkatan kompetensi. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar proses dan standar PTK.', 'Kepala satuan pendidikan dan pendidik merencanakan pembelajaran dan mengimplementasikan pengetahuan tentang domain bilangan melalui intrakurikuler, kokurikuler, dan/atau ekstrakurikuler untuk memperbaiki proses pembelajaran numerasi peserta didik. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar isi, standar proses, dan standar penilaian.', 'Kepala satuan pendidikan mendorong perbaikan kemampuan domain bilangan melalui program dan kebijakan di satuan pendidikan, baik yang membutuhkan anggaran dan yang tidak membutuhkan anggaran. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar pembiayaan dan standar pengelolaan.'],
+        link:'https://guru.kemendikdasmen.go.id/artikel/22', arkas:'Kegiatan BOS Reguler\n\n- Peningkatan kompetensi guru untuk memperkuat numerasi\n- Pengembangan kegiatan literasi dan numerasi\n- Peningkatan kompetensi guru untuk pembelajaran berorientasi pada peserta didik' },
+      { id:uid(), indikator:'A.2 Kemampuan numerasi', capaian:'Baik (75% peserta didik sudah mencapai kompetensi minimum)', skor:'75%',
+        akarMasalah:'D.1.1 Manajemen kelas', benahi:'Pengelolaan kelas yang mendukung pembelajaran serta penerapan penghargaan dan sanksi secara proporsional mendukung kemampuan numerasi siswa.',
+        langkah:['Kepala satuan pendidikan dan pendidik meningkatkan kompetensi manajemen kelas melalui pelatihan dan refleksi untuk mendukung suasana kondusif dalam pembelajaran yang meningkatkan kemampuan numerasi peserta didik.  Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar proses dan standar PTK.', 'Kepala satuan pendidikan dan pendidik menyusun dan mengimplementasikan strategi manajemen kelas melalui intrakurikuler, kokurikuler, dan ekstrakurikuler untuk menciptakan suasana pembelajaran yang kondusif dan meningkatkan numerasi peserta didik. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar isi, standar proses, dan standar penilaian.', 'Kepala satuan pendidikan mendorong program dan kebijakan manajemen kelas, baik dengan anggaran maupun tanpa anggaran, untuk meningkatkan kemampuan numerasi peserta didik. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar pembiayaan dan standar pengelolaan.'],
+        link:'https://guru.kemendikdasmen.go.id/artikel/77', arkas:'Kegiatan BOS Reguler\n\n- Peningkatan kompetensi guru untuk memahami kurikulum dan cara mengajarkannya\n- Peningkatan kompetensi guru untuk pengembangan diri melalui kebiasaan refleksi\n- Peningkatan kompetensi guru untuk pembelajaran berorientasi pada peserta didik' },
+      { id:uid(), indikator:'A.1 Kemampuan literasi', capaian:'Baik (85,71% peserta didik sudah mencapai kompetensi minimum)', skor:'85,71%',
+        akarMasalah:'A.1.1 Kompetensi membaca teks informasi', benahi:'Kemampuan untuk memahami teks informasi berkaitan erat dengan kemampuan literasi siswa secara keseluruhan.',
+        langkah:['Kepala satuan pendidikan dan pendidik meningkatkan kompetensi dengan mempelajari tentang teks informasi sebagai bagian dari kemampuan literasi melalui pelatihan, diskusi pada komunitas belajar, belajar mandiri memanfaatkan berbagai sumber belajar, dan kegiatan lain yang menunjang peningkatan kompetensi. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar proses dan standar PTK.', 'Kepala satuan pendidikan dan pendidik merencanakan pembelajaran dan mengimplementasikan pengetahuan tentang teks informasi melalui intrakurikuler, kokurikuler, dan/atau ekstrakurikuler untuk meningkatkan minat baca serta memperbaiki proses pembelajaran literasi peserta didik. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar isi, standar proses, dan standar penilaian.', 'Kepala satuan pendidikan mendorong perbaikan kemampuan teks informasi melalui program dan kebijakan di satuan pendidikan, baik yang membutuhkan anggaran dan yang tidak membutuhkan anggaran. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar pembiayaan dan standar pengelolaan.', 'Kepala satuan pendidikan mendorong pemenuhan dan ketersediaan buku teks utama yang disusun oleh pemerintah (Kemendikdasmen) dan buku teks pendamping yang disusun masyarakat/penerbit dan telah mendapatkan SK kelayakan dari pemerintah (Kemendikdasmen) sebagai buku pelajaran yang wajib digunakan pada satuan pendidikan untuk meningkatkan kualitas pembelajaran berdasarkan kurikulum yang berlaku, serta buku nonteks baik yang disusun oleh pemerintah maupun masyarakat/penerbit sebagai bahan bacaan dalam mendukung literasi di satuan pendidikan. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar sarana dan prasarana.'],
+        link:'https://guru.kemendikdasmen.go.id/artikel/24', arkas:'Kegiatan BOS Reguler\n\n- Peningkatan kompetensi guru untuk memperkuat literasi\n- Pengembangan kegiatan literasi dan numerasi\n- Kegiatan pemberdayaan perpustakaan terutama untuk pengembangan minat baca peserta didik\n- Pengadaan dan pemanfaatan buku teks utama, buku teks pendamping, serta buku nonteks' },
+      { id:uid(), indikator:'A.1 Kemampuan literasi', capaian:'Baik (85,71% peserta didik sudah mencapai kompetensi minimum)', skor:'85,71%',
+        akarMasalah:'D.1.1 Manajemen kelas', benahi:'Pengelolaan kelas yang mendukung pembelajaran serta penerapan penghargaan dan sanksi secara proporsional mendukung kemampuan literasi siswa',
+        langkah:['Kepala satuan pendidikan dan pendidik meningkatkan kompetensi manajemen kelas yang mendukung pembelajaran serta penerapan penghargaan dan sanksi secara proporsional dalam rangka mendukung kemampuan literasi peserta didik melalui pelatihan, diskusi pada komunitas belajar, belajar mandiri memanfaatkan berbagai sumber belajar, dan kegiatan lain yang menunjang peningkatan kompetensi. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar isi dan standar proses.', 'Kepala satuan pendidikan dan pendidik merencanakan dan mengimplementasikan strategi manajemen kelas melalui intrakurikuler, kokurikuler, dan/atau ekstrakurikuler untuk mendukung kemampuan literasi peserta didik. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar proses dan standar PTK.', 'Kepala satuan pendidikan mendorong perbaikan manajemen kelas di satuan pendidikan melalui program dan kebijakan di satuan pendidikan, baik yang membutuhkan anggaran dan yang tidak membutuhkan anggaran untuk mendukung kemampuan literasi peserta didik. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar pembiayaan dan standar pengelolaan.'],
+        link:'https://guru.kemendikdasmen.go.id/artikel/77', arkas:'Kegiatan BOS Reguler\n\n- Peningkatan kompetensi guru untuk memahami kurikulum dan cara mengajarkannya\n- Peningkatan kompetensi guru untuk pengembangan diri melalui kebiasaan refleksi\n- Peningkatan kompetensi guru untuk pembelajaran berorientasi pada peserta didik' }
+    ],
+    parsedAt: new Date().toISOString()
+  };
+
+  var s3 = emptySchool();
+  s3.nama = 'UPTD SD Negeri 79 Parepare';
+  s3.jenjang = 'SD';
+  s3.npsn = '40307630';
+  s3.rapor = {
+    tahun:'2025',
+    indikator:[
+      { kode:'A.1', dimensi:'A', nama:'Kemampuan literasi', capaian:'Baik (91,67% peserta didik sudah mencapai kompetensi minimum)', skor:'91,67%' },
+      { kode:'A.2', dimensi:'A', nama:'Kemampuan numerasi', capaian:'Baik (87,5% peserta didik sudah mencapai kompetensi minimum)', skor:'87,5%' },
+      { kode:'A.3', dimensi:'A', nama:'Karakter', capaian:'Baik', skor:'66,52' },
+      { kode:'C.3', dimensi:'C', nama:'Pengalaman Pelatihan PTK', capaian:'Kurang', skor:'0' },
+      { kode:'D.1', dimensi:'D', nama:'Kualitas pembelajaran', capaian:'Baik', skor:'73,25' },
+      { kode:'D.2', dimensi:'D', nama:'Refleksi dan perbaikan pembelajaran oleh guru', capaian:'Baik', skor:'77,47' },
+      { kode:'D.3', dimensi:'D', nama:'Kepemimpinan instruksional', capaian:'Baik', skor:'77,53' },
+      { kode:'D.4', dimensi:'D', nama:'Iklim keamanan satuan pendidikan', capaian:'Baik', skor:'81,9' },
+      { kode:'D.6', dimensi:'D', nama:'Iklim Kesetaraan Gender', capaian:'Baik', skor:'79,11' },
+      { kode:'D.8', dimensi:'D', nama:'Iklim Kebinekaan', capaian:'Baik', skor:'73,3' },
+      { kode:'D.10', dimensi:'D', nama:'Iklim Inklusivitas', capaian:'Baik', skor:'60,6' },
+      { kode:'D.18', dimensi:'D', nama:'Kesiapsiagaan Bencana dan Perubahan Iklim', capaian:'Baik', skor:'74,64' },
+      { kode:'D.19', dimensi:'D', nama:'Tujuh Kebiasaan Anak Indonesia Hebat', capaian:'Sedang', skor:'6,56' },
+      { kode:'E.1', dimensi:'E', nama:'Partisipasi warga satuan pendidikan', capaian:'Baik', skor:'72,59' },
+      { kode:'E.2', dimensi:'E', nama:'Proporsi pemanfaatan sumber daya sekolah untuk peningkatan mutu', capaian:'Kurang', skor:'11,16' },
+      { kode:'E.3', dimensi:'E', nama:'Pemanfaatan TIK untuk pengelolaan anggaran', capaian:'Baik', skor:'68,51' },
+      { kode:'E.5', dimensi:'E', nama:'Program dan kebijakan satuan pendidikan', capaian:'Baik', skor:'76,96' },
+      { kode:'E.6', dimensi:'E', nama:'Ketersediaan Buku Pendidikan', capaian:'Capaian Tidak Tersedia', skor:'Tidak Tersedia (Satdik Anda tidak menjawab pertanyaan untuk indikator ini)' },
+      { kode:'E.7', dimensi:'E', nama:'Indeks Fasilitas Satuan Pendidikan', capaian:'Sedang', skor:'66,67' }
+    ],
+    rekomendasi:[
+      { id:uid(), indikator:'D.8 Iklim Kebinekaan', capaian:'Baik', skor:'73,3',
+        akarMasalah:'D.8.3 Toleransi dan kesetaraan peserta didik', benahi:'Aktivitas peningkatan kemapuan guru dan kepala sekolah yang bertujuan menunjang terciptanya sikap inklusif yang mendukung sikap menerima dan menghargai keragaman agama dan budaya di sekolah sehingga berdampak kepada iklim kebinekaan.',
+        langkah:['Kepala satuan pendidikan dan pendidik mempelajari konsep dan praktik terkait dukungan atas kesetaraan siswa sebagai bagian dari peningkatan kualitas iklim kebinekaan di satuan pendidikan. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar PTK dan standar proses.', 'Kepala satuan pendidikan dan pendidik mengimplementasikan pengetahuan tentang dukungan atas kesetaraan peserta didik untuk meningkatkan proses pembelajaran peserta didik. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar proses, standar isi, dan standar pengelolaan', 'Kepala satuan pendidikan mendorong perbaikan penerapan dukungan atas kesetaraan peserta didik di satuan pendidikan melalui program, kebijakan, baik itu yang membutuhkan anggaran maupun yang tidak membutuhkan anggaran. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar pengelolaan dan standar pembiayaan.'],
+        link:'https://guru.kemendikdasmen.go.id/artikel/144', arkas:'Kegiatan BOS Reguler\n\n- Program pembinaan kesiswaan dan kepemimpinan siswa\n- Pengembangan kegiatan pelibatan orang tua/wali/keluarga di pembelajaran\n- Peningkatan kompetensi guru untuk memahami sikap inklusif, toleran, dan kesetaraan gender (termasuk pendidikan inklusif/disabilitas)' },
+      { id:uid(), indikator:'D.8 Iklim Kebinekaan', capaian:'Baik', skor:'73,3',
+        akarMasalah:'D.6.1 Pemahaman dan sikap warga satuan pendidikan terhadap kesetaraan gender', benahi:'Kondisi sekolah yang menunjukkan adanya pemahaman, dukungan dan tindakan warga sekolah terhadap kesetaraan kemampuan, hak, dan kewajiban antara laki-laki dan perempuan merupakan salah satu faktor yang mempengaruhi peningkatkan iklim kebinekaan sekolah.',
+        langkah:['Kepala satuan pendidikan dan pendidik mempelajari tentang konsep, pemahaman, dan sikap warga sekolah terkait kesetaraan gender untuk mendorong iklim kebinekaan di satuan pendidikan. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar PTK dan standar proses.', 'Kepala satuan pendidikan dan pendidik mengintegrasikan pengetahuan tentang pemahaman dan sikap warga sekolah terkait kesetaraan gender untuk memperbaiki proses pembelajaran peserta didik. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar proses, standar isi, dan standar pengelolaan.', 'Kepala satuan pendidikan mendorong perbaikan pemahaman dan sikap warga sekolah terkait kesetaraan gender di satuan pendidikan melalui program, kebijakan, dan penganggaran. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar pengelolaan dan standar pembiayaan.'],
+        link:'https://guru.kemendikdasmen.go.id/artikel/136', arkas:'Kegiatan BOS Reguler\n\n- Peningkatan kompetensi guru untuk pembelajaran berorientasi pada peserta didik\n- Penyediaan atau pembuatan media pembelajaran\n- Peningkatan kompetensi guru untuk memahami sikap inklusif, toleran, dan kesetaraan gender (termasuk pendidikan inklusif/disabilitas)' },
+      { id:uid(), indikator:'A.3 Karakter', capaian:'Baik', skor:'66,52',
+        akarMasalah:'A.3.4 Nalar Kritis', benahi:'Kemauan dan kebiasaan mengambil siswa dalam keputusan secara logis berdasarkan berbagai bukti dan sudut pandang yang beragam mendukung kemampuan siswa dalam aspek karakter.',
+        langkah:['Kepala satuan pendidikan dan pendidik meningkatkan kompetensi dengan mempelajari tentang pendidikan karakter yang berkaitan dengan menumbuhkan kemauan dan kebiasaan mengambil keputusan secara logis berdasarkan berbagai bukti dan sudut pandang yang beragam pada diri peserta didik melalui pelatihan, diskusi pada komunitas belajar, belajar mandiri memanfaatkan berbagai sumber belajar, dan kegiatan lain yang menunjang peningkatan kompetensi. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar proses dan standar PTK', 'Kepala satuan pendidikan dan pendidik merencanakan dan mengimplementasikan pembelajaran yang menumbuhkan sikap pengambilan keputusan secara logis melalui intrakurikuler, kokurikuler, dan/atau ekstrakurikuler untuk mendukung pengembangan pendidikan karakter. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar proses dan standar pengelolaan', 'Kepala satuan pendidikan mendorong perbaikan dimensi Nalar Kritis melalui program dan kebijakan di satuan pendidikan, baik yang membutuhkan anggaran dan yang tidak membutuhkan anggaran untuk mendukung pengembangan pendidikan karakter. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar pengelolaan dan standar pembiayaan'],
+        link:'https://guru.kemendikdasmen.go.id/artikel/34', arkas:'Kegiatan BOS Reguler\n\n- Pengembangan pembelajaran berbasis projek (termasuk P5)\n- Peningkatan kompetensi guru untuk keterlibatan orang tua/wali dan masyarakat dalam pembelajaran\n- Peningkatan kompetensi guru untuk pemahaman Profil Pelajar Pancasila: Nalar Kritis' },
+      { id:uid(), indikator:'A.3 Karakter', capaian:'Baik', skor:'66,52',
+        akarMasalah:'D.1.1 Manajemen kelas', benahi:'Pengelolaan kelas yang mendukung pembelajaran serta penerapan penghargaan dan sanksi secara proporsional mendukung kemampuan siswa dalam aspek karakter.',
+        langkah:['Kepala satuan pendidikan dan pendidik meningkatkan kompetensi manajemen kelas melalui pelatihan dan refleksi untuk mendukung suasana kondusif yang mengembangkan karakter peserta didik yang bersifat holistik mencakup komponen pengetahuan, afektif, keterampilan, dan perwujudan dalam perilaku. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar PTK dan standar pengelolaan.', 'Kepala satuan pendidikan dan pendidik menyusun dan mengimplementasikan strategi manajemen kelas yang diterapkan melalui intrakurikuler, kokurikuler, dan/atau ekstrakurikuler untuk menciptakan suasana pembelajaran yang kondusif dan mengembangkan karakter peserta didik yang bersifat holistik mencakup komponen pengetahuan, afektif, keterampilan, dan perwujudan dalam perilaku. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar pengelolaan, standar proses dan standar isi', 'Kepala satuan pendidikan mendorong program dan kebijakan manajemen kelas, baik dengan anggaran maupun tanpa anggaran, untuk dapat mengembangkan karakter peserta didik yang bersifat holistik mencakup komponen pengetahuan, afektif, keterampilan, dan perwujudan dalam perilaku. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar pengelolaan dan standar pembiayaan'],
+        link:'https://guru.kemendikdasmen.go.id/artikel/77', arkas:'Kegiatan BOS Reguler\n\n- Peningkatan kompetensi guru untuk memahami kurikulum dan cara mengajarkannya\n- Peningkatan kompetensi guru untuk pengembangan diri melalui kebiasaan refleksi\n- Peningkatan kompetensi guru untuk pembelajaran berorientasi pada peserta didik' },
+      { id:uid(), indikator:'D.4 Iklim keamanan satuan pendidikan', capaian:'Baik', skor:'81,9',
+        akarMasalah:'D.4.7 Pemahaman dan sikap guru tentang kekerasan seksual', benahi:'Pengalaman dan pengetahuan siswa tentang kekerasan seksual dan serta pemahaman dan sikap guru tentang kekerasan seksual merupakan salah satu faktor yang memengaruhi iklim keamanan di sekolah.',
+        langkah:['Kepala satuan pendidikan dan pendidik mengadakan pelatihan intensif bagi GTK dalam memahami definisi, bentuk perilaku, dampak, serta strategi pencegahan dan penanganan kekerasan seksual dengan pendekatan ramah anak, sebagai bagian ikllm keamanan satuan pendidikan. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar PTK dan standar proses.', 'Pendidik mengimplementasikan pengetahuan mengenai identifikasi, pencegahan, dan penanganan kekerasan seksual di lingkungan satuan pendidikan dengan mengembangkan alat bantu dalam memonitoring dan evaluasi pembelajaran yang berorientasi pada kesadaran terhadap kekerasan seksual. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar pengelolaan, standar proses, dan standar isi.', 'Kepala satuan pendidikan merancang kebijakan satuan pendidikan dengan memberikan panduan resmi bagi seluruh warga sekolah mengenai langkah pencegahan, pelaporan, dan penanganan kasus kekerasan seksual dengan melibatkan GTK, siswa, dan wali peserta didik. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar pengelolaan dan standar pembiayaan'],
+        link:'https://guru.kemendikdasmen.go.id/artikel/128', arkas:'Kegiatan BOS Reguler\n\n- Pengembangan program pencegahan dan penanganan kekerasan dan kekerasan seksual di satuan pendidikan (termasuk program Roots)\n- Penerapan program pencegahan perundungan\n- Peningkatan kompetensi guru untuk memahami tentang perundungan, kekerasan, dan kekerasan seksual' },
+      { id:uid(), indikator:'D.4 Iklim keamanan satuan pendidikan', capaian:'Baik', skor:'81,9',
+        akarMasalah:'D.10.3 Sikap terhadap disabilitas', benahi:'Penerimaan dan penghargaan terhadap siswa dengan disabilitas mendorong menciptakan iklim sekolah yang aman untuk semua',
+        langkah:['Kepala satuan pendidikan dan pendidik meningkatkan kompetensi yang bertujuan untuk memahami bentuk penerimaan, dukungan, dan penghargaan terhadap peserta didik disabilitas dalam rangka memperbaiki iklim keamanan satuan pendidikan melalui pelatihan, diskusi pada komunitas belajar, belajar mandiri dengan memanfaatkan berbagai sumber belajar, dan kegiatan lain yang menunjang peningkatan kompetensi. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar PTK dan standar proses', 'Kepala satuan pendidikan dan pendidik mengintegrasikan pengetahuan tentang bentuk penerimaan, dukungan, dan penghargaan terhadap peserta didik disabilitas di satuan pendidikan dan mengimplementasikannya dalam aktivitas intrakurikuler, kokurikuler, dan/atau ekstrakurikuler untuk meningkatkan iklim keamanan satuan pendidikan. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar standar proses dan standar pengelolaan.', 'Kepala satuan pendidikan mendukung perbaikan sikap terhadap peserta didik disabilitas melalui implementasi kegiatan, program, maupun pembuatan kebijakan, baik yang membutuhkan anggaran maupun yang tidak membutuhkan anggaran. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar pengelolaan dan standar pembiayaan.'],
+        link:'https://guru.kemendikdasmen.go.id/artikel/156', arkas:'Kegiatan BOS Reguler\n\n- Peningkatan kompetensi guru untuk pengelolaan lingkungan pembelajaran yang aman dan nyaman\n- Peningkatan kompetensi guru untuk memahami sikap inklusif, toleran, dan kesertaan gender (termasuk pendidikan inklusif/disabilitas)\n- Pengembangan sekolah sehat, sekolah aman, sekolah ramah anak, sekolah inklusi, sekolah adiwiyata, dan sejenisnya' },
+      { id:uid(), indikator:'D.1 Kualitas pembelajaran', capaian:'Baik', skor:'73,25',
+        akarMasalah:'D.1.1 Manajemen kelas', benahi:'Pengelolaan kelas yang mendukung pembelajaran serta penerapan penghargaan dan sanksi secara proporsional mendukung peningkatan kualitas pembelajaran.',
+        langkah:['Kepala satuan pendidikan dan pendidik meningkatkan kompetensi manajemen kelas melalui pelatihan dan refleksi untuk mendukung suasana kondusif untuk mengembangkan kualitas pembelajaran yang dilihat dari meningkatnya kualitas interaksi antara pendidik, peserta didik, dan materi pembelajaran dalam proses pengajaran dan pembelajaran. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar PTK, standar proses, dan standar isi.', 'Kepala satuan pendidikan dan pendidik menyusun dan mengimplementasikan strategi manajemen kelas diterapkan melalui intrakurikuler, kokurikuler, dan/atau ekstrakurikuler untuk menciptakan suasana pembelajaran yang kondusif serta mengembangkan kualitas pembelajaran yang dilihat dari kualitas interaksi antara pendidik, peserta didik, dan materi pembelajaran dalam proses pengajaran dan pembelajaran. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar proses, standar isi, dan standar pengelolaan.', 'Kepala satuan pendidikan mendorong program dan kebijakan manajemen kelas, baik dengan anggaran maupun tanpa anggaran, untuk mendukung suasana kondusif serta mengembangkan kualitas pembelajaran yang dilihat dari kualitas interaksi antara pendidik, peserta didik, dan materi pembelajaran dalam proses pengajaran dan pembelajaran. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar pengelolaan dan standar pembiayaan.'],
+        link:'https://guru.kemendikdasmen.go.id/artikel/77', arkas:'Kegiatan BOS Reguler\n\n- Peningkatan kompetensi guru untuk memahami kurikulum dan cara mengajarkannya\n- Peningkatan kompetensi guru untuk pengembangan diri melalui kebiasaan refleksi\n- Peningkatan kompetensi guru untuk pembelajaran berorientasi pada peserta didik' },
+      { id:uid(), indikator:'D.1 Kualitas pembelajaran', capaian:'Baik', skor:'73,25',
+        akarMasalah:'D.2.1 Belajar tentang pembelajaran', benahi:'Aktivitas belajar Guru yang bertujuan meningkatkan pengetahuan dan keterampilan mengajar merupakan salah satu faktor yang mempengaruhi kulitas pembelajaran.',
+        langkah:['Kepala satuan pendidikan dan pendidik meningkatkan kemampuan belajar tentang pembelajaran sebagai bagian dari peningkatan kualitas pembelajaran melalui pelatihan, diskusi di komunitas belajar, serta kegiatan lain yang menunjang keterampilan mengajar. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar PTK dan standar proses.', 'Kepala satuan pendidikan dan pendidik mengimplementasikan pengetahuan dan keterampilan mengajar melalui diskusi di komunitas belajar. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar proses dan standar pengelolaan.', 'Kepala satuan pendidikan mendorong perbaikan proses pembelajaran pendidik sebagai bagian dari peningkatan kualitas pembelajaran di satuan pendidkan melalui program dan kebijakan di sekolah, baik yang membutuhkan anggaran maupun yang tidak membutuhkan anggaran. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar pengelolaan dan standar pembiayaan.'],
+        link:'https://guru.kemendikdasmen.go.id/artikel/85', arkas:'Kegiatan BOS Reguler\n\n- Pelaksanaan kegiatan komunitas belajar di satuan pendidikan\n- Peningkatan kompetensi guru untuk memahami karakteristik dan cara belajar peserta didik\n- Peningkatan kompetensi guru untuk memahami konten pembelajaran dan cara mengajarkannya' },
+      { id:uid(), indikator:'A.1 Kemampuan literasi', capaian:'Baik (91,67% peserta didik sudah mencapai kompetensi minimum)', skor:'91,67%',
+        akarMasalah:'A.1.1 Kompetensi membaca teks informasi', benahi:'Kemampuan untuk memahami teks informasi berkaitan erat dengan kemampuan literasi siswa secara keseluruhan.',
+        langkah:['Kepala satuan pendidikan dan pendidik meningkatkan kompetensi dengan mempelajari tentang teks informasi sebagai bagian dari kemampuan literasi melalui pelatihan, diskusi pada komunitas belajar, belajar mandiri memanfaatkan berbagai sumber belajar, dan kegiatan lain yang menunjang peningkatan kompetensi. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar proses dan standar PTK.', 'Kepala satuan pendidikan dan pendidik merencanakan pembelajaran dan mengimplementasikan pengetahuan tentang teks informasi melalui intrakurikuler, kokurikuler, dan/atau ekstrakurikuler untuk meningkatkan minat baca serta memperbaiki proses pembelajaran literasi peserta didik. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar isi, standar proses, dan standar penilaian.', 'Kepala satuan pendidikan mendorong perbaikan kemampuan teks informasi melalui program dan kebijakan di satuan pendidikan, baik yang membutuhkan anggaran dan yang tidak membutuhkan anggaran. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar pembiayaan dan standar pengelolaan.', 'Kepala satuan pendidikan mendorong pemenuhan dan ketersediaan buku teks utama yang disusun oleh pemerintah (Kemendikdasmen) dan buku teks pendamping yang disusun masyarakat/penerbit dan telah mendapatkan SK kelayakan dari pemerintah (Kemendikdasmen) sebagai buku pelajaran yang wajib digunakan pada satuan pendidikan untuk meningkatkan kualitas pembelajaran berdasarkan kurikulum yang berlaku, serta buku nonteks baik yang disusun oleh pemerintah maupun masyarakat/penerbit sebagai bahan bacaan dalam mendukung literasi di satuan pendidikan. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar sarana dan prasarana.'],
+        link:'https://guru.kemendikdasmen.go.id/artikel/24', arkas:'Kegiatan BOS Reguler\n\n- Peningkatan kompetensi guru untuk memperkuat literasi\n- Pengembangan kegiatan literasi dan numerasi\n- Kegiatan pemberdayaan perpustakaan terutama untuk pengembangan minat baca peserta didik\n- Pengadaan dan pemanfaatan buku teks utama, buku teks pendamping, serta buku nonteks' },
+      { id:uid(), indikator:'A.1 Kemampuan literasi', capaian:'Baik (91,67% peserta didik sudah mencapai kompetensi minimum)', skor:'91,67%',
+        akarMasalah:'D.1.1 Manajemen kelas', benahi:'Pengelolaan kelas yang mendukung pembelajaran serta penerapan penghargaan dan sanksi secara proporsional mendukung kemampuan literasi siswa',
+        langkah:['Kepala satuan pendidikan dan pendidik meningkatkan kompetensi manajemen kelas yang mendukung pembelajaran serta penerapan penghargaan dan sanksi secara proporsional dalam rangka mendukung kemampuan literasi peserta didik melalui pelatihan, diskusi pada komunitas belajar, belajar mandiri memanfaatkan berbagai sumber belajar, dan kegiatan lain yang menunjang peningkatan kompetensi. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar isi dan standar proses.', 'Kepala satuan pendidikan dan pendidik merencanakan dan mengimplementasikan strategi manajemen kelas melalui intrakurikuler, kokurikuler, dan/atau ekstrakurikuler untuk mendukung kemampuan literasi peserta didik. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar proses dan standar PTK.', 'Kepala satuan pendidikan mendorong perbaikan manajemen kelas di satuan pendidikan melalui program dan kebijakan di satuan pendidikan, baik yang membutuhkan anggaran dan yang tidak membutuhkan anggaran untuk mendukung kemampuan literasi peserta didik. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar pembiayaan dan standar pengelolaan.'],
+        link:'https://guru.kemendikdasmen.go.id/artikel/77', arkas:'Kegiatan BOS Reguler\n\n- Peningkatan kompetensi guru untuk memahami kurikulum dan cara mengajarkannya\n- Peningkatan kompetensi guru untuk pengembangan diri melalui kebiasaan refleksi\n- Peningkatan kompetensi guru untuk pembelajaran berorientasi pada peserta didik' },
+      { id:uid(), indikator:'A.2 Kemampuan numerasi', capaian:'Baik (87,5% peserta didik sudah mencapai kompetensi minimum)', skor:'87,5%',
+        akarMasalah:'A.2.3 Kompetensi pada domain Geometri', benahi:'Kemampuan untuk memahami geometri berkaitan erat dengan kemampuan numerasi siswa secara keseluruhan.',
+        langkah:['Kepala satuan pendidikan dan pendidik meningkatkan kompetensi dengan mempelajari tentang domain geometri sebagai bagian dari kemampuan numerasi melalui pelatihan, diskusi pada komunitas belajar, belajar mandiri memanfaatkan berbagai sumber belajar, dan kegiatan lain yang menunjang peningkatan kompetensi. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar proses dan standar PTK.', 'Kepala satuan pendidikan dan pendidik merencanakan pembelajaran dan mengimplementasikan pengetahuan tentang domain geometri melalui intrakurikuler, kokurikuler, dan/atau ekstrakurikuler untuk meningkatkan minat baca serta memperbaiki proses pembelajaran numerasi peserta didik. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar isi, standar proses, dan standar penilaian.', 'Kepala satuan pendidikan mendorong perbaikan kemampuan domain geometri melalui program dan kebijakan di satuan pendidikan, baik yang membutuhkan anggaran dan yang tidak membutuhkan anggaran. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar pembiayaan dan standar pengelolaan.'],
+        link:'https://guru.kemendikdasmen.go.id/artikel/22', arkas:'Kegiatan BOS Reguler\n\n- Peningkatan kompetensi guru untuk memperkuat numerasi\n- Pengembangan kegiatan literasi dan numerasi\n- Peningkatan kompetensi guru untuk pembelajaran berorientasi pada peserta didik' },
+      { id:uid(), indikator:'A.2 Kemampuan numerasi', capaian:'Baik (87,5% peserta didik sudah mencapai kompetensi minimum)', skor:'87,5%',
+        akarMasalah:'D.1.1 Manajemen kelas', benahi:'Pengelolaan kelas yang mendukung pembelajaran serta penerapan penghargaan dan sanksi secara proporsional mendukung kemampuan numerasi siswa.',
+        langkah:['Kepala satuan pendidikan dan pendidik meningkatkan kompetensi manajemen kelas melalui pelatihan dan refleksi untuk mendukung suasana kondusif dalam pembelajaran yang meningkatkan kemampuan numerasi peserta didik.  Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar proses dan standar PTK.', 'Kepala satuan pendidikan dan pendidik menyusun dan mengimplementasikan strategi manajemen kelas melalui intrakurikuler, kokurikuler, dan ekstrakurikuler untuk menciptakan suasana pembelajaran yang kondusif dan meningkatkan numerasi peserta didik. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar isi, standar proses, dan standar penilaian.', 'Kepala satuan pendidikan mendorong program dan kebijakan manajemen kelas, baik dengan anggaran maupun tanpa anggaran, untuk meningkatkan kemampuan numerasi peserta didik. Inspirasi benahi ini mendukung pencapaian standar kompetensi lulusan melalui peningkatan standar pembiayaan dan standar pengelolaan.'],
+        link:'https://guru.kemendikdasmen.go.id/artikel/77', arkas:'Kegiatan BOS Reguler\n\n- Peningkatan kompetensi guru untuk memahami kurikulum dan cara mengajarkannya\n- Peningkatan kompetensi guru untuk pengembangan diri melalui kebiasaan refleksi\n- Peningkatan kompetensi guru untuk pembelajaran berorientasi pada peserta didik' }
+    ],
+    parsedAt: new Date().toISOString()
+  };
+
+  return [s1, s2, s3];
+}
+
+function normalizeSchool(s){
+  if(!s.rkt) s.rkt = [];
+  if(!s.rkjm) s.rkjm = [];
+  if(!s.rkas) s.rkas = [];
+  if(s.rapor === undefined) s.rapor = null;
+  if(!s.kesadaranJawaban) s.kesadaranJawaban = {};
+  if(!s.kapasitasJawaban) s.kapasitasJawaban = {};
+  if(s.catatan === undefined) s.catatan = '';
+  if(!s.kunjungan) s.kunjungan = [];
+  if(s.npsn === undefined) s.npsn = '';
+  if(s.jenjang === undefined) s.jenjang = '';
+  if(s.laporanNomor === undefined) s.laporanNomor = '';
+  if(s.laporanTanggal === undefined) s.laporanTanggal = '';
+  return s;
+}
+
+function defaultData(){
+  return { profile:{ nama:'', jabatan:'Pengawas Sekolah', wilayah:'', nip:'' }, schools: sampleSchools(), triwulanMeta:{}, extraYears:[] };
+}
+
+var state = { data: defaultData(), tab:'dashboard', activeSchoolId:null, loading:true, showProfil:false, showBackup:false, saveTimer:null, triwulanYear:null,
+  kunjunganFilterQ:'semua', kunjunganFilterYear:'semua', rkasFilterQ:'semua', rktFilterQ:'semua' };
+
+var TRIWULAN_OPTIONS = [
+  { value:'semua', label:'Semua triwulan' },
+  { value:'1', label:'Triwulan I (Jan\u2013Mar)' },
+  { value:'2', label:'Triwulan II (Apr\u2013Jun)' },
+  { value:'3', label:'Triwulan III (Jul\u2013Sep)' },
+  { value:'4', label:'Triwulan IV (Okt\u2013Des)' }
+];
+function triwulanFilterSelect(currentValue, onSelect){
+  var sel = el('select',{class:'year-select'});
+  TRIWULAN_OPTIONS.forEach(function(o){
+    var opt = el('option',{value:o.value},[o.label]);
+    if(String(currentValue) === o.value) opt.setAttribute('selected','selected');
+    sel.appendChild(opt);
+  });
+  sel.addEventListener('change', function(){ onSelect(sel.value); });
+  return sel;
+}
+
+function kesadaranLevel(s){
+  var vals = KESADARAN_Q.map(function(q){ return s.kesadaranJawaban[q.id]; });
+  var answered = vals.filter(Boolean);
+  if(answered.length < KESADARAN_Q.length) return null;
+  return vals.indexOf('berdaya') > -1 ? 'Berdaya' : 'Berkembang';
+}
+function kapasitasLevel(s){
+  var vals = KAPASITAS_Q.map(function(q){ return s.kapasitasJawaban[q.id]; });
+  var answered = vals.filter(Boolean);
+  if(answered.length < KAPASITAS_Q.length) return null;
+  var order = ['rendah','sedang','tinggi'];
+  var best = -1;
+  vals.forEach(function(v){ var i = order.indexOf(v); if(i>best) best=i; });
+  return best>=0 ? (order[best].charAt(0).toUpperCase()+order[best].slice(1)) : null;
+}
+function strategiFor(s){
+  if(s.strategiManual) return s.strategiManual;
+  var kes = kesadaranLevel(s), kap = kapasitasLevel(s);
+  if(!kes || !kap) return null;
+  var m = MATRIX[kes + '|' + kap];
+  if(!m) return null;
+  return { strategi:m.strategi, metode:m.metode, prioritas:m.prioritas, deskripsi:m.deskripsi, kesadaran:kes, kapasitas:kap };
+}
+
+var LOCAL_KEY = STORAGE_KEY;
+var hasCloudStorage = (typeof window.storage !== 'undefined' && window.storage && typeof window.storage.set === 'function');
+state.saveWarning = null;
+
+function showSaveWarning(msg){
+  state.saveWarning = msg;
+  var box = document.getElementById('save-warning-box');
+  if(box){ box.textContent = msg; box.style.display = 'block'; }
+}
+function clearSaveWarning(){
+  if(!state.saveWarning) return;
+  state.saveWarning = null;
+  var box = document.getElementById('save-warning-box');
+  if(box) box.style.display = 'none';
+}
+
+function localSave(){
+  try{
+    window.localStorage.setItem(LOCAL_KEY, JSON.stringify(state.data));
+    return true;
+  }catch(e){ console.error('localStorage save failed', e); return false; }
+}
+function localLoad(){
+  try{
+    var raw = window.localStorage.getItem(LOCAL_KEY);
+    return raw ? JSON.parse(raw) : null;
+  }catch(e){ console.error('localStorage load failed', e); return null; }
+}
+
+function doSave(){
+  if(hasCloudStorage){
+    try{
+      window.storage.set(STORAGE_KEY, JSON.stringify(state.data), false).then(function(res){
+        if(!res){ if(!localSave()) showSaveWarning('Penyimpanan gagal. Segera ekspor data (tombol "Ekspor / Impor JSON") agar tidak kehilangan pekerjaan.'); else clearSaveWarning(); }
+        else clearSaveWarning();
+      }).catch(function(e){
+        console.error('save failed', e);
+        if(!localSave()) showSaveWarning('Penyimpanan gagal. Segera ekspor data (tombol "Ekspor / Impor JSON") agar tidak kehilangan pekerjaan.');
+        else clearSaveWarning();
+      });
+    }catch(e){
+      console.error('save failed', e);
+      if(!localSave()) showSaveWarning('Penyimpanan gagal. Segera ekspor data (tombol "Ekspor / Impor JSON") agar tidak kehilangan pekerjaan.');
+      else clearSaveWarning();
+    }
+  } else {
+    if(!localSave()) showSaveWarning('Penyimpanan otomatis tidak tersedia di lingkungan ini. Gunakan tombol "Ekspor / Impor JSON" secara berkala agar pekerjaan tidak hilang.');
+    else clearSaveWarning();
+  }
+}
+function save(){
+  clearTimeout(state.saveTimer);
+  state.saveTimer = setTimeout(doSave, 250);
+}
+function flushSave(){
+  if(state.saveTimer){ clearTimeout(state.saveTimer); state.saveTimer = null; doSave(); }
+}
+document.addEventListener('visibilitychange', function(){ if(document.visibilityState === 'hidden') flushSave(); });
+window.addEventListener('pagehide', flushSave);
+window.addEventListener('beforeunload', flushSave);
+function load(){
+  if(hasCloudStorage){
+    try{
+      window.storage.get(STORAGE_KEY, false).then(function(res){
+        if(res && res.value){
+          applyLoadedData(res.value);
+        } else {
+          var local = localLoad();
+          if(local) applyLoadedObject(local);
+        }
+        state.loading = false;
+        render();
+      }).catch(function(){
+        var local = localLoad();
+        if(local) applyLoadedObject(local);
+        state.loading = false;
+        render();
+      });
+    }catch(e){
+      var local = localLoad();
+      if(local) applyLoadedObject(local);
+      state.loading = false;
+      render();
+    }
+  } else {
+    var local = localLoad();
+    if(local) applyLoadedObject(local);
+    state.loading = false;
+    render();
+  }
+}
+function applyLoadedData(rawStr){
+  try{
+    applyLoadedObject(JSON.parse(rawStr));
+  }catch(e){ state.data = defaultData(); }
+}
+function applyLoadedObject(parsed){
+  state.data = {
+    profile: Object.assign({}, defaultData().profile, (parsed && parsed.profile) || {}),
+    schools: (parsed && Array.isArray(parsed.schools)) ? parsed.schools.map(normalizeSchool) : [],
+    triwulanMeta: (parsed && parsed.triwulanMeta && typeof parsed.triwulanMeta === 'object') ? parsed.triwulanMeta : {},
+    extraYears: (parsed && Array.isArray(parsed.extraYears)) ? parsed.extraYears : []
+  };
+}
+
+function el(tag, attrs, children){
+  var node = document.createElement(tag);
+  attrs = attrs || {};
+  Object.keys(attrs).forEach(function(k){
+    var v = attrs[k];
+    if(v === null || v === undefined) return;
+    if(k === 'html'){ node.innerHTML = v; }
+    else if(k.indexOf('on') === 0){ node.addEventListener(k.slice(2).toLowerCase(), v); }
+    else if(k === 'class'){ node.className = v; }
+    else { node.setAttribute(k, v); }
+  });
+  (children||[]).forEach(function(c){ if(c) node.appendChild(typeof c === 'string' ? document.createTextNode(c) : c); });
+  return node;
+}
+function text(t){ return document.createTextNode(t); }
+
+function escapeHtml(s){
+  return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+/* ---------- render ---------- */
+function render(){
+  var app = document.getElementById('app');
+  app.innerHTML = '';
+  if(state.loading){
+    app.appendChild(el('div',{class:'empty'},[el('div',{class:'big'},['Memuat data...'])]));
+    return;
+  }
+  app.appendChild(renderMasthead());
+  var warnBox = el('div',{id:'save-warning-box', class:'no-print', style:'display:'+(state.saveWarning?'block':'none')+';background:#fbecea;border:1px solid var(--danger);color:var(--danger);border-radius:4px;padding:10px 16px;font-size:13px;margin-bottom:14px'},[state.saveWarning||'']);
+  app.appendChild(warnBox);
+  app.appendChild(renderStepper());
+
+  var body = el('div',{});
+  if(state.tab === 'dashboard') body.appendChild(renderDashboard());
+  else if(state.tab === 'sekolah') body.appendChild(renderSekolah());
+  else if(state.tab === 'kunjungan') body.appendChild(renderKunjungan());
+  else if(state.tab === 'refleksi') body.appendChild(renderRefleksi());
+  else if(state.tab === 'rapor') body.appendChild(renderRapor());
+  else if(state.tab === 'rkt') body.appendChild(renderRkt());
+  else if(state.tab === 'rkjm') body.appendChild(renderRkjm());
+  else if(state.tab === 'rkas') body.appendChild(renderRkas());
+  else if(state.tab === 'laporan') body.appendChild(renderLaporanAkhir());
+  else if(state.tab === 'triwulan') body.appendChild(renderLaporanTriwulanan());
+  app.appendChild(body);
+
+  if(state.showProfil){
+    var wrap = el('div',{class:'rel-wrap'});
+    wrap.appendChild(renderProfilModal());
+    app.appendChild(wrap);
+  }
+  if(state.showBackup){
+    var wrap2 = el('div',{class:'rel-wrap'});
+    wrap2.appendChild(renderBackupModal());
+    app.appendChild(wrap2);
+  }
+}
+
+function renderMasthead(){
+  var m = state.data.profile;
+  var head = el('div',{class:'masthead'});
+  var mark = el('div',{class:'mark'},[
+    el('div',{class:'seal'},['PS']),
+    el('div',{},[
+      el('h1',{},['Pendampingan Sekolah Binaan']),
+      el('p',{class:'tagline'},[ (m.nama ? m.nama+' \u2014 ' : '') + (m.jabatan||'Pengawas Sekolah') + (m.wilayah ? ', '+m.wilayah : '') ])
+    ])
+  ]);
+  head.appendChild(mark);
+  var btnGroup = el('div',{class:'no-print', style:'display:flex;align-items:center;gap:14px'});
+  btnGroup.appendChild(el('span',{style:'font-size:11.5px;color:var(--ink-soft);display:flex;align-items:center;gap:5px'},[
+    el('span',{style:'width:6px;height:6px;border-radius:50%;background:var(--berdaya);display:inline-block'},[]),
+    text('Tersimpan otomatis')
+  ]));
+  btnGroup.appendChild(el('button',{class:'profil-btn', onclick:function(){ state.showBackup = true; render(); }},['Ekspor / Impor JSON']));
+  btnGroup.appendChild(el('button',{class:'profil-btn', onclick:function(){ state.showProfil = true; render(); }},['Profil pengawas']));
+  head.appendChild(btnGroup);
+  return head;
+}
+
+function renderBackupModal(){
+  var overlay = el('div',{class:'modal-overlay'});
+  var modal = el('div',{class:'modal'});
+  modal.appendChild(el('h3',{},['Ekspor & impor data (JSON)']));
+  modal.appendChild(el('p',{style:'font-size:13px;color:var(--ink-soft);margin:-8px 0 16px'},['Unduh seluruh data pendampingan sebagai file cadangan (.json), atau pulihkan dari file cadangan sebelumnya. Berguna untuk berpindah perangkat atau menghindari kehilangan data.']));
+
+  var msg = el('div',{});
+
+  var dlBtn = el('button',{class:'btn secondary', onclick:function(){
+    try{
+      var blob = new Blob([JSON.stringify(state.data, null, 2)], {type:'application/json'});
+      var url = URL.createObjectURL(blob);
+      var a = el('a',{href:url, download:'cadangan-pendampingan-sekolah-'+(new Date().toISOString().slice(0,10))+'.json'});
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }catch(e){ console.error(e); }
+  }},['Ekspor JSON (unduh file .json)']);
+  modal.appendChild(dlBtn);
+
+  var importLbl = el('div',{style:'margin-top:18px;font-size:12.5px;color:var(--ink-soft)'},['Impor JSON (pulihkan dari file):']);
+  var fileIn = el('input',{type:'file', accept:'.json', style:'display:block;margin-top:8px'});
+  fileIn.addEventListener('change', function(){
+    var f = fileIn.files[0];
+    if(!f) return;
+    var reader = new FileReader();
+    reader.onload = function(e){
+      try{
+        var parsed = JSON.parse(e.target.result);
+        if(!parsed || !Array.isArray(parsed.schools)){
+          msg.innerHTML = '';
+          msg.appendChild(el('div',{class:'upload-msg err'},['File tidak valid atau bukan cadangan aplikasi ini.']));
+          return;
+        }
+        state.data = {
+          profile: Object.assign({}, defaultData().profile, parsed.profile || {}),
+          schools: parsed.schools.map(normalizeSchool),
+          triwulanMeta: (parsed.triwulanMeta && typeof parsed.triwulanMeta === 'object') ? parsed.triwulanMeta : {}
+        };
+        save();
+        msg.innerHTML = '';
+        msg.appendChild(el('div',{class:'upload-msg ok'},['Data berhasil dipulihkan dari cadangan.']));
+        render();
+      }catch(err){
+        console.error(err);
+        msg.innerHTML = '';
+        msg.appendChild(el('div',{class:'upload-msg err'},['Gagal membaca file cadangan. Pastikan file JSON tidak rusak.']));
+      }
+    };
+    reader.readAsText(f);
+  });
+  modal.appendChild(importLbl);
+  modal.appendChild(fileIn);
+  modal.appendChild(msg);
+
+  var sampleWrap = el('div',{style:'margin-top:20px;padding-top:16px;border-top:1px solid var(--line)'});
+  sampleWrap.appendChild(el('div',{style:'font-size:12.5px;color:var(--ink-soft);margin-bottom:8px'},['Ingin melihat contoh tampilan aplikasi (termasuk laporan triwulanan) sebelum mengisi data asli? Muat 3 sekolah binaan semu (dummy) beserta riwayat kunjungan sepanjang tahun 2026. Data contoh ini akan ditambahkan ke daftar sekolah yang sudah ada dan bisa dihapus kapan saja.']));
+  sampleWrap.appendChild(el('button',{class:'btn ghost', onclick:function(){
+    var existingNames = state.data.schools.map(function(x){ return x.nama.trim().toLowerCase(); });
+    var added = 0;
+    sampleSchools().forEach(function(sch){
+      if(existingNames.indexOf(sch.nama.trim().toLowerCase()) > -1) return;
+      state.data.schools.push(sch);
+      added++;
+    });
+    save();
+    msg.innerHTML = '';
+    msg.appendChild(el('div',{class:'upload-msg ok'},[ added > 0 ? (added+' sekolah contoh berhasil ditambahkan.') : 'Sekolah contoh sudah ada di daftar sebelumnya.' ]));
+    render();
+  }},['Muat 3 sekolah contoh (dummy)']));
+  modal.appendChild(sampleWrap);
+
+  var row = el('div',{class:'btn-row'});
+  row.appendChild(el('button',{class:'btn ghost', onclick:function(){ state.showBackup = false; render(); }},['Tutup']));
+  modal.appendChild(row);
+
+  overlay.appendChild(modal);
+  return overlay;
+}
+
+function renderProfilModal(){
+  var overlay = el('div',{class:'modal-overlay'});
+  var modal = el('div',{class:'modal'});
+  modal.appendChild(el('h3',{},['Profil pengawas sekolah']));
+  var nama = el('input',{type:'text', value:state.data.profile.nama, placeholder:'Nama lengkap dan gelar'});
+  var jabatan = el('input',{type:'text', value:state.data.profile.jabatan, placeholder:'Contoh: Pengawas Sekolah Kec. ...'});
+  var wilayah = el('input',{type:'text', value:state.data.profile.wilayah, placeholder:'Kabupaten / Kota'});
+  var nipProf = el('input',{type:'text', value:state.data.profile.nip||'', placeholder:'NIP pengawas (opsional)'});
+  modal.appendChild(el('label',{class:'field'},[el('span',{},['Nama']), nama]));
+  modal.appendChild(el('label',{class:'field'},[el('span',{},['Jabatan']), jabatan]));
+  modal.appendChild(el('label',{class:'field'},[el('span',{},['Wilayah']), wilayah]));
+  modal.appendChild(el('label',{class:'field'},[el('span',{},['NIP']), nipProf]));
+  var row = el('div',{class:'btn-row'});
+  row.appendChild(el('button',{class:'btn', onclick:function(){
+    state.data.profile = { nama:nama.value.trim(), jabatan:jabatan.value.trim()||'Pengawas Sekolah', wilayah:wilayah.value.trim(), nip:nipProf.value.trim() };
+    save(); state.showProfil = false; render();
+  }},['Simpan']));
+  row.appendChild(el('button',{class:'btn ghost', onclick:function(){ state.showProfil = false; render(); }},['Batal']));
+  modal.appendChild(row);
+  overlay.appendChild(modal);
+  return overlay;
+}
+
+function renderStepper(){
+  var items = [
+    { id:'dashboard', num:'', label:'Ringkasan' },
+    { id:'sekolah', num:'1', label:'Sekolah binaan' },
+    { id:'kunjungan', num:'2', label:'Kunjungan pendampingan' },
+    { id:'refleksi', num:'3', label:'Refleksi dan strategi' },
+    { id:'rapor', num:'4', label:'Rapor pendidikan' },
+    { id:'rkt', num:'5', label:'RKT (tahunan)' },
+    { id:'rkjm', num:'6', label:'RKJM (4 tahun)' },
+    { id:'rkas', num:'7', label:'RKA/RKAS' },
+    { id:'laporan', num:'8', label:'Laporan akhir' },
+    { id:'triwulan', num:'9', label:'Laporan triwulanan' }
+  ];
+  var wrap = el('div',{class:'stepper no-print'});
+  items.forEach(function(it){
+    var btn = el('button',{class:'step-btn' + (state.tab===it.id?' active':''), onclick:function(){ state.tab = it.id; render(); }},[
+      it.num ? el('span',{class:'num'},['Tahap '+it.num]) : el('span',{class:'num'},['\u00A0']),
+      el('span',{class:'lbl'},[it.label])
+    ]);
+    wrap.appendChild(btn);
+  });
+  return wrap;
+}
+
+function badgeFor(kind, value){
+  if(!value) return el('span',{class:'badge muted'},['Belum diisi']);
+  var cls = value.toLowerCase().replace(/\s+/g,'-');
+  return el('span',{class:'badge '+cls},[value]);
+}
+
+/* ---------- Dashboard ---------- */
+function renderDashboard(){
+  var wrap = el('div',{});
+  var schools = state.data.schools;
+  var withStrategi = schools.map(function(s){ return { s:s, strat: strategiFor(s) }; });
+  var complete = withStrategi.filter(function(x){ return x.strat; }).length;
+  var utama = withStrategi.filter(function(x){ return x.strat && x.strat.prioritas==='Prioritas Utama'; }).length;
+
+  var metrics = el('div',{class:'metrics'});
+  var totalKunjungan = schools.reduce(function(acc,s){ return acc + s.kunjungan.length; }, 0);
+  metrics.appendChild(el('div',{class:'metric'},[el('div',{class:'n'},[String(schools.length)]), el('div',{class:'l'},['Sekolah binaan'])]));
+  metrics.appendChild(el('div',{class:'metric'},[el('div',{class:'n'},[String(totalKunjungan)]), el('div',{class:'l'},['Kunjungan tercatat'])]));
+  metrics.appendChild(el('div',{class:'metric'},[el('div',{class:'n'},[String(complete)]), el('div',{class:'l'},['Sudah punya strategi'])]));
+  metrics.appendChild(el('div',{class:'metric'},[el('div',{class:'n'},[String(utama)]), el('div',{class:'l'},['Prioritas utama'])]));
+  metrics.appendChild(el('div',{class:'metric'},[el('div',{class:'n'},[String(schools.length-complete)]), el('div',{class:'l'},['Refleksi belum lengkap'])]));
+  wrap.appendChild(metrics);
+
+  var panel = el('div',{class:'panel'});
+  panel.appendChild(el('h2',{},['Daftar sekolah binaan']));
+  panel.appendChild(el('p',{class:'sub'},['Diurutkan berdasarkan skala prioritas pendampingan. Klik satu baris untuk membuka refleksi dan strategi sekolah tersebut.']));
+
+  if(schools.length === 0){
+    panel.appendChild(el('div',{class:'empty'},[
+      el('div',{class:'big'},['Belum ada sekolah binaan']),
+      el('p',{},['Tambahkan sekolah terlebih dahulu di tahap 1.']),
+      el('button',{class:'btn', style:'margin-top:10px', onclick:function(){ state.tab='sekolah'; render(); }},['Tambah sekolah'])
+    ]));
+  } else {
+    var sorted = withStrategi.slice().sort(function(a,b){
+      var pa = a.strat ? PRIORITAS_ORDER[a.strat.prioritas] : 9;
+      var pb = b.strat ? PRIORITAS_ORDER[b.strat.prioritas] : 9;
+      return pa - pb;
+    });
+    var table = el('table',{class:'roster'});
+    var thead = el('thead',{},[el('tr',{},[
+      el('th',{},['Sekolah']), el('th',{},['Kesadaran']), el('th',{},['Kapasitas']),
+      el('th',{},['Strategi']), el('th',{},['Prioritas'])
+    ])]);
+    table.appendChild(thead);
+    var tbody = el('tbody',{});
+    sorted.forEach(function(x){
+      var s = x.s, strat = x.strat;
+      var tr = el('tr',{onclick:function(){ state.activeSchoolId = s.id; state.tab='refleksi'; render(); }},[
+        el('td',{},[el('div',{style:'font-weight:500'},[s.nama||'(tanpa nama)']), el('div',{style:'font-size:12px;color:var(--ink-soft)'},[s.kepsek||''])]),
+        el('td',{},[badgeFor('kes', kesadaranLevel(s))]),
+        el('td',{},[badgeFor('kap', kapasitasLevel(s))]),
+        el('td',{},[strat ? strat.strategi : el('span',{class:'badge muted'},['\u2014'])]),
+        el('td',{},[strat ? badgeFor('pri', strat.prioritas) : el('span',{class:'badge muted'},['\u2014'])])
+      ]);
+      tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+    panel.appendChild(table);
+  }
+  wrap.appendChild(panel);
+  return wrap;
+}
+
+/* ---------- Sekolah ---------- */
+function renderSekolah(){
+  var wrap = el('div',{});
+  var panel = el('div',{class:'panel'});
+  panel.appendChild(el('h2',{},['Tambah sekolah binaan']));
+  panel.appendChild(el('p',{class:'sub'},['Data ini menjadi dasar identitas laporan pendampingan pada tahap-tahap berikutnya.']));
+
+  var nama = el('input',{type:'text', placeholder:'Contoh: UPTD SDN 12 Parepare'});
+  var kepsek = el('input',{type:'text', placeholder:'Nama kepala sekolah'});
+  var nip = el('input',{type:'text', placeholder:'NIP kepala sekolah (opsional)'});
+  var kecamatan = el('input',{type:'text', placeholder:'Kecamatan'});
+  var npsn = el('input',{type:'text', placeholder:'NPSN (opsional)'});
+  var jenjang = el('select',{});
+  ['', 'TK', 'SD', 'SMP', 'SMA', 'SMK', 'SLB'].forEach(function(j){
+    jenjang.appendChild(el('option',{value:j},[j || 'Pilih jenjang\u2026']));
+  });
+  var errBox = el('div',{});
+
+  var grid = el('div',{class:'grid2'});
+  grid.appendChild(el('label',{class:'field'},[el('span',{},['Nama sekolah']), nama]));
+  grid.appendChild(el('label',{class:'field'},[el('span',{},['Kepala sekolah']), kepsek]));
+  grid.appendChild(el('label',{class:'field'},[el('span',{},['NIP kepala sekolah']), nip]));
+  grid.appendChild(el('label',{class:'field'},[el('span',{},['Kecamatan']), kecamatan]));
+  grid.appendChild(el('label',{class:'field'},[el('span',{},['NPSN']), npsn]));
+  grid.appendChild(el('label',{class:'field'},[el('span',{},['Jenjang']), jenjang]));
+  panel.appendChild(grid);
+  panel.appendChild(errBox);
+
+  var row = el('div',{class:'btn-row'});
+  row.appendChild(el('button',{class:'btn', onclick:function(){
+    errBox.innerHTML = '';
+    if(!nama.value.trim()){
+      errBox.appendChild(el('div',{class:'error-text'},['Nama sekolah wajib diisi.']));
+      return;
+    }
+    var dup = state.data.schools.some(function(x){ return x.nama.trim().toLowerCase() === nama.value.trim().toLowerCase(); });
+    if(dup){
+      errBox.appendChild(el('div',{class:'error-text'},['Sekolah dengan nama ini sudah terdaftar.']));
+      return;
+    }
+    var sch = emptySchool();
+    sch.nama = nama.value.trim();
+    sch.kepsek = kepsek.value.trim();
+    sch.nip = nip.value.trim();
+    sch.kecamatan = kecamatan.value.trim();
+    sch.npsn = npsn.value.trim();
+    sch.jenjang = jenjang.value;
+    state.data.schools.push(sch);
+    save();
+    nama.value=''; kepsek.value=''; nip.value=''; kecamatan.value=''; npsn.value=''; jenjang.value='';
+    render();
+  }},['Tambah sekolah']));
+  panel.appendChild(row);
+  wrap.appendChild(panel);
+
+  var listPanel = el('div',{class:'panel'});
+  var listHeadRow = el('div',{style:'display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:4px'},[
+    el('h2',{style:'margin:0'},['Sekolah terdaftar (' + state.data.schools.length + ')'])
+  ]);
+  listPanel.appendChild(listHeadRow);
+  if(state.data.schools.length === 0){
+    listPanel.appendChild(el('div',{class:'empty'},[el('p',{},['Belum ada sekolah yang ditambahkan.'])]));
+  } else {
+    var searchIn = el('input',{type:'text', placeholder:'Cari nama sekolah, kepala sekolah, atau kecamatan\u2026', style:'max-width:360px;margin-bottom:16px'});
+    listPanel.appendChild(searchIn);
+    var tableWrap = el('div',{});
+    listPanel.appendChild(tableWrap);
+    function renderRoster(filter){
+      tableWrap.innerHTML = '';
+      var f = (filter||'').trim().toLowerCase();
+      var filtered = state.data.schools.filter(function(s){
+        if(!f) return true;
+        return (s.nama||'').toLowerCase().indexOf(f) > -1 ||
+               (s.kepsek||'').toLowerCase().indexOf(f) > -1 ||
+               (s.kecamatan||'').toLowerCase().indexOf(f) > -1;
+      });
+      if(filtered.length === 0){
+        tableWrap.appendChild(el('div',{class:'empty'},[el('p',{},['Tidak ada sekolah yang cocok dengan pencarian.'])]));
+        return;
+      }
+      var table = el('table',{class:'roster'});
+      table.appendChild(el('thead',{},[el('tr',{},[el('th',{},['Sekolah']), el('th',{},['Jenjang']), el('th',{},['Kepala sekolah']), el('th',{},['Kecamatan']), el('th',{},[''])])]));
+      var tbody = el('tbody',{});
+      filtered.forEach(function(s){
+        tbody.appendChild(el('tr',{},[
+          el('td',{onclick:function(){ state.activeSchoolId=s.id; state.tab='refleksi'; render(); }},[s.nama]),
+          el('td',{onclick:function(){ state.activeSchoolId=s.id; state.tab='refleksi'; render(); }},[s.jenjang||'\u2014']),
+          el('td',{onclick:function(){ state.activeSchoolId=s.id; state.tab='refleksi'; render(); }},[s.kepsek||'\u2014']),
+          el('td',{onclick:function(){ state.activeSchoolId=s.id; state.tab='refleksi'; render(); }},[s.kecamatan||'\u2014']),
+          el('td',{},[el('button',{class:'btn danger', style:'padding:5px 12px;font-size:12.5px', onclick:function(ev){
+            ev.stopPropagation();
+            if(confirm('Hapus sekolah "'+s.nama+'" beserta seluruh data pendampingannya?')){
+              state.data.schools = state.data.schools.filter(function(x){ return x.id !== s.id; });
+              if(state.activeSchoolId === s.id) state.activeSchoolId = null;
+              save(); render();
+            }
+          }},['Hapus'])])
+        ]));
+      });
+      table.appendChild(tbody);
+      tableWrap.appendChild(table);
+    }
+    searchIn.addEventListener('input', function(){ renderRoster(searchIn.value); });
+    renderRoster('');
+  }
+  wrap.appendChild(listPanel);
+  return wrap;
+}
+
+function schoolPicker(onChange){
+  var sel = el('select',{class:'school-picker', onchange:function(){ onChange(sel.value); }});
+  sel.appendChild(el('option',{value:''},['Pilih sekolah\u2026']));
+  state.data.schools.forEach(function(s){
+    var opt = el('option',{value:s.id},[s.nama]);
+    if(s.id === state.activeSchoolId) opt.setAttribute('selected','selected');
+    sel.appendChild(opt);
+  });
+  return sel;
+}
+
+var JENIS_KUNJUNGAN = ['Kunjungan kelas', 'Pembinaan individual kepala sekolah', 'Fasilitasi/FGD guru', 'Coaching', 'Monitoring tindak lanjut', 'Lainnya'];
+
+function renderKunjungan(){
+  var wrap = el('div',{});
+  var picker = el('div',{class:'panel'});
+  picker.appendChild(el('h2',{},['Pilih sekolah']));
+  picker.appendChild(el('p',{class:'sub'},['Catat setiap kunjungan atau kegiatan pendampingan ke sekolah ini sebagai bukti dan riwayat pelaksanaan.']));
+  picker.appendChild(schoolPicker(function(id){ state.activeSchoolId = id || null; render(); }));
+  wrap.appendChild(picker);
+
+  var s = state.data.schools.filter(function(x){ return x.id === state.activeSchoolId; })[0];
+  if(!s){
+    wrap.appendChild(el('div',{class:'panel'},[el('div',{class:'empty'},[el('p',{},['Pilih sekolah untuk mencatat kunjungan pendampingan.'])])]));
+    return wrap;
+  }
+
+  var formPanel = el('div',{class:'panel'});
+  formPanel.appendChild(el('h2',{},['Tambah catatan kunjungan \u2014 ' + s.nama]));
+
+  var tgl = el('input',{type:'text', placeholder:'Contoh: 12 Agustus 2026'});
+  var jenis = el('select',{});
+  JENIS_KUNJUNGAN.forEach(function(j){ jenis.appendChild(el('option',{value:j},[j])); });
+  var hasil = el('textarea',{placeholder:'Ringkasan hasil kunjungan/kegiatan\u2026'});
+  var tl = el('textarea',{placeholder:'Rencana tindak lanjut (opsional)\u2026'});
+
+  var g = el('div',{class:'grid2'});
+  g.appendChild(el('label',{class:'field'},[el('span',{},['Tanggal']), tgl]));
+  g.appendChild(el('label',{class:'field'},[el('span',{},['Jenis kegiatan']), jenis]));
+  formPanel.appendChild(g);
+  formPanel.appendChild(el('label',{class:'field'},[el('span',{},['Ringkasan hasil']), hasil]));
+  formPanel.appendChild(el('label',{class:'field'},[el('span',{},['Rencana tindak lanjut']), tl]));
+  var errBox = el('div',{});
+  formPanel.appendChild(errBox);
+
+  formPanel.appendChild(el('button',{class:'btn', onclick:function(){
+    errBox.innerHTML = '';
+    if(!tgl.value.trim()){
+      errBox.appendChild(el('div',{class:'error-text'},['Tanggal kunjungan wajib diisi.']));
+      return;
+    }
+    s.kunjungan.push({ id:uid(), tanggal:tgl.value.trim(), jenis:jenis.value, hasil:hasil.value.trim(), tindaklanjut:tl.value.trim() });
+    s.kunjungan.sort(function(a,b){ return a.tanggal < b.tanggal ? 1 : -1; });
+    save(); render();
+  }},['Simpan catatan kunjungan']));
+  wrap.appendChild(formPanel);
+
+  var listPanel = el('div',{class:'panel'});
+  var listHead = el('div',{style:'display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px'},[
+    el('h2',{style:'margin:0'},['Riwayat kunjungan'])
+  ]);
+  var filterRow = el('div',{class:'btn-row no-print', style:'margin:0 0 6px'});
+  var kunjunganYears = selectableYears();
+  var yearFilterSel = el('select',{class:'year-select'});
+  yearFilterSel.appendChild(el('option',{value:'semua'},['Semua tahun']));
+  kunjunganYears.forEach(function(y){
+    var o = el('option',{value:String(y)},[String(y)]);
+    if(String(state.kunjunganFilterYear) === String(y)) o.setAttribute('selected','selected');
+    yearFilterSel.appendChild(o);
+  });
+  yearFilterSel.addEventListener('change', function(){ state.kunjunganFilterYear = yearFilterSel.value; render(); });
+  filterRow.appendChild(yearFilterSel);
+  filterRow.appendChild(triwulanFilterSelect(state.kunjunganFilterQ, function(v){ state.kunjunganFilterQ = v; render(); }));
+  filterRow.appendChild(addYearControl(function(y){ state.kunjunganFilterYear = String(y); render(); }));
+  listPanel.appendChild(listHead);
+  listPanel.appendChild(filterRow);
+
+  var visibleKunjungan = s.kunjungan.filter(function(v){
+    if(state.kunjunganFilterQ === 'semua' && state.kunjunganFilterYear === 'semua') return true;
+    var d = parseTanggalIndo(v.tanggal);
+    if(!d) return false;
+    if(state.kunjunganFilterYear !== 'semua' && String(d.year) !== String(state.kunjunganFilterYear)) return false;
+    if(state.kunjunganFilterQ !== 'semua' && String(triwulanOfMonth(d.month)) !== String(state.kunjunganFilterQ)) return false;
+    return true;
+  });
+  listHead.appendChild(el('span',{style:'font-size:12.5px;color:var(--ink-soft)'},[
+    visibleKunjungan.length + ' dari ' + s.kunjungan.length + ' catatan'
+  ]));
+
+  if(s.kunjungan.length === 0){
+    listPanel.appendChild(el('div',{class:'empty'},[el('p',{},['Belum ada catatan kunjungan untuk sekolah ini.'])]));
+  } else if(visibleKunjungan.length === 0){
+    listPanel.appendChild(el('div',{class:'empty'},[el('p',{},['Tidak ada catatan kunjungan pada periode yang dipilih.'])]));
+  } else {
+    visibleKunjungan.forEach(function(v){
+      var item = el('div',{class:'visit-item'});
+      item.appendChild(el('div',{class:'visit-head'},[
+        el('div',{},[
+          el('div',{class:'visit-date'},[v.tanggal]),
+          el('div',{class:'visit-jenis'},[v.jenis])
+        ]),
+        el('button',{class:'remove-x', 'aria-label':'Hapus', onclick:function(){
+          s.kunjungan = s.kunjungan.filter(function(x){ return x.id !== v.id; });
+          save(); render();
+        }},['\u00D7'])
+      ]));
+      if(v.hasil) item.appendChild(el('div',{class:'visit-body'},[v.hasil]));
+      if(v.tindaklanjut) item.appendChild(el('div',{class:'visit-tl'},[el('div',{class:'lbl'},['Tindak lanjut']), text(v.tindaklanjut)]));
+      listPanel.appendChild(item);
+    });
+  }
+  wrap.appendChild(listPanel);
+  return wrap;
+}
+
+/* ---------- Refleksi & Strategi ---------- */
+function renderRefleksi(){
+  var wrap = el('div',{});
+  var picker = el('div',{class:'panel'});
+  picker.appendChild(el('h2',{},['Pilih sekolah']));
+  picker.appendChild(schoolPicker(function(id){ state.activeSchoolId = id || null; render(); }));
+  wrap.appendChild(picker);
+
+  var s = state.data.schools.filter(function(x){ return x.id === state.activeSchoolId; })[0];
+  if(!s){
+    wrap.appendChild(el('div',{class:'panel'},[el('div',{class:'empty'},[el('p',{},['Pilih sekolah untuk memulai refleksi komitmen perubahan.'])])]));
+    return wrap;
+  }
+
+  wrap.appendChild(renderReflectionBlock(s, 'kesadaran', 'Refleksi kesadaran melakukan refleksi',
+    'Mengidentifikasi tingkat kesadaran kepala sekolah dalam melakukan refleksi.', KESADARAN_Q,
+    ['berkembang','berdaya'], {berkembang:'Berkembang', berdaya:'Berdaya'}));
+
+  wrap.appendChild(renderReflectionBlock(s, 'kapasitas', 'Refleksi kapasitas memimpin perubahan',
+    'Mengidentifikasi tingkat kapasitas kepala sekolah dalam memimpin perubahan.', KAPASITAS_Q,
+    ['rendah','sedang','tinggi'], {rendah:'Rendah', sedang:'Sedang', tinggi:'Tinggi'}));
+
+  wrap.appendChild(renderStrategiBlock(s));
+  return wrap;
+}
+
+function renderReflectionBlock(s, kind, title, sub, questions, levels, labels){
+  var panel = el('div',{class:'panel'});
+  panel.appendChild(el('h2',{},[title + ' \u2014 ' + s.nama]));
+  panel.appendChild(el('p',{class:'sub'},[sub]));
+
+  var answers = kind === 'kesadaran' ? s.kesadaranJawaban : s.kapasitasJawaban;
+
+  questions.forEach(function(q, idx){
+    var qwrap = el('div',{class:'question'});
+    qwrap.appendChild(el('span',{class:'qnum'},['Pertanyaan pemantik '+(idx+1)]));
+    qwrap.appendChild(el('p',{class:'qtext'},[q.pemantik]));
+    levels.forEach(function(lv){
+      var selected = answers[q.id] === lv;
+      var opt = el('label',{class:'opt' + (selected?' selected':'')},[
+        el('input',{type:'radio', name:kind+'-'+q.id, checked:selected?'checked':null, onchange:function(){
+          answers[q.id] = lv; save(); render();
+        }}),
+        el('div',{},[ el('span',{class:'opt-lvl'},[labels[lv]]), el('span',{class:'opt-text'},[q[lv]]) ])
+      ]);
+      qwrap.appendChild(opt);
+    });
+    panel.appendChild(qwrap);
+  });
+
+  var level = kind === 'kesadaran' ? kesadaranLevel(s) : kapasitasLevel(s);
+  var strip = el('div',{class:'result-strip'},[
+    el('div',{class:'item'},[el('div',{class:'l'},['Hasil']), badgeFor(kind, level)]),
+    el('div',{class:'item'},[el('div',{class:'l'},['Status']), text(level ? 'Refleksi lengkap' : 'Jawab semua pertanyaan untuk melihat hasil')])
+  ]);
+  panel.appendChild(strip);
+  return panel;
+}
+
+function renderStrategiBlock(s){
+  var panel = el('div',{class:'panel'});
+  panel.appendChild(el('h2',{},['Strategi, metode, dan prioritas pendampingan']));
+  panel.appendChild(el('p',{class:'sub'},['Dihitung otomatis dari hasil refleksi kesadaran dan kapasitas, mengikuti matriks komitmen perubahan kepala sekolah.']));
+
+  var strat = strategiFor(s);
+  if(!strat){
+    panel.appendChild(el('div',{class:'empty'},[el('p',{},['Lengkapi refleksi kesadaran dan kapasitas di atas untuk melihat strategi pendampingan.'])]));
+    return panel;
+  }
+
+  var card = el('div',{class:'strategi-card'});
+  var head = el('div',{class:'strategi-head'},[
+    el('h3',{},[strat.strategi]),
+    badgeFor('pri', strat.prioritas)
+  ]);
+  card.appendChild(head);
+  var body = el('div',{class:'strategi-body'});
+  var kv = el('div',{class:'kv-row'},[
+    el('div',{class:'kv'},[el('div',{class:'l'},['Kesadaran']), el('div',{class:'v'},[strat.kesadaran])]),
+    el('div',{class:'kv'},[el('div',{class:'l'},['Kapasitas']), el('div',{class:'v'},[strat.kapasitas])]),
+    el('div',{class:'kv'},[el('div',{class:'l'},['Metode pendampingan']), el('div',{class:'v'},[strat.metode])])
+  ]);
+  body.appendChild(kv);
+  body.appendChild(el('p',{},[strat.deskripsi]));
+
+  var overrideRow = el('div',{style:'margin-top:14px'});
+  var chkOverride = el('input',{type:'checkbox', id:'ov-'+s.id, checked: s.strategiManual ? 'checked' : null, onchange:function(){
+    if(chkOverride.checked){
+      s.strategiManual = { strategi:strat.strategi, metode:strat.metode, prioritas:strat.prioritas, deskripsi:strat.deskripsi, kesadaran:strat.kesadaran, kapasitas:strat.kapasitas };
+    } else { s.strategiManual = null; }
+    save(); render();
+  }});
+  var lbl = el('label',{style:'font-size:13px;color:var(--ink-soft);display:flex;gap:8px;align-items:center;cursor:pointer'},[chkOverride, text('Sesuaikan strategi/metode/prioritas secara manual')]);
+  overrideRow.appendChild(lbl);
+  body.appendChild(overrideRow);
+
+  if(s.strategiManual){
+    var selStrat = el('select',{});
+    var selMetode = el('input',{type:'text', value:s.strategiManual.metode});
+    var selPrior = el('select',{});
+    ['Penyemai Perubahan','Perubahan Segera','Penguatan Perubahan','Perubahan Berangsur','Pemicu Perubahan','Perubahan Berkelanjutan'].forEach(function(opt){
+      var o = el('option',{value:opt},[opt]);
+      if(opt === s.strategiManual.strategi) o.setAttribute('selected','selected');
+      selStrat.appendChild(o);
+    });
+    ['Prioritas Utama','Prioritas Menengah','Prioritas Akhir'].forEach(function(opt){
+      var o = el('option',{value:opt},[opt]);
+      if(opt === s.strategiManual.prioritas) o.setAttribute('selected','selected');
+      selPrior.appendChild(o);
+    });
+    var manGrid = el('div',{class:'grid2', style:'margin-top:12px'});
+    manGrid.appendChild(el('label',{class:'field'},[el('span',{},['Strategi']), selStrat]));
+    manGrid.appendChild(el('label',{class:'field'},[el('span',{},['Prioritas']), selPrior]));
+    manGrid.appendChild(el('label',{class:'field'},[el('span',{},['Metode pendampingan']), selMetode]));
+    body.appendChild(manGrid);
+    body.appendChild(el('button',{class:'btn secondary', style:'margin-top:4px', onclick:function(){
+      s.strategiManual.strategi = selStrat.value;
+      s.strategiManual.metode = selMetode.value;
+      s.strategiManual.prioritas = selPrior.value;
+      save(); render();
+    }},['Simpan penyesuaian']));
+  }
+
+  card.appendChild(body);
+  panel.appendChild(card);
+  return panel;
+}
+
+/* ---------- Rapor Pendidikan ---------- */
+function capaianClass(cap){
+  var c = (cap||'').toLowerCase();
+  if(c.indexOf('baik') > -1) return 'baik';
+  if(c.indexOf('sedang') > -1 || c.indexOf('cukup') > -1) return 'sedang cap';
+  if(c.indexOf('kurang') > -1) return 'kurang';
+  return 'muted';
+}
+
+function renderRapor(){
+  var wrap = el('div',{});
+  var picker = el('div',{class:'panel'});
+  picker.appendChild(el('h2',{},['Pilih sekolah']));
+  picker.appendChild(schoolPicker(function(id){ state.activeSchoolId = id || null; render(); }));
+  wrap.appendChild(picker);
+
+  var s = state.data.schools.filter(function(x){ return x.id === state.activeSchoolId; })[0];
+  if(!s){
+    wrap.appendChild(el('div',{class:'panel'},[el('div',{class:'empty'},[el('p',{},['Pilih sekolah untuk mengunggah dan melihat data Rapor Pendidikan.'])])]));
+    return wrap;
+  }
+
+  var uploadPanel = el('div',{class:'panel'});
+  uploadPanel.appendChild(el('h2',{},['Unggah Rapor Pendidikan \u2014 ' + s.nama]));
+  uploadPanel.appendChild(el('p',{class:'sub'},['Unggah file Rapor Pendidikan/PBD (.xlsx) resmi dari platform Rapor Pendidikan. Data indikator dan rekomendasi prioritas akan diambil otomatis untuk mengisi RKT dan RKJM. File diproses langsung di perangkat kamu, tidak diunggah ke server mana pun.']));
+
+  var box = el('div',{class:'upload-box'});
+  var msgBox = el('div',{});
+  var fname = el('div',{class:'fname'},[ s.rapor ? ('File tersimpan: skor tahun ' + (s.rapor.tahun||'\u2014') + ', ' + s.rapor.indikator.length + ' indikator, ' + s.rapor.rekomendasi.length + ' rekomendasi prioritas.') : 'Belum ada file yang diunggah.' ]);
+  var fileInput = el('input',{type:'file', accept:'.xlsx,.xls'});
+  fileInput.addEventListener('change', function(){
+    var f = fileInput.files[0];
+    if(!f) return;
+    msgBox.innerHTML = '';
+    msgBox.appendChild(el('div',{class:'upload-msg'},['Memproses file\u2026']));
+    var reader = new FileReader();
+    reader.onload = function(e){
+      try{
+        var data = new Uint8Array(e.target.result);
+        var workbook = XLSX.read(data, { type:'array' });
+        var parsed = parseRaporWorkbook(workbook);
+        if(parsed.indikator.length === 0 && parsed.rekomendasi.length === 0){
+          msgBox.innerHTML = '';
+          msgBox.appendChild(el('div',{class:'upload-msg err'},['File terbaca, tetapi format sheet "2. LAPORAN RAPOR" atau "2.2 REKOM. PRIORITAS" tidak ditemukan. Pastikan ini file Rapor Pendidikan resmi.']));
+          return;
+        }
+        s.rapor = parsed;
+        save();
+        render();
+      }catch(err){
+        console.error(err);
+        msgBox.innerHTML = '';
+        msgBox.appendChild(el('div',{class:'upload-msg err'},['Gagal membaca file. Pastikan formatnya .xlsx dan tidak rusak.']));
+      }
+    };
+    reader.readAsArrayBuffer(f);
+  });
+  box.appendChild(el('div',{},['Pilih file Rapor Pendidikan (.xlsx)']));
+  box.appendChild(fileInput);
+  box.appendChild(fname);
+  box.appendChild(msgBox);
+  uploadPanel.appendChild(box);
+
+  if(s.rapor){
+    var row = el('div',{class:'btn-row'});
+    row.appendChild(el('button',{class:'btn danger', onclick:function(){
+      if(confirm('Hapus data Rapor Pendidikan yang tersimpan untuk sekolah ini?')){
+        s.rapor = null; save(); render();
+      }
+    }},['Hapus data rapor']));
+    uploadPanel.appendChild(row);
+  }
+  wrap.appendChild(uploadPanel);
+
+  if(s.rapor && s.rapor.indikator.length){
+    var indPanel = el('div',{class:'panel'});
+    indPanel.appendChild(el('h2',{},['Capaian indikator \u2014 tahun ' + (s.rapor.tahun||'\u2014')]));
+    indPanel.appendChild(el('p',{class:'sub'},['Diambil dari sheet "2. Laporan Rapor" pada file yang diunggah.']));
+    var byDim = {};
+    s.rapor.indikator.forEach(function(ind){ (byDim[ind.dimensi]=byDim[ind.dimensi]||[]).push(ind); });
+    Object.keys(byDim).sort().forEach(function(d){
+      indPanel.appendChild(el('div',{class:'dim-block-title'},[DIM_LABELS[d] || ('Dimensi ' + d)]));
+      var table = el('table',{class:'indikator'});
+      table.appendChild(el('thead',{},[el('tr',{},[el('th',{},['Kode']), el('th',{},['Indikator']), el('th',{},['Capaian']), el('th',{},['Skor'])])]));
+      var tbody = el('tbody',{});
+      byDim[d].forEach(function(ind){
+        tbody.appendChild(el('tr',{},[
+          el('td',{},[ind.kode]), el('td',{},[ind.nama]),
+          el('td',{},[el('span',{class:'badge '+capaianClass(ind.capaian)},[ind.capaian||'\u2014'])]),
+          el('td',{},[ind.skor||'\u2014'])
+        ]));
+      });
+      table.appendChild(tbody);
+      indPanel.appendChild(table);
+    });
+    wrap.appendChild(indPanel);
+  }
+
+  if(s.rapor && s.rapor.rekomendasi.length){
+    var rekomPanel = el('div',{class:'panel'});
+    rekomPanel.appendChild(el('h2',{},['Rekomendasi prioritas dari Rapor Pendidikan']));
+    rekomPanel.appendChild(el('p',{class:'sub'},['Diambil dari sheet "2.2 Rekom. Prioritas". Rekomendasi ini otomatis tersedia untuk dipilih pada tahap RKT dan RKJM.']));
+    s.rapor.rekomendasi.forEach(function(r, i){
+      var item = el('div',{class:'rekom-item'});
+      item.appendChild(el('div',{class:'rekom-head'},[
+        el('div',{},[
+          el('div',{class:'rekom-title'},[(i+1)+'. '+r.indikator]),
+          el('div',{class:'rekom-akar'},['Akar masalah: '+r.akarMasalah])
+        ]),
+        el('span',{class:'badge '+capaianClass(r.capaian)},[r.capaian||'\u2014'])
+      ]));
+      rekomPanel.appendChild(item);
+    });
+    wrap.appendChild(rekomPanel);
+  }
+
+  return wrap;
+}
+
+/* ---------- RKT ---------- */
+function rekomToLib(r){
+  return { dimensi:r.indikator, judul:r.akarMasalah || r.indikator,
+    langkah: r.langkah.length ? r.langkah : (r.benahi ? [r.benahi] : []) };
+}
+
+function addProgramToList(s, listKey, item, sourceKey, withYear){
+  var entry = { id:uid(), dimensi:item.dimensi, judul:item.judul, langkah:item.langkah.slice(), custom:false, sourceKey:sourceKey };
+  if(withYear) entry.tahun = 1;
+  if(listKey === 'rkt') entry.triwulan = null;
+  s[listKey].push(entry);
+}
+
+function renderRaporRekomPicker(s, listKey){
+  if(!s.rapor || !s.rapor.rekomendasi.length) return null;
+  var panel = el('div',{class:'panel'});
+  panel.appendChild(el('h2',{},['Rekomendasi dari Rapor Pendidikan']));
+  panel.appendChild(el('p',{class:'sub'},['Diambil dari hasil analisis Rapor Pendidikan sekolah ini (tahun '+(s.rapor.tahun||'\u2014')+'). Centang untuk menambahkan ke daftar program.']));
+  s.rapor.rekomendasi.forEach(function(r, i){
+    var sourceKey = 'rapor:'+r.id;
+    var libItem = rekomToLib(r);
+    var already = s[listKey].some(function(x){ return x.sourceKey === sourceKey; });
+    var box = el('div',{class:'prog-item'});
+    var chk = el('input',{class:'chk', type:'checkbox', checked: already?'checked':null, onchange:function(){
+      if(chk.checked){ addProgramToList(s, listKey, libItem, sourceKey, listKey==='rkjm'); }
+      else { s[listKey] = s[listKey].filter(function(x){ return x.sourceKey !== sourceKey; }); }
+      save(); render();
+    }});
+    var headRow = el('div',{class:'prog-head'},[
+      chk,
+      el('div',{style:'flex:1'},[
+        el('div',{class:'prog-title'},[(i+1)+'. '+r.indikator+' \u2014 '+r.akarMasalah]),
+      ])
+    ]);
+    box.appendChild(headRow);
+    if(libItem.langkah.length){
+      var ol = el('ol',{class:'steps'});
+      libItem.langkah.forEach(function(st){ ol.appendChild(el('li',{},[st])); });
+      box.appendChild(ol);
+    }
+    if(r.arkas){
+      box.appendChild(el('div',{style:'font-size:12px;color:var(--ink-soft);margin-top:8px'},[el('strong',{},['Kegiatan ARKAS terkait: ']), text(r.arkas.split('\n')[0])]));
+    }
+    panel.appendChild(box);
+  });
+  return panel;
+}
+
+function renderLibraryPicker(s, listKey){
+  var panel = el('div',{class:'panel'});
+  panel.appendChild(el('h2',{},['Pustaka rekomendasi umum']));
+  panel.appendChild(el('p',{class:'sub'},['Contoh program lintas dimensi Rapor Pendidikan. Gunakan bila belum ada data rapor untuk sekolah ini, atau sebagai pelengkap.']));
+  var dims = {};
+  RKT_LIBRARY.forEach(function(item){ (dims[item.dimensi] = dims[item.dimensi] || []).push(item); });
+  Object.keys(dims).forEach(function(dim){
+    var group = el('div',{class:'dim-group'});
+    group.appendChild(el('div',{class:'dim-title'},[dim]));
+    dims[dim].forEach(function(item){
+      var sourceKey = 'lib:'+item.judul;
+      var already = s[listKey].some(function(x){ return x.sourceKey === sourceKey; });
+      var box = el('div',{class:'prog-item'});
+      var chk = el('input',{class:'chk', type:'checkbox', checked: already?'checked':null, onchange:function(){
+        if(chk.checked){ addProgramToList(s, listKey, item, sourceKey, listKey==='rkjm'); }
+        else { s[listKey] = s[listKey].filter(function(x){ return x.sourceKey !== sourceKey; }); }
+        save(); render();
+      }});
+      var headRow = el('div',{class:'prog-head'},[
+        chk,
+        el('div',{style:'flex:1'},[ el('div',{class:'prog-title'},[item.judul]) ])
+      ]);
+      box.appendChild(headRow);
+      var ol = el('ol',{class:'steps'});
+      item.langkah.forEach(function(st){ ol.appendChild(el('li',{},[st])); });
+      box.appendChild(ol);
+      group.appendChild(box);
+    });
+    panel.appendChild(group);
+  });
+  return panel;
+}
+
+function renderCustomProgramPanel(s, listKey, targetLabel){
+  var panel = el('div',{class:'panel'});
+  panel.appendChild(el('h2',{},['Tambah program khusus']));
+  panel.appendChild(el('p',{class:'sub'},['Untuk kebutuhan sekolah yang tidak tercakup pada rekomendasi di atas.']));
+  var dimIn = el('input',{type:'text', placeholder:'Dimensi (contoh: Sarana Prasarana)'});
+  var judulIn = el('input',{type:'text', placeholder:'Judul program'});
+  var langkahIn = el('textarea',{placeholder:'Langkah-langkah, satu per baris'});
+  var g = el('div',{class:'grid2'});
+  g.appendChild(el('label',{class:'field'},[el('span',{},['Dimensi']), dimIn]));
+  g.appendChild(el('label',{class:'field'},[el('span',{},['Judul program']), judulIn]));
+  panel.appendChild(g);
+  panel.appendChild(el('label',{class:'field'},[el('span',{},['Langkah pelaksanaan']), langkahIn]));
+  panel.appendChild(el('button',{class:'btn secondary', onclick:function(){
+    if(!judulIn.value.trim()) return;
+    var steps = langkahIn.value.split(/\r?\n/).map(function(x){ return x.trim(); }).filter(Boolean);
+    var entry = { id:uid(), dimensi:dimIn.value.trim()||'Umum', judul:judulIn.value.trim(), langkah:steps, custom:true };
+    if(listKey === 'rkjm') entry.tahun = 1;
+    if(listKey === 'rkt') entry.triwulan = null;
+    s[listKey].push(entry);
+    dimIn.value=''; judulIn.value=''; langkahIn.value='';
+    save(); render();
+  }},['Tambahkan ke '+targetLabel]));
+  return panel;
+}
+
+function renderSelectedPanel(s, listKey, withYear, withTriwulan, filterQ){
+  var panel = el('div',{class:'panel'});
+  var headRow = el('div',{style:'display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px'},[
+    el('h2',{style:'margin:0'},['Program terpilih ('+s[listKey].length+')'])
+  ]);
+  panel.appendChild(headRow);
+  if(s[listKey].length === 0){
+    panel.appendChild(el('div',{class:'empty'},[el('p',{},['Belum ada program yang dipilih.'])]));
+    return panel;
+  }
+  if(withTriwulan){
+    var filterRow = el('div',{class:'btn-row no-print', style:'margin-bottom:10px'});
+    filterRow.appendChild(triwulanFilterSelect(filterQ, function(v){ state.rktFilterQ = v; render(); }));
+    panel.appendChild(filterRow);
+  }
+  var items = s[listKey];
+  if(withTriwulan && filterQ && filterQ !== 'semua'){
+    items = items.filter(function(r){ return String(r.triwulan||'') === String(filterQ); });
+  }
+  if(withTriwulan) headRow.appendChild(el('span',{style:'font-size:12.5px;color:var(--ink-soft)'},[items.length+' dari '+s[listKey].length+' program ditampilkan']));
+  if(items.length === 0){
+    panel.appendChild(el('div',{class:'empty'},[el('p',{},['Tidak ada program pada triwulan yang dipilih.'])]));
+    return panel;
+  }
+  var list = el('div',{class:'selected-list'});
+  items.forEach(function(r){
+    var row = el('div',{class:'row'});
+    row.appendChild(el('div',{class:'t'},[ el('strong',{},[r.dimensi+' \u2014 ']), text(r.judul) ]));
+    if(withYear){
+      var sel = el('select',{class:'year-select'});
+      [1,2,3,4].forEach(function(y){
+        var o = el('option',{value:String(y)},['Tahun '+y]);
+        if(r.tahun === y) o.setAttribute('selected','selected');
+        sel.appendChild(o);
+      });
+      sel.addEventListener('change', function(){ r.tahun = parseInt(sel.value,10); save(); render(); });
+      row.appendChild(sel);
+    }
+    if(withTriwulan){
+      var twSel = el('select',{class:'year-select'});
+      [['','Triwulan \u2014'],['1','Triwulan I'],['2','Triwulan II'],['3','Triwulan III'],['4','Triwulan IV']].forEach(function(pair){
+        var o = el('option',{value:pair[0]},[pair[1]]);
+        if(String(r.triwulan||'') === pair[0]) o.setAttribute('selected','selected');
+        twSel.appendChild(o);
+      });
+      twSel.addEventListener('change', function(){ r.triwulan = twSel.value || null; save(); render(); });
+      row.appendChild(twSel);
+    }
+    row.appendChild(el('button',{class:'remove-x', 'aria-label':'Hapus', onclick:function(){
+      s[listKey] = s[listKey].filter(function(x){ return x.id !== r.id; });
+      save(); render();
+    }},['\u00D7']));
+    list.appendChild(row);
+  });
+  panel.appendChild(list);
+  return panel;
+}
+
+function renderRkt(){
+  var wrap = el('div',{});
+  var picker = el('div',{class:'panel'});
+  picker.appendChild(el('h2',{},['Pilih sekolah']));
+  picker.appendChild(schoolPicker(function(id){ state.activeSchoolId = id || null; render(); }));
+  wrap.appendChild(picker);
+
+  var s = state.data.schools.filter(function(x){ return x.id === state.activeSchoolId; })[0];
+  if(!s){
+    wrap.appendChild(el('div',{class:'panel'},[el('div',{class:'empty'},[el('p',{},['Pilih sekolah untuk menyusun Rencana Kerja Tahunan (RKT).'])])]));
+    return wrap;
+  }
+  var strat = strategiFor(s);
+
+  var raporPanel = renderRaporRekomPicker(s, 'rkt');
+  if(raporPanel) wrap.appendChild(raporPanel);
+  wrap.appendChild(renderLibraryPicker(s, 'rkt'));
+  wrap.appendChild(renderCustomProgramPanel(s, 'rkt', 'RKT'));
+  wrap.appendChild(renderSelectedPanel(s, 'rkt', false, true, state.rktFilterQ));
+  wrap.appendChild(renderReportPanel(s, strat));
+  return wrap;
+}
+
+function renderRkjm(){
+  var wrap = el('div',{});
+  var picker = el('div',{class:'panel'});
+  picker.appendChild(el('h2',{},['Pilih sekolah']));
+  picker.appendChild(schoolPicker(function(id){ state.activeSchoolId = id || null; render(); }));
+  wrap.appendChild(picker);
+
+  var s = state.data.schools.filter(function(x){ return x.id === state.activeSchoolId; })[0];
+  if(!s){
+    wrap.appendChild(el('div',{class:'panel'},[el('div',{class:'empty'},[el('p',{},['Pilih sekolah untuk menyusun Rencana Kerja Jangka Menengah (RKJM), 4 tahun.'])])]));
+    return wrap;
+  }
+
+  var introPanel = el('div',{class:'panel'});
+  introPanel.appendChild(el('h2',{},['RKJM \u2014 ' + s.nama]));
+  introPanel.appendChild(el('p',{class:'sub'},['Rencana Kerja Jangka Menengah menyusun program yang sama seperti RKT, namun disebar dalam rentang 4 tahun. Pilih program di bawah, lalu tentukan tahun pelaksanaannya pada daftar program terpilih.']));
+  wrap.appendChild(introPanel);
+
+  var raporPanel = renderRaporRekomPicker(s, 'rkjm');
+  if(raporPanel) wrap.appendChild(raporPanel);
+  wrap.appendChild(renderLibraryPicker(s, 'rkjm'));
+  wrap.appendChild(renderCustomProgramPanel(s, 'rkjm', 'RKJM'));
+  wrap.appendChild(renderSelectedPanel(s, 'rkjm', true));
+
+  var byYearPanel = el('div',{class:'panel'});
+  byYearPanel.appendChild(el('h2',{},['Peta program per tahun']));
+  if(s.rkjm.length === 0){
+    byYearPanel.appendChild(el('div',{class:'empty'},[el('p',{},['Belum ada program yang dipilih.'])]));
+  } else {
+    [1,2,3,4].forEach(function(y){
+      var items = s.rkjm.filter(function(r){ return r.tahun === y; });
+      var g = el('div',{class:'rkjm-year-group'});
+      g.appendChild(el('div',{class:'rkjm-year-title'},['Tahun '+y]));
+      if(items.length === 0){
+        g.appendChild(el('p',{style:'font-size:13px;color:var(--ink-soft);margin:0'},['Belum ada program pada tahun ini.']));
+      } else {
+        items.forEach(function(r){
+          g.appendChild(el('p',{style:'margin:0 0 6px;font-size:13.5px'},[ el('strong',{},[r.dimensi+' \u2014 ']), text(r.judul) ]));
+        });
+      }
+      byYearPanel.appendChild(g);
+    });
+  }
+  wrap.appendChild(byYearPanel);
+
+  wrap.appendChild(renderRkjmReportPanel(s));
+  return wrap;
+}
+
+function renderReportPanel(s, strat){
+  var panel = el('div',{class:'panel'});
+  var barRow = el('div',{style:'display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px'},[
+    el('h2',{style:'margin:0'},['Ringkasan pendampingan']),
+  ]);
+  panel.appendChild(barRow);
+  panel.appendChild(el('p',{class:'sub'},['Rangkuman siap cetak untuk didokumentasikan sebagai hasil pendampingan sekolah binaan.']));
+
+  var report = el('div',{class:'report', id:'report-'+s.id});
+  var prof = state.data.profile;
+  report.appendChild(el('div',{class:'rpt-title'},['Ringkasan Pendampingan \u2014 ' + (s.nama||'(tanpa nama)')]));
+  report.appendChild(el('div',{class:'rpt-sub'},[
+    (prof.nama||'\u2014') + ', ' + (prof.jabatan||'Pengawas Sekolah') + (prof.wilayah ? ', '+prof.wilayah : '')
+  ]));
+
+  report.appendChild(el('h3',{},['Identitas sekolah']));
+  report.appendChild(el('p',{},['Sekolah: ' + (s.nama||'\u2014') + '. Kepala sekolah: ' + (s.kepsek||'\u2014') + (s.nip? ' (NIP '+s.nip+')':'') + '. Kecamatan: ' + (s.kecamatan||'\u2014') + '.']));
+
+  report.appendChild(el('h3',{},['Hasil refleksi komitmen perubahan']));
+  var kes = kesadaranLevel(s), kap = kapasitasLevel(s);
+  report.appendChild(el('p',{},['Tingkat kesadaran kepala sekolah dalam melakukan refleksi: ' + (kes||'belum lengkap') + '. Tingkat kapasitas kepala sekolah dalam memimpin perubahan: ' + (kap||'belum lengkap') + '.']));
+
+  report.appendChild(el('h3',{},['Strategi dan metode pendampingan']));
+  if(strat){
+    report.appendChild(el('p',{},['Strategi pendampingan yang digunakan adalah ' + strat.strategi + ', dengan metode ' + strat.metode + ', pada ' + strat.prioritas.toLowerCase() + '. ' + strat.deskripsi]));
+  } else {
+    report.appendChild(el('p',{},['Strategi pendampingan belum dapat ditentukan karena refleksi belum lengkap.']));
+  }
+
+  report.appendChild(el('h3',{},['Rekomendasi program Rencana Kerja Tahunan (RKT)']));
+  if(s.rkt.length === 0){
+    report.appendChild(el('p',{},['Belum ada program RKT yang dipilih untuk sekolah ini.']));
+  } else {
+    s.rkt.forEach(function(r, i){
+      report.appendChild(el('p',{style:'margin-bottom:2px'},[ el('strong',{},[(i+1)+'. ['+r.dimensi+'] '+r.judul]) ]));
+      var ol = el('ol',{});
+      r.langkah.forEach(function(st){ ol.appendChild(el('li',{},[st])); });
+      report.appendChild(ol);
+    });
+  }
+
+  if(s.catatan){
+    report.appendChild(el('h3',{},['Catatan tambahan']));
+    report.appendChild(el('p',{},[s.catatan]));
+  }
+
+  panel.appendChild(report);
+
+  panel.appendChild(el('label',{class:'field', style:'margin-top:18px'},[el('span',{},['Catatan tambahan (opsional)']),
+    el('textarea',{oninput:function(e){ s.catatan = e.target.value; save(); }},[])
+  ]));
+  var noteArea = panel.querySelector('textarea');
+  noteArea.value = s.catatan || '';
+
+  var actions = el('div',{class:'btn-row no-print'});
+  actions.appendChild(el('button',{class:'btn secondary', onclick:function(){ window.print(); }},['Cetak / simpan sebagai PDF']));
+  actions.appendChild(el('button',{class:'btn ghost', onclick:function(){
+    var el2 = document.getElementById('report-'+s.id);
+    var txt = el2.innerText;
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(txt).then(function(){ alert('Ringkasan disalin ke clipboard.'); });
+    }
+  }},['Salin teks']));
+  panel.appendChild(actions);
+
+  return panel;
+}
+
+function renderRkjmReportPanel(s){
+  var panel = el('div',{class:'panel'});
+  panel.appendChild(el('h2',{},['Ringkasan RKJM']));
+  panel.appendChild(el('p',{class:'sub'},['Rangkuman Rencana Kerja Jangka Menengah (4 tahun) siap cetak.']));
+
+  var report = el('div',{class:'report', id:'rkjm-report-'+s.id});
+  var prof = state.data.profile;
+  report.appendChild(el('div',{class:'rpt-title'},['Rencana Kerja Jangka Menengah \u2014 ' + (s.nama||'(tanpa nama)')]));
+  report.appendChild(el('div',{class:'rpt-sub'},[
+    (prof.nama||'\u2014') + ', ' + (prof.jabatan||'Pengawas Sekolah') + (prof.wilayah ? ', '+prof.wilayah : '')
+  ]));
+
+  report.appendChild(el('h3',{},['Identitas sekolah']));
+  report.appendChild(el('p',{},['Sekolah: ' + (s.nama||'\u2014') + '. Kepala sekolah: ' + (s.kepsek||'\u2014') + (s.nip? ' (NIP '+s.nip+')':'') + '. Kecamatan: ' + (s.kecamatan||'\u2014') + '.']));
+
+  if(s.rkjm.length === 0){
+    report.appendChild(el('h3',{},['Program per tahun']));
+    report.appendChild(el('p',{},['Belum ada program RKJM yang dipilih untuk sekolah ini.']));
+  } else {
+    [1,2,3,4].forEach(function(y){
+      report.appendChild(el('h3',{},['Tahun '+y]));
+      var items = s.rkjm.filter(function(r){ return r.tahun === y; });
+      if(items.length === 0){
+        report.appendChild(el('p',{},['Tidak ada program yang dijadwalkan pada tahun ini.']));
+        return;
+      }
+      items.forEach(function(r, i){
+        report.appendChild(el('p',{style:'margin-bottom:2px'},[ el('strong',{},[(i+1)+'. ['+r.dimensi+'] '+r.judul]) ]));
+        if(r.langkah && r.langkah.length){
+          var ol = el('ol',{});
+          r.langkah.forEach(function(st){ ol.appendChild(el('li',{},[st])); });
+          report.appendChild(ol);
+        }
+      });
+    });
+  }
+  panel.appendChild(report);
+
+  var actions = el('div',{class:'btn-row no-print'});
+  actions.appendChild(el('button',{class:'btn secondary', onclick:function(){ window.print(); }},['Cetak / simpan sebagai PDF']));
+  actions.appendChild(el('button',{class:'btn ghost', onclick:function(){
+    var el2 = document.getElementById('rkjm-report-'+s.id);
+    var txt = el2.innerText;
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(txt).then(function(){ alert('Ringkasan disalin ke clipboard.'); });
+    }
+  }},['Salin teks']));
+  panel.appendChild(actions);
+
+  return panel;
+}
+
+/* ---------- Laporan Akhir ---------- */
+function renderRecapTable(){
+  var panel = el('div',{class:'panel'});
+  panel.appendChild(el('h2',{},['Rekapitulasi seluruh sekolah binaan']));
+  panel.appendChild(el('p',{class:'sub'},['Ringkasan status pendampingan seluruh sekolah, untuk dilampirkan pada laporan akhir.']));
+  if(state.data.schools.length === 0){
+    panel.appendChild(el('div',{class:'empty'},[el('p',{},['Belum ada sekolah binaan.'])]));
+    return panel;
+  }
+  var table = el('table',{class:'roster'});
+  table.appendChild(el('thead',{},[el('tr',{},[
+    el('th',{},['Sekolah']), el('th',{},['Kesadaran']), el('th',{},['Kapasitas']),
+    el('th',{},['Strategi']), el('th',{},['Prioritas']), el('th',{},['Program RKT']), el('th',{},['Program RKJM']), el('th',{},['Total RKAS'])
+  ])]));
+  var tbody = el('tbody',{});
+  state.data.schools.forEach(function(s){
+    var strat = strategiFor(s);
+    var totalRkas = s.rkas.reduce(function(acc,r){ return acc + rkasTotal(r); }, 0);
+    tbody.appendChild(el('tr',{},[
+      el('td',{},[s.nama||'(tanpa nama)']),
+      el('td',{},[badgeFor('kes', kesadaranLevel(s))]),
+      el('td',{},[badgeFor('kap', kapasitasLevel(s))]),
+      el('td',{},[strat ? strat.strategi : el('span',{class:'badge muted'},['\u2014'])]),
+      el('td',{},[strat ? badgeFor('pri', strat.prioritas) : el('span',{class:'badge muted'},['\u2014'])]),
+      el('td',{},[String(s.rkt.length)]),
+      el('td',{},[String(s.rkjm.length)]),
+      el('td',{},[rupiah(totalRkas)])
+    ]));
+  });
+  table.appendChild(tbody);
+  panel.appendChild(table);
+
+  var actions = el('div',{class:'btn-row no-print'});
+  actions.appendChild(el('button',{class:'btn ghost', onclick:function(){ window.print(); }},['Cetak rekapitulasi']));
+  panel.appendChild(actions);
+  return panel;
+}
+
+/* ---------- RKA / RKAS ---------- */
+var SUMBER_DANA = ['BOS Reguler', 'BOP Kinerja', 'BOSDA', 'Komite Sekolah', 'APBD', 'Lainnya'];
+
+function rupiah(n){
+  n = Number(n)||0;
+  return 'Rp' + n.toLocaleString('id-ID');
+}
+
+function rkasTotal(row){ return (Number(row.volume)||0) * (Number(row.hargaSatuan)||0); }
+
+function addRkasRow(s, data){
+  s.rkas.push(Object.assign({ id:uid(), kegiatan:'', komponen:'', sumberDana:'BOS Reguler', volume:1, satuan:'paket', hargaSatuan:0, sourceKey:null, triwulan:null }, data));
+}
+
+function renderRkas(){
+  var wrap = el('div',{});
+  var picker = el('div',{class:'panel'});
+  picker.appendChild(el('h2',{},['Pilih sekolah']));
+  picker.appendChild(el('p',{class:'sub'},['Susun Rencana Kegiatan dan Anggaran Sekolah (RKA/RKAS) berdasarkan hasil analisis Rapor Pendidikan dan program RKT yang sudah dipilih. Semua nilai dapat diedit langsung pada tabel.']));
+  picker.appendChild(schoolPicker(function(id){ state.activeSchoolId = id || null; render(); }));
+  wrap.appendChild(picker);
+
+  var s = state.data.schools.filter(function(x){ return x.id === state.activeSchoolId; })[0];
+  if(!s){
+    wrap.appendChild(el('div',{class:'panel'},[el('div',{class:'empty'},[el('p',{},['Pilih sekolah untuk menyusun RKA/RKAS.'])])]));
+    return wrap;
+  }
+
+  /* --- Sumber: rekomendasi rapor pendidikan (kolom ARKAS) --- */
+  if(s.rapor && s.rapor.rekomendasi.length){
+    var rekomPanel = el('div',{class:'panel'});
+    rekomPanel.appendChild(el('h2',{},['Tambah dari rekomendasi Rapor Pendidikan']));
+    rekomPanel.appendChild(el('p',{class:'sub'},['Diambil dari kolom kegiatan ARKAS pada hasil analisis Rapor Pendidikan. Centang untuk menambahkan sebagai baris RKAS (nilai volume dan harga satuan diisi 0, silakan sesuaikan).']));
+    s.rapor.rekomendasi.forEach(function(r, i){
+      var sourceKey = 'rapor:'+r.id;
+      var already = s.rkas.some(function(x){ return x.sourceKey === sourceKey; });
+      var box = el('div',{class:'prog-item'});
+      var chk = el('input',{class:'chk', type:'checkbox', checked: already?'checked':null, onchange:function(){
+        if(chk.checked){
+          var keg = r.arkas ? r.arkas.split('\n')[0] : (r.benahi || r.indikator);
+          addRkasRow(s, { kegiatan:keg, komponen:r.indikator, sourceKey:sourceKey });
+        } else {
+          s.rkas = s.rkas.filter(function(x){ return x.sourceKey !== sourceKey; });
+        }
+        save(); render();
+      }});
+      box.appendChild(el('div',{class:'prog-head'},[
+        chk,
+        el('div',{style:'flex:1'},[el('div',{class:'prog-title'},[(i+1)+'. '+r.indikator+' \u2014 '+(r.akarMasalah||'')])])
+      ]));
+      if(r.arkas) box.appendChild(el('div',{style:'font-size:12px;color:var(--ink-soft);margin-top:6px'},[text(r.arkas.split('\n')[0])]));
+      rekomPanel.appendChild(box);
+    });
+    wrap.appendChild(rekomPanel);
+  }
+
+  /* --- Sumber: program RKT terpilih --- */
+  if(s.rkt.length){
+    var rktPanel = el('div',{class:'panel'});
+    rktPanel.appendChild(el('h2',{},['Tambah dari program RKT terpilih']));
+    rktPanel.appendChild(el('p',{class:'sub'},['Ubah program Rencana Kerja Tahunan yang sudah dipilih menjadi baris anggaran.']));
+    s.rkt.forEach(function(r){
+      var sourceKey = 'rkt:'+r.id;
+      var already = s.rkas.some(function(x){ return x.sourceKey === sourceKey; });
+      var box = el('div',{class:'prog-item'});
+      var chk = el('input',{class:'chk', type:'checkbox', checked: already?'checked':null, onchange:function(){
+        if(chk.checked){ addRkasRow(s, { kegiatan:r.judul, komponen:r.dimensi, sourceKey:sourceKey }); }
+        else { s.rkas = s.rkas.filter(function(x){ return x.sourceKey !== sourceKey; }); }
+        save(); render();
+      }});
+      box.appendChild(el('div',{class:'prog-head'},[
+        chk, el('div',{style:'flex:1'},[el('div',{class:'prog-title'},['['+r.dimensi+'] '+r.judul])])
+      ]));
+      rktPanel.appendChild(box);
+    });
+    wrap.appendChild(rktPanel);
+  }
+
+  /* --- Tambah baris manual --- */
+  var manPanel = el('div',{class:'panel'});
+  manPanel.appendChild(el('h2',{},['Tambah baris manual']));
+  manPanel.appendChild(el('button',{class:'btn secondary', onclick:function(){
+    addRkasRow(s, {});
+    save(); render();
+  }},['+ Tambah baris kosong']));
+  wrap.appendChild(manPanel);
+
+  /* --- Tabel RKAS --- */
+  var tablePanel = el('div',{class:'panel'});
+  var headRow = el('div',{style:'display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px'},[
+    el('h2',{style:'margin:0'},['Tabel RKA/RKAS \u2014 ' + s.nama])
+  ]);
+  tablePanel.appendChild(headRow);
+  tablePanel.appendChild(el('p',{class:'sub'},['Klik pada sel untuk mengedit langsung. Kolom "Jumlah" dihitung otomatis dari volume \u00D7 harga satuan. Isi kolom "Triwulan" untuk menandai rencana pelaksanaan tiap kegiatan.']));
+
+  var rkasFilterRow = el('div',{class:'btn-row no-print', style:'margin-bottom:10px'});
+  rkasFilterRow.appendChild(triwulanFilterSelect(state.rkasFilterQ, function(v){ state.rkasFilterQ = v; render(); }));
+  tablePanel.appendChild(rkasFilterRow);
+
+  var visibleRkas = s.rkas.filter(function(r){
+    if(state.rkasFilterQ === 'semua') return true;
+    return String(r.triwulan||'') === String(state.rkasFilterQ);
+  });
+
+  if(s.rkas.length === 0){
+    tablePanel.appendChild(el('div',{class:'empty'},[el('p',{},['Belum ada baris RKA/RKAS. Tambahkan dari rekomendasi di atas, atau tambah baris manual.'])]));
+  } else if(visibleRkas.length === 0){
+    tablePanel.appendChild(el('div',{class:'empty'},[el('p',{},['Belum ada baris RKA/RKAS untuk triwulan yang dipilih.'])]));
+  } else {
+    var table = el('table',{class:'rkas'});
+    table.appendChild(el('thead',{},[el('tr',{},[
+      el('th',{},['Kegiatan']), el('th',{},['Komponen/Dimensi']), el('th',{},['Sumber Dana']),
+      el('th',{},['Triwulan']),
+      el('th',{},['Volume']), el('th',{},['Satuan']), el('th',{},['Harga Satuan (Rp)']),
+      el('th',{},['Jumlah (Rp)']), el('th',{},[''])
+    ])]));
+    var tbody = el('tbody',{});
+    visibleRkas.forEach(function(r){
+      var kegIn = el('input',{class:'rkas-cell-input', type:'text', value:r.kegiatan, placeholder:'Nama kegiatan', oninput:function(e){ r.kegiatan=e.target.value; save(); }});
+      var komIn = el('input',{class:'rkas-cell-input', type:'text', value:r.komponen, placeholder:'Komponen', oninput:function(e){ r.komponen=e.target.value; save(); }});
+      var sumSel = el('select',{class:'rkas-cell-input', onchange:function(){ r.sumberDana=sumSel.value; save(); render(); }});
+      SUMBER_DANA.forEach(function(sd){
+        var o = el('option',{value:sd},[sd]);
+        if(sd === r.sumberDana) o.setAttribute('selected','selected');
+        sumSel.appendChild(o);
+      });
+      var volIn = el('input',{class:'rkas-cell-input', type:'number', min:'0', value:String(r.volume), oninput:function(e){ r.volume=e.target.value; save(); render(); }});
+      var satIn = el('input',{class:'rkas-cell-input', type:'text', value:r.satuan, placeholder:'paket/kali/org', oninput:function(e){ r.satuan=e.target.value; save(); }});
+      var hargaIn = el('input',{class:'rkas-cell-input', type:'number', min:'0', step:'1000', value:String(r.hargaSatuan), oninput:function(e){ r.hargaSatuan=e.target.value; save(); render(); }});
+      var twSel = el('select',{class:'rkas-cell-input', onchange:function(){ r.triwulan = twSel.value || null; save(); render(); }});
+      [['','\u2014'],['1','I'],['2','II'],['3','III'],['4','IV']].forEach(function(pair){
+        var o = el('option',{value:pair[0]},[pair[1]]);
+        if(String(r.triwulan||'') === pair[0]) o.setAttribute('selected','selected');
+        twSel.appendChild(o);
+      });
+      var tds = [
+        el('td',{},[kegIn, r.sourceKey ? el('span',{class:'rkas-source-tag'},[r.sourceKey.indexOf('rapor:')===0?'Dari Rapor Pendidikan':'Dari RKT']) : null]),
+        el('td',{},[komIn]),
+        el('td',{},[sumSel]),
+        el('td',{style:'max-width:70px'},[twSel]),
+        el('td',{class:'num', style:'max-width:80px'},[volIn]),
+        el('td',{},[satIn]),
+        el('td',{class:'num', style:'max-width:140px'},[hargaIn]),
+        el('td',{class:'num'},[rupiah(rkasTotal(r))]),
+        el('td',{},[el('button',{class:'remove-x', 'aria-label':'Hapus', onclick:function(){
+          s.rkas = s.rkas.filter(function(x){ return x.id !== r.id; });
+          save(); render();
+        }},['\u00D7'])])
+      ];
+      tbody.appendChild(el('tr',{},tds));
+    });
+    table.appendChild(tbody);
+
+    var grandTotal = visibleRkas.reduce(function(acc,r){ return acc + rkasTotal(r); }, 0);
+    var totalLabel = state.rkasFilterQ === 'semua' ? 'Total keseluruhan' : 'Total Triwulan ' + TRIWULAN_LABEL[Number(state.rkasFilterQ)].roman;
+    table.appendChild(el('tfoot',{},[el('tr',{},[
+      el('td',{colspan:'7'},[totalLabel]), el('td',{class:'num'},[rupiah(grandTotal)]), el('td',{},[])
+    ])]));
+    tablePanel.appendChild(table);
+
+    var bySumber = {};
+    visibleRkas.forEach(function(r){ bySumber[r.sumberDana] = (bySumber[r.sumberDana]||0) + rkasTotal(r); });
+    var summary = el('div',{class:'sumber-summary'});
+    Object.keys(bySumber).forEach(function(k){
+      summary.appendChild(el('div',{class:'box'},[el('div',{class:'l'},[k]), el('div',{class:'v'},[rupiah(bySumber[k])])]));
+    });
+    tablePanel.appendChild(summary);
+
+    var actions = el('div',{class:'btn-row no-print'});
+    actions.appendChild(el('button',{class:'btn ghost', onclick:function(){ window.print(); }},['Cetak tabel RKAS']));
+    tablePanel.appendChild(actions);
+  }
+  wrap.appendChild(tablePanel);
+  return wrap;
+}
+
+function renderLaporanAkhir(){
+  var wrap = el('div',{});
+  wrap.appendChild(renderRecapTable());
+
+  var picker = el('div',{class:'panel'});
+  picker.appendChild(el('h2',{},['Laporan akhir per sekolah']));
+  picker.appendChild(el('p',{class:'sub'},['Menggabungkan seluruh tahap pendampingan \u2014 refleksi, strategi, Rapor Pendidikan, RKT, dan RKJM \u2014 menjadi satu laporan akhir siap cetak.']));
+  picker.appendChild(schoolPicker(function(id){ state.activeSchoolId = id || null; render(); }));
+  wrap.appendChild(picker);
+
+  var s = state.data.schools.filter(function(x){ return x.id === state.activeSchoolId; })[0];
+  if(!s){
+    wrap.appendChild(el('div',{class:'panel'},[el('div',{class:'empty'},[el('p',{},['Pilih sekolah untuk menyusun laporan akhir.'])])]));
+    return wrap;
+  }
+  var strat = strategiFor(s);
+  var kes = kesadaranLevel(s), kap = kapasitasLevel(s);
+  var prof = state.data.profile;
+
+  var panel = el('div',{class:'panel'});
+  var report = el('div',{class:'report', id:'laporan-akhir-'+s.id});
+
+  var meta = el('div',{class:'btn-row no-print', style:'margin-bottom:16px'});
+  var nomorIn = el('input',{type:'text', placeholder:'Nomor laporan (opsional)', style:'max-width:220px', value: s.laporanNomor||'', oninput:function(e){ s.laporanNomor = e.target.value; save(); }});
+  var tglIn = el('input',{type:'text', placeholder:'Tanggal laporan (contoh: 20 Desember 2026)', style:'max-width:260px', value: s.laporanTanggal||'', oninput:function(e){ s.laporanTanggal = e.target.value; save(); }});
+  meta.appendChild(el('label',{class:'field', style:'margin:0'},[el('span',{},['Nomor laporan']), nomorIn]));
+  meta.appendChild(el('label',{class:'field', style:'margin:0'},[el('span',{},['Tanggal laporan']), tglIn]));
+  panel.appendChild(meta);
+
+  report.appendChild(el('div',{class:'rpt-title'},['Laporan Akhir Pendampingan \u2014 ' + (s.nama||'(tanpa nama)')]));
+  report.appendChild(el('div',{class:'rpt-sub'},[
+    (s.laporanNomor ? 'Nomor: '+s.laporanNomor+' \u2014 ' : '') + (s.laporanTanggal ? s.laporanTanggal+' \u2014 ' : '') +
+    (prof.nama||'\u2014') + ', ' + (prof.jabatan||'Pengawas Sekolah') + (prof.wilayah ? ', '+prof.wilayah : '')
+  ]));
+
+  report.appendChild(el('h3',{},['1. Identitas sekolah']));
+  report.appendChild(el('p',{},['Sekolah: ' + (s.nama||'\u2014') + (s.jenjang? ' ('+s.jenjang+')':'') + '. NPSN: ' + (s.npsn||'\u2014') + '. Kepala sekolah: ' + (s.kepsek||'\u2014') + (s.nip? ' (NIP '+s.nip+')':'') + '. Kecamatan: ' + (s.kecamatan||'\u2014') + '.']));
+
+  report.appendChild(el('h3',{},['2. Riwayat kunjungan pendampingan']));
+  if(s.kunjungan.length === 0){
+    report.appendChild(el('p',{},['Belum ada catatan kunjungan pendampingan untuk sekolah ini.']));
+  } else {
+    var kOl = el('ol',{});
+    s.kunjungan.slice().reverse().forEach(function(v){
+      var li = el('li',{style:'margin-bottom:8px'});
+      li.appendChild(el('div',{},[el('strong',{},[v.tanggal+' \u2014 '+v.jenis])]));
+      if(v.hasil) li.appendChild(el('div',{},[v.hasil]));
+      if(v.tindaklanjut) li.appendChild(el('div',{style:'color:var(--ink-soft);font-size:13px'},['Tindak lanjut: '+v.tindaklanjut]));
+      kOl.appendChild(li);
+    });
+    report.appendChild(kOl);
+  }
+
+  report.appendChild(el('h3',{},['3. Hasil refleksi komitmen perubahan']));
+  report.appendChild(el('p',{},['Tingkat kesadaran kepala sekolah dalam melakukan refleksi: ' + (kes||'belum lengkap') + '. Tingkat kapasitas kepala sekolah dalam memimpin perubahan: ' + (kap||'belum lengkap') + '.']));
+
+  report.appendChild(el('h3',{},['4. Strategi dan metode pendampingan']));
+  if(strat){
+    report.appendChild(el('p',{},['Strategi pendampingan yang digunakan adalah ' + strat.strategi + ', dengan metode ' + strat.metode + ', pada ' + strat.prioritas.toLowerCase() + '. ' + strat.deskripsi]));
+  } else {
+    report.appendChild(el('p',{},['Strategi pendampingan belum dapat ditentukan karena refleksi belum lengkap.']));
+  }
+
+  report.appendChild(el('h3',{},['5. Ringkasan Rapor Pendidikan']));
+  if(s.rapor && s.rapor.indikator.length){
+    report.appendChild(el('p',{},['Berdasarkan Rapor Pendidikan tahun ' + (s.rapor.tahun||'\u2014') + ', tercatat ' + s.rapor.indikator.length + ' indikator utama dengan rincian capaian sebagai berikut.']));
+    var tbl = el('table',{class:'indikator'});
+    tbl.appendChild(el('thead',{},[el('tr',{},[el('th',{},['Kode']), el('th',{},['Indikator']), el('th',{},['Capaian']), el('th',{},['Skor'])])]));
+    var tb = el('tbody',{});
+    s.rapor.indikator.forEach(function(ind){
+      tb.appendChild(el('tr',{},[el('td',{},[ind.kode]), el('td',{},[ind.nama]), el('td',{},[ind.capaian||'\u2014']), el('td',{},[ind.skor||'\u2014'])]));
+    });
+    tbl.appendChild(tb);
+    report.appendChild(tbl);
+    if(s.rapor.rekomendasi.length){
+      report.appendChild(el('p',{},['Sebanyak ' + s.rapor.rekomendasi.length + ' rekomendasi prioritas perbaikan layanan teridentifikasi dari hasil analisis, mencakup indikator: ' + s.rapor.rekomendasi.map(function(r){ return r.indikator; }).filter(function(v,i,a){ return a.indexOf(v)===i; }).join(', ') + '.']));
+    }
+  } else {
+    report.appendChild(el('p',{},['Data Rapor Pendidikan belum diunggah untuk sekolah ini.']));
+  }
+
+  report.appendChild(el('h3',{},['6. Rencana Kerja Tahunan (RKT)']));
+  if(s.rkt.length === 0){
+    report.appendChild(el('p',{},['Belum ada program RKT yang dipilih untuk sekolah ini.']));
+  } else {
+    s.rkt.forEach(function(r, i){
+      report.appendChild(el('p',{style:'margin-bottom:2px'},[ el('strong',{},[(i+1)+'. ['+r.dimensi+'] '+r.judul]) ]));
+      if(r.langkah && r.langkah.length){
+        var ol = el('ol',{});
+        r.langkah.forEach(function(st){ ol.appendChild(el('li',{},[st])); });
+        report.appendChild(ol);
+      }
+    });
+  }
+
+  report.appendChild(el('h3',{},['7. Rencana Kerja Jangka Menengah (RKJM)']));
+  if(s.rkjm.length === 0){
+    report.appendChild(el('p',{},['Belum ada program RKJM yang dipilih untuk sekolah ini.']));
+  } else {
+    [1,2,3,4].forEach(function(y){
+      var items = s.rkjm.filter(function(r){ return r.tahun === y; });
+      if(items.length === 0) return;
+      report.appendChild(el('p',{style:'margin:0 0 4px'},[el('strong',{},['Tahun '+y])]));
+      var ol = el('ol',{});
+      items.forEach(function(r){ ol.appendChild(el('li',{},[r.dimensi+' \u2014 '+r.judul])); });
+      report.appendChild(ol);
+    });
+  }
+
+  report.appendChild(el('h3',{},['8. Rencana Kegiatan dan Anggaran Sekolah (RKAS)']));
+  if(s.rkas.length === 0){
+    report.appendChild(el('p',{},['Belum ada rincian RKA/RKAS yang disusun untuk sekolah ini.']));
+  } else {
+    var rkasTbl = el('table',{class:'rkas'});
+    rkasTbl.appendChild(el('thead',{},[el('tr',{},[
+      el('th',{},['Kegiatan']), el('th',{},['Sumber Dana']), el('th',{},['Volume']), el('th',{},['Satuan']), el('th',{},['Harga Satuan']), el('th',{},['Jumlah'])
+    ])]));
+    var rkasTb = el('tbody',{});
+    s.rkas.forEach(function(r){
+      rkasTb.appendChild(el('tr',{},[
+        el('td',{},[r.kegiatan||'\u2014']), el('td',{},[r.sumberDana]), el('td',{class:'num'},[String(r.volume)]),
+        el('td',{},[r.satuan||'\u2014']), el('td',{class:'num'},[rupiah(r.hargaSatuan)]), el('td',{class:'num'},[rupiah(rkasTotal(r))])
+      ]));
+    });
+    rkasTbl.appendChild(rkasTb);
+    var rkasGrand = s.rkas.reduce(function(acc,r){ return acc + rkasTotal(r); }, 0);
+    rkasTbl.appendChild(el('tfoot',{},[el('tr',{},[ el('td',{colspan:'5'},['Total keseluruhan']), el('td',{class:'num'},[rupiah(rkasGrand)]) ])]));
+    report.appendChild(rkasTbl);
+  }
+
+  if(s.catatan){
+    report.appendChild(el('h3',{},['9. Catatan tambahan']));
+    report.appendChild(el('p',{},[s.catatan]));
+  }
+
+  report.appendChild(el('h3',{},['Kesimpulan']));
+  report.appendChild(el('p',{},['Pendampingan terhadap ' + (s.nama||'sekolah ini') + ' telah dilaksanakan melalui tahapan refleksi komitmen perubahan, penetapan strategi dan metode pendampingan, analisis Rapor Pendidikan, hingga penyusunan Rencana Kerja Tahunan dan Rencana Kerja Jangka Menengah. Hasil pendampingan ini diharapkan menjadi acuan bagi kepala sekolah dan tim dalam melaksanakan program peningkatan mutu satuan pendidikan secara berkelanjutan.']));
+
+  var sigWrap = el('div',{style:'display:flex;justify-content:space-between;gap:24px;margin-top:50px;font-family:\'Public Sans\',sans-serif;font-size:13.5px'});
+  sigWrap.appendChild(el('div',{style:'text-align:center;width:220px'},[
+    el('div',{},['Mengetahui,']),
+    el('div',{},['Kepala Sekolah']),
+    el('div',{style:'height:70px'},[]),
+    el('div',{style:'font-weight:600;border-top:1px solid var(--ink);padding-top:4px'},[s.kepsek || '(\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026)']),
+    el('div',{style:'font-size:12px;color:var(--ink-soft)'},[s.nip ? 'NIP '+s.nip : '\u00A0'])
+  ]));
+  sigWrap.appendChild(el('div',{style:'text-align:center;width:220px'},[
+    el('div',{},[(s.laporanTanggal||'\u2026\u2026\u2026\u2026\u2026, \u2026\u2026\u2026')]),
+    el('div',{},['Pengawas Sekolah']),
+    el('div',{style:'height:70px'},[]),
+    el('div',{style:'font-weight:600;border-top:1px solid var(--ink);padding-top:4px'},[prof.nama || '(\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026)']),
+    el('div',{style:'font-size:12px;color:var(--ink-soft)'},[prof.nip ? 'NIP '+prof.nip : '\u00A0'])
+  ]));
+  report.appendChild(sigWrap);
+
+  panel.appendChild(report);
+
+  var actions = el('div',{class:'btn-row no-print'});
+  actions.appendChild(el('button',{class:'btn secondary', onclick:function(){ window.print(); }},['Cetak / simpan sebagai PDF']));
+  actions.appendChild(el('button',{class:'btn ghost', onclick:function(){
+    var el2 = document.getElementById('laporan-akhir-'+s.id);
+    var txt = el2.innerText;
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(txt).then(function(){ alert('Laporan akhir disalin ke clipboard.'); });
+    }
+  }},['Salin teks']));
+  panel.appendChild(actions);
+
+  wrap.appendChild(panel);
+  return wrap;
+}
+
+/* ---------- Laporan Triwulanan ---------- */
+var BULAN_ID = ['januari','februari','maret','april','mei','juni','juli','agustus','september','oktober','november','desember'];
+var TRIWULAN_LABEL = {
+  1: { roman:'I', rentang:'Januari \u2013 Maret' },
+  2: { roman:'II', rentang:'April \u2013 Juni' },
+  3: { roman:'III', rentang:'Juli \u2013 September' },
+  4: { roman:'IV', rentang:'Oktober \u2013 Desember' }
+};
+
+function parseTanggalIndo(str){
+  if(!str) return null;
+  var low = String(str).toLowerCase();
+  var yearMatch = low.match(/\b(19|20)\d{2}\b/);
+  if(!yearMatch) return null;
+  var year = parseInt(yearMatch[0], 10);
+  var monthIdx = -1;
+  for(var i=0;i<BULAN_ID.length;i++){
+    if(low.indexOf(BULAN_ID[i]) > -1){ monthIdx = i; break; }
+  }
+  if(monthIdx === -1){
+    var m = low.match(/\b(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{2,4})\b/);
+    if(m){
+      var mm = parseInt(m[2],10);
+      if(mm>=1 && mm<=12){ monthIdx = mm-1; }
+    } else {
+      var m2 = low.match(/\b(\d{4})-(\d{1,2})-(\d{1,2})\b/);
+      if(m2){ var mm2 = parseInt(m2[2],10); if(mm2>=1 && mm2<=12) monthIdx = mm2-1; }
+    }
+  }
+  if(monthIdx === -1) return null;
+  var dayMatch = low.match(/\b(\d{1,2})\b/);
+  var day = dayMatch ? parseInt(dayMatch[0],10) : 1;
+  return { day:day, month:monthIdx, year:year };
+}
+function triwulanOfMonth(month){ return Math.floor(month/3) + 1; }
+
+function collectTriwulanYears(){
+  var years = {};
+  state.data.schools.forEach(function(s){
+    s.kunjungan.forEach(function(v){
+      var d = parseTanggalIndo(v.tanggal);
+      if(d) years[d.year] = true;
+    });
+  });
+  var arr = Object.keys(years).map(Number).sort(function(a,b){ return b-a; });
+  if(arr.length === 0) arr.push(new Date().getFullYear());
+  return arr;
+}
+
+function selectableYears(){
+  var years = {};
+  collectTriwulanYears().forEach(function(y){ years[y] = true; });
+  var now = new Date().getFullYear();
+  for(var y = now-2; y <= now+3; y++){ years[y] = true; }
+  (state.data.extraYears||[]).forEach(function(y){ years[Number(y)] = true; });
+  return Object.keys(years).map(Number).sort(function(a,b){ return b-a; });
+}
+
+function addYearControl(onAdded){
+  var wrap = el('span',{style:'display:inline-flex;gap:4px;align-items:center'});
+  var input = el('input',{type:'number', placeholder:'Tahun lain', style:'width:100px;padding:6px 8px;border:1px solid var(--line-strong);border-radius:3px;font-family:\'Public Sans\',sans-serif;font-size:13px'});
+  var btn = el('button',{class:'btn ghost', type:'button', style:'padding:6px 10px', onclick:function(){
+    var y = parseInt(input.value,10);
+    if(!y || y < 1900 || y > 3000) return;
+    if(!state.data.extraYears) state.data.extraYears = [];
+    if(state.data.extraYears.indexOf(y) === -1) state.data.extraYears.push(y);
+    input.value = '';
+    save();
+    onAdded(y);
+  }},['+ Tahun']);
+  wrap.appendChild(input);
+  wrap.appendChild(btn);
+  return wrap;
+}
+
+function getTriwulanMeta(year, q){
+  var key = year+'-TW'+q;
+  if(!state.data.triwulanMeta[key]) state.data.triwulanMeta[key] = { nomor:'', tanggal:'' };
+  return state.data.triwulanMeta[key];
+}
+
+function renderLaporanTriwulanan(){
+  var wrap = el('div',{});
+  var years = selectableYears();
+  if(!state.triwulanYear || years.indexOf(state.triwulanYear) === -1){
+    var curY = new Date().getFullYear();
+    state.triwulanYear = years.indexOf(curY) > -1 ? curY : years[0];
+  }
+  var year = state.triwulanYear;
+  var prof = state.data.profile;
+
+  var picker = el('div',{class:'panel no-print'});
+  picker.appendChild(el('h2',{},['Laporan triwulanan']));
+  picker.appendChild(el('p',{class:'sub'},['Merekap seluruh kunjungan pendampingan ke sekolah binaan per triwulan (Triwulan I: Januari\u2013Maret, II: April\u2013Juni, III: Juli\u2013September, IV: Oktober\u2013Desember), berdasarkan tanggal pada catatan di menu Kunjungan pendampingan.']));
+  var yearSel = el('select',{class:'year-select', onchange:function(e){ state.triwulanYear = parseInt(e.target.value,10); render(); }});
+  years.forEach(function(y){
+    var opt = el('option',{value:String(y)},[String(y)]);
+    if(y === year) opt.setAttribute('selected','selected');
+    yearSel.appendChild(opt);
+  });
+  var yearFieldRow = el('div',{style:'display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap'});
+  yearFieldRow.appendChild(el('label',{class:'field', style:'max-width:160px;margin:0'},[el('span',{},['Tahun']), yearSel]));
+  yearFieldRow.appendChild(addYearControl(function(y){ state.triwulanYear = y; render(); }));
+  picker.appendChild(yearFieldRow);
+  wrap.appendChild(picker);
+
+  var byQuarter = {1:[],2:[],3:[],4:[]};
+  var unrecognized = 0;
+  state.data.schools.forEach(function(s){
+    s.kunjungan.forEach(function(v){
+      var d = parseTanggalIndo(v.tanggal);
+      if(!d){ unrecognized++; return; }
+      if(d.year !== year) return;
+      var q = triwulanOfMonth(d.month);
+      byQuarter[q].push({ school:s, v:v, d:d });
+    });
+  });
+  [1,2,3,4].forEach(function(q){
+    byQuarter[q].sort(function(a,b){
+      if(a.d.month !== b.d.month) return a.d.month - b.d.month;
+      if(a.d.day !== b.d.day) return a.d.day - b.d.day;
+      return (a.school.nama||'').localeCompare(b.school.nama||'');
+    });
+  });
+
+  var recapPanel = el('div',{class:'panel no-print'});
+  recapPanel.appendChild(el('h2',{},['Rekap jumlah kunjungan '+year]));
+  var recapTbl = el('table',{class:'rkas'});
+  recapTbl.appendChild(el('thead',{},[el('tr',{},[
+    el('th',{},['Triwulan']), el('th',{},['Rentang bulan']), el('th',{},['Jumlah kunjungan']), el('th',{},['Sekolah tercakup'])
+  ])]));
+  var recapTb = el('tbody',{});
+  [1,2,3,4].forEach(function(q){
+    var items = byQuarter[q];
+    var schoolSet = {};
+    items.forEach(function(it){ schoolSet[it.school.id] = true; });
+    recapTb.appendChild(el('tr',{},[
+      el('td',{},['Triwulan '+TRIWULAN_LABEL[q].roman]),
+      el('td',{},[TRIWULAN_LABEL[q].rentang]),
+      el('td',{class:'num'},[String(items.length)]),
+      el('td',{class:'num'},[String(Object.keys(schoolSet).length)])
+    ]));
+  });
+  recapTbl.appendChild(recapTb);
+  recapPanel.appendChild(recapTbl);
+  if(unrecognized > 0){
+    recapPanel.appendChild(el('p',{style:'margin-top:12px;font-size:12.5px;color:var(--danger)'},[
+      unrecognized + ' catatan kunjungan memiliki format tanggal yang tidak dikenali sehingga belum masuk ke triwulan manapun. Tulis tanggal dengan format seperti "12 Agustus 2026" di menu Kunjungan pendampingan agar ikut terhitung.'
+    ]));
+  }
+  wrap.appendChild(recapPanel);
+
+  [1,2,3,4].forEach(function(q){
+    var meta = getTriwulanMeta(year, q);
+    var panel = el('div',{class:'panel tw-section'});
+    var metaRow = el('div',{class:'btn-row no-print', style:'margin-bottom:16px'});
+    var nomorIn = el('input',{type:'text', placeholder:'Nomor laporan (opsional)', style:'max-width:220px', value: meta.nomor||'', oninput:function(e){ meta.nomor = e.target.value; save(); }});
+    var tglIn = el('input',{type:'text', placeholder:'Tanggal laporan (contoh: 2 April '+year+')', style:'max-width:260px', value: meta.tanggal||'', oninput:function(e){ meta.tanggal = e.target.value; save(); }});
+    metaRow.appendChild(el('label',{class:'field', style:'margin:0'},[el('span',{},['Nomor laporan']), nomorIn]));
+    metaRow.appendChild(el('label',{class:'field', style:'margin:0'},[el('span',{},['Tanggal laporan']), tglIn]));
+    panel.appendChild(metaRow);
+
+    var reportId = 'laporan-tw-'+year+'-'+q;
+    var report = el('div',{class:'report', id:reportId});
+    report.appendChild(el('div',{class:'rpt-title'},['Laporan Triwulan '+TRIWULAN_LABEL[q].roman+' Tahun '+year]));
+    report.appendChild(el('div',{class:'rpt-sub'},[
+      TRIWULAN_LABEL[q].rentang+' '+year+
+      (meta.nomor ? ' \u2014 Nomor: '+meta.nomor : '') + (meta.tanggal ? ' \u2014 '+meta.tanggal : '') + ' \u2014 ' +
+      (prof.nama||'\u2014') + ', ' + (prof.jabatan||'Pengawas Sekolah') + (prof.wilayah ? ', '+prof.wilayah : '')
+    ]));
+
+    var items = byQuarter[q];
+    report.appendChild(el('h3',{},['1. Ringkasan pelaksanaan']));
+    if(items.length === 0){
+      report.appendChild(el('p',{},['Belum ada catatan kunjungan pendampingan pada periode ini.']));
+    } else {
+      var schoolSet2 = {};
+      items.forEach(function(it){ schoolSet2[it.school.id] = true; });
+      report.appendChild(el('p',{},[
+        'Selama periode ini telah dilaksanakan ' + items.length + ' kegiatan pendampingan ke ' + Object.keys(schoolSet2).length + ' sekolah binaan, dengan rincian sebagai berikut.'
+      ]));
+    }
+
+    report.appendChild(el('h3',{},['2. Rincian kegiatan pendampingan']));
+    if(items.length === 0){
+      report.appendChild(el('p',{},['Tidak ada data untuk ditampilkan.']));
+    } else {
+      var ol = el('ol',{});
+      items.forEach(function(it){
+        var li = el('li',{style:'margin-bottom:8px'});
+        li.appendChild(el('div',{},[el('strong',{},[it.v.tanggal + ' \u2014 ' + it.school.nama + ' \u2014 ' + it.v.jenis])]));
+        if(it.v.hasil) li.appendChild(el('div',{},[it.v.hasil]));
+        if(it.v.tindaklanjut) li.appendChild(el('div',{style:'color:var(--ink-soft);font-size:13px'},['Tindak lanjut: '+it.v.tindaklanjut]));
+        ol.appendChild(li);
+      });
+      report.appendChild(ol);
+    }
+
+    report.appendChild(el('h3',{},['3. Rekap per sekolah binaan']));
+    if(items.length === 0){
+      report.appendChild(el('p',{},['\u2014']));
+    } else {
+      var perSchool = {};
+      items.forEach(function(it){
+        if(!perSchool[it.school.id]) perSchool[it.school.id] = { nama: it.school.nama, count:0 };
+        perSchool[it.school.id].count++;
+      });
+      var tbl2 = el('table',{class:'rkas'});
+      tbl2.appendChild(el('thead',{},[el('tr',{},[el('th',{},['Sekolah']), el('th',{},['Jumlah kunjungan'])])]));
+      var tb2 = el('tbody',{});
+      Object.keys(perSchool).map(function(k){ return perSchool[k]; }).sort(function(a,b){ return (a.nama||'').localeCompare(b.nama||''); }).forEach(function(row){
+        tb2.appendChild(el('tr',{},[el('td',{},[row.nama||'\u2014']), el('td',{class:'num'},[String(row.count)])]));
+      });
+      tbl2.appendChild(tb2);
+      report.appendChild(tbl2);
+    }
+
+    var sigWrap = el('div',{style:'display:flex;justify-content:space-between;gap:24px;margin-top:50px;font-family:\'Public Sans\',sans-serif;font-size:13.5px'});
+    sigWrap.appendChild(el('div',{style:'text-align:center;width:220px'},[
+      el('div',{},['Mengetahui,']),
+      el('div',{},['Koordinator Pengawas Sekolah']),
+      el('div',{style:'height:70px'},[]),
+      el('div',{style:'font-weight:600;border-top:1px solid var(--ink);padding-top:4px'},['(\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026)']),
+      el('div',{style:'font-size:12px;color:var(--ink-soft)'},['\u00A0'])
+    ]));
+    sigWrap.appendChild(el('div',{style:'text-align:center;width:220px'},[
+      el('div',{},[(meta.tanggal||'\u2026\u2026\u2026\u2026\u2026, \u2026\u2026\u2026')]),
+      el('div',{},['Pengawas Sekolah']),
+      el('div',{style:'height:70px'},[]),
+      el('div',{style:'font-weight:600;border-top:1px solid var(--ink);padding-top:4px'},[prof.nama || '(\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026)']),
+      el('div',{style:'font-size:12px;color:var(--ink-soft)'},[prof.nip ? 'NIP '+prof.nip : '\u00A0'])
+    ]));
+    report.appendChild(sigWrap);
+
+    panel.appendChild(report);
+
+    var actions = el('div',{class:'btn-row no-print'});
+    actions.appendChild(el('button',{class:'btn secondary', onclick:function(){ window.print(); }},['Cetak semua triwulan / simpan sebagai PDF']));
+    actions.appendChild(el('button',{class:'btn ghost', onclick:function(){
+      var elx = document.getElementById(reportId);
+      var txt = elx.innerText;
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(txt).then(function(){ alert('Laporan Triwulan '+TRIWULAN_LABEL[q].roman+' disalin ke clipboard.'); });
+      }
+    }},['Salin teks triwulan '+TRIWULAN_LABEL[q].roman]));
+    panel.appendChild(actions);
+
+    wrap.appendChild(panel);
+  });
+
+  return wrap;
+}
+
+load();
+})();
+</script>
+</body>
+</html>
