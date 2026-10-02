@@ -156,6 +156,30 @@
   .rkjm-year-group{ margin-bottom:20px; }
   .rkjm-year-title{ font-family:'Source Serif 4',serif; font-size:16px; color:var(--pine); border-bottom:2px solid var(--pine); padding-bottom:6px; margin-bottom:10px; }
 
+  /* tabel dokumen (RKT / RKJM / RKAS) */
+  .tbl-wrap{ overflow-x:auto; }
+  table.doc{ width:100%; border-collapse:collapse; font-family:'Public Sans',sans-serif; font-size:13px; line-height:1.5; background:#fff; }
+  table.doc th{ background:var(--pine); color:#fff; font-weight:500; text-align:left; padding:8px 10px; border:1px solid var(--pine); font-size:12px; }
+  table.doc td{ border:1px solid var(--line-strong); padding:8px 10px; vertical-align:top; }
+  table.doc th.c, table.doc td.c{ text-align:center; }
+  table.doc td.num{ text-align:right; white-space:nowrap; }
+  table.doc tr.grp td{ background:var(--gold-soft); font-weight:600; color:var(--pine); }
+  table.doc tfoot td{ font-weight:600; background:var(--paper); }
+  table.doc ol{ margin:0; padding-left:18px; }
+  table.doc ol li{ margin-bottom:2px; }
+  table.doc .dim{ font-size:11.5px; color:var(--gold); text-transform:uppercase; letter-spacing:.2px; font-weight:600; }
+  table.doc select.year-select{ width:100%; }
+  table.doc td.pick{ padding:0; text-align:center; }
+  table.doc td.pick button{ width:100%; min-height:38px; background:none; border:none; cursor:pointer; font-size:15px; color:var(--pine); }
+  table.doc td.pick button:hover{ background:var(--gold-soft); }
+  table.doc td.pick.on{ background:var(--berdaya-bg); }
+  table.doc td.empty-note{ text-align:center; color:var(--ink-soft); }
+  @media print{
+    table.doc th{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+    table.doc tr{ page-break-inside:avoid; }
+    table.doc thead{ display:table-header-group; }
+  }
+
   /* buttons/forms */
   .btn{ font-family:'Public Sans',sans-serif; font-size:13.5px; font-weight:500; padding:9px 18px; border-radius:3px; cursor:pointer; border:1px solid var(--pine); background:var(--pine); color:#fff; }
   .btn:hover{ background:var(--pine-2); }
@@ -1747,10 +1771,19 @@ function renderSelectedPanel(s, listKey, withYear, withTriwulan, filterQ){
     panel.appendChild(el('div',{class:'empty'},[el('p',{},['Tidak ada program pada triwulan yang dipilih.'])]));
     return panel;
   }
-  var list = el('div',{class:'selected-list'});
-  items.forEach(function(r){
-    var row = el('div',{class:'row'});
-    row.appendChild(el('div',{class:'t'},[ el('strong',{},[r.dimensi+' \u2014 ']), text(r.judul) ]));
+  var table = el('table',{class:'doc'});
+  var headCells = [ el('th',{class:'c', style:'width:44px'},['No']), el('th',{style:'width:150px'},['Dimensi']), el('th',{},['Program']) ];
+  if(withYear) headCells.push(el('th',{style:'width:120px'},['Tahun']));
+  if(withTriwulan) headCells.push(el('th',{style:'width:130px'},['Triwulan']));
+  headCells.push(el('th',{class:'c no-print', style:'width:44px'},['']));
+  table.appendChild(el('thead',{},[el('tr',{},headCells)]));
+  var tbody = el('tbody',{});
+  items.forEach(function(r, i){
+    var tds = [
+      el('td',{class:'c'},[String(i+1)]),
+      el('td',{},[el('span',{class:'dim'},[r.dimensi])]),
+      el('td',{},[text(r.judul)])
+    ];
     if(withYear){
       var sel = el('select',{class:'year-select'});
       [1,2,3,4].forEach(function(y){
@@ -1759,25 +1792,26 @@ function renderSelectedPanel(s, listKey, withYear, withTriwulan, filterQ){
         sel.appendChild(o);
       });
       sel.addEventListener('change', function(){ r.tahun = parseInt(sel.value,10); save(); render(); });
-      row.appendChild(sel);
+      tds.push(el('td',{},[sel]));
     }
     if(withTriwulan){
       var twSel = el('select',{class:'year-select'});
-      [['','Triwulan \u2014'],['1','Triwulan I'],['2','Triwulan II'],['3','Triwulan III'],['4','Triwulan IV']].forEach(function(pair){
+      [['','\u2014'],['1','Triwulan I'],['2','Triwulan II'],['3','Triwulan III'],['4','Triwulan IV']].forEach(function(pair){
         var o = el('option',{value:pair[0]},[pair[1]]);
         if(String(r.triwulan||'') === pair[0]) o.setAttribute('selected','selected');
         twSel.appendChild(o);
       });
       twSel.addEventListener('change', function(){ r.triwulan = twSel.value || null; save(); render(); });
-      row.appendChild(twSel);
+      tds.push(el('td',{},[twSel]));
     }
-    row.appendChild(el('button',{class:'remove-x', 'aria-label':'Hapus', onclick:function(){
+    tds.push(el('td',{class:'c no-print'},[el('button',{class:'remove-x', 'aria-label':'Hapus', onclick:function(){
       s[listKey] = s[listKey].filter(function(x){ return x.id !== r.id; });
       save(); render();
-    }},['\u00D7']));
-    list.appendChild(row);
+    }},['\u00D7'])]));
+    tbody.appendChild(el('tr',{},tds));
   });
-  panel.appendChild(list);
+  table.appendChild(tbody);
+  panel.appendChild(el('div',{class:'tbl-wrap'},[table]));
   return panel;
 }
 
@@ -1830,22 +1864,35 @@ function renderRkjm(){
 
   var byYearPanel = el('div',{class:'panel'});
   byYearPanel.appendChild(el('h2',{},['Peta program per tahun']));
+  byYearPanel.appendChild(el('p',{class:'sub no-print'},['Klik sel pada kolom tahun untuk memindahkan jadwal program.']));
   if(s.rkjm.length === 0){
     byYearPanel.appendChild(el('div',{class:'empty'},[el('p',{},['Belum ada program yang dipilih.'])]));
   } else {
-    [1,2,3,4].forEach(function(y){
-      var items = s.rkjm.filter(function(r){ return r.tahun === y; });
-      var g = el('div',{class:'rkjm-year-group'});
-      g.appendChild(el('div',{class:'rkjm-year-title'},['Tahun '+y]));
-      if(items.length === 0){
-        g.appendChild(el('p',{style:'font-size:13px;color:var(--ink-soft);margin:0'},['Belum ada program pada tahun ini.']));
-      } else {
-        items.forEach(function(r){
-          g.appendChild(el('p',{style:'margin:0 0 6px;font-size:13.5px'},[ el('strong',{},[r.dimensi+' \u2014 ']), text(r.judul) ]));
-        });
-      }
-      byYearPanel.appendChild(g);
+    var mt = el('table',{class:'doc'});
+    mt.appendChild(el('thead',{},[el('tr',{},[
+      el('th',{class:'c', style:'width:40px'},['No']), el('th',{style:'width:130px'},['Dimensi']), el('th',{},['Program']),
+      el('th',{class:'c', style:'width:70px'},['Tahun 1']), el('th',{class:'c', style:'width:70px'},['Tahun 2']),
+      el('th',{class:'c', style:'width:70px'},['Tahun 3']), el('th',{class:'c', style:'width:70px'},['Tahun 4'])
+    ])]));
+    var mb = el('tbody',{});
+    s.rkjm.forEach(function(r, i){
+      var tds = [ el('td',{class:'c'},[String(i+1)]), el('td',{},[el('span',{class:'dim'},[r.dimensi])]), el('td',{},[text(r.judul)]) ];
+      [1,2,3,4].forEach(function(y){
+        tds.push(el('td',{class:'pick'+(r.tahun===y?' on':'')},[
+          el('button',{'aria-label':'Jadwalkan di tahun '+y, onclick:function(){ r.tahun = y; save(); render(); }},[r.tahun===y?'\u2713':''])
+        ]));
+      });
+      mb.appendChild(el('tr',{},tds));
     });
+    mt.appendChild(mb);
+    mt.appendChild(el('tfoot',{},[el('tr',{},[
+      el('td',{colspan:'3',class:'num'},['Jumlah program']),
+      el('td',{class:'c'},[String(s.rkjm.filter(function(r){return r.tahun===1;}).length)]),
+      el('td',{class:'c'},[String(s.rkjm.filter(function(r){return r.tahun===2;}).length)]),
+      el('td',{class:'c'},[String(s.rkjm.filter(function(r){return r.tahun===3;}).length)]),
+      el('td',{class:'c'},[String(s.rkjm.filter(function(r){return r.tahun===4;}).length)])
+    ])]));
+    byYearPanel.appendChild(el('div',{class:'tbl-wrap'},[mt]));
   }
   wrap.appendChild(byYearPanel);
 
@@ -1882,16 +1929,27 @@ function renderReportPanel(s, strat){
     report.appendChild(el('p',{},['Strategi pendampingan belum dapat ditentukan karena refleksi belum lengkap.']));
   }
 
-  report.appendChild(el('h3',{},['Rekomendasi program Rencana Kerja Tahunan (RKT)']));
+  report.appendChild(el('h3',{},['Rencana Kerja Tahunan (RKT)']));
   if(s.rkt.length === 0){
     report.appendChild(el('p',{},['Belum ada program RKT yang dipilih untuk sekolah ini.']));
   } else {
+    var rt = el('table',{class:'doc'});
+    rt.appendChild(el('thead',{},[el('tr',{},[
+      el('th',{class:'c', style:'width:40px'},['No']), el('th',{style:'width:120px'},['Dimensi']), el('th',{style:'width:28%'},['Program']),
+      el('th',{},['Langkah kegiatan']), el('th',{style:'width:100px'},['Waktu'])
+    ])]));
+    var rtb = el('tbody',{});
     s.rkt.forEach(function(r, i){
-      report.appendChild(el('p',{style:'margin-bottom:2px'},[ el('strong',{},[(i+1)+'. ['+r.dimensi+'] '+r.judul]) ]));
-      var ol = el('ol',{});
-      r.langkah.forEach(function(st){ ol.appendChild(el('li',{},[st])); });
-      report.appendChild(ol);
+      rtb.appendChild(el('tr',{},[
+        el('td',{class:'c'},[String(i+1)]),
+        el('td',{},[el('span',{class:'dim'},[r.dimensi])]),
+        el('td',{},[text(r.judul)]),
+        el('td',{},[langkahOl(r)]),
+        el('td',{},[twText(r.triwulan)])
+      ]));
     });
+    rt.appendChild(rtb);
+    report.appendChild(el('div',{class:'tbl-wrap'},[rt]));
   }
 
   if(s.catatan){
@@ -1909,6 +1967,11 @@ function renderReportPanel(s, strat){
 
   var actions = el('div',{class:'btn-row no-print'});
   actions.appendChild(el('button',{class:'btn secondary', onclick:function(){ window.print(); }},['Cetak / simpan sebagai PDF']));
+  actions.appendChild(el('button',{class:'btn ghost', onclick:function(){
+    var aoa = [['No','Dimensi','Program','Langkah kegiatan','Waktu']];
+    s.rkt.forEach(function(r,i){ aoa.push([i+1, r.dimensi, r.judul, langkahPlain(r), twText(r.triwulan)]); });
+    downloadXlsx(aoa, 'RKT', 'RKT_'+safeName(s.nama)+'.xlsx', [5,18,45,70,14]);
+  }},['Unduh Excel (RKT)']));
   actions.appendChild(el('button',{class:'btn ghost', onclick:function(){
     var el2 = document.getElementById('report-'+s.id);
     var txt = el2.innerText;
@@ -1936,31 +1999,48 @@ function renderRkjmReportPanel(s){
   report.appendChild(el('h3',{},['Identitas sekolah']));
   report.appendChild(el('p',{},['Sekolah: ' + (s.nama||'\u2014') + '. Kepala sekolah: ' + (s.kepsek||'\u2014') + (s.nip? ' (NIP '+s.nip+')':'') + '. Kecamatan: ' + (s.kecamatan||'\u2014') + '.']));
 
+  report.appendChild(el('h3',{},['Program per tahun']));
   if(s.rkjm.length === 0){
-    report.appendChild(el('h3',{},['Program per tahun']));
     report.appendChild(el('p',{},['Belum ada program RKJM yang dipilih untuk sekolah ini.']));
   } else {
+    var jt = el('table',{class:'doc'});
+    jt.appendChild(el('thead',{},[el('tr',{},[
+      el('th',{class:'c', style:'width:40px'},['No']), el('th',{style:'width:120px'},['Dimensi']),
+      el('th',{style:'width:30%'},['Program']), el('th',{},['Langkah kegiatan'])
+    ])]));
+    var jb = el('tbody',{});
     [1,2,3,4].forEach(function(y){
-      report.appendChild(el('h3',{},['Tahun '+y]));
+      jb.appendChild(el('tr',{class:'grp'},[el('td',{colspan:'4'},['Tahun '+y])]));
       var items = s.rkjm.filter(function(r){ return r.tahun === y; });
       if(items.length === 0){
-        report.appendChild(el('p',{},['Tidak ada program yang dijadwalkan pada tahun ini.']));
+        jb.appendChild(el('tr',{},[el('td',{colspan:'4',class:'empty-note'},['Tidak ada program yang dijadwalkan pada tahun ini.'])]));
         return;
       }
       items.forEach(function(r, i){
-        report.appendChild(el('p',{style:'margin-bottom:2px'},[ el('strong',{},[(i+1)+'. ['+r.dimensi+'] '+r.judul]) ]));
-        if(r.langkah && r.langkah.length){
-          var ol = el('ol',{});
-          r.langkah.forEach(function(st){ ol.appendChild(el('li',{},[st])); });
-          report.appendChild(ol);
-        }
+        jb.appendChild(el('tr',{},[
+          el('td',{class:'c'},[String(i+1)]),
+          el('td',{},[el('span',{class:'dim'},[r.dimensi])]),
+          el('td',{},[text(r.judul)]),
+          el('td',{},[langkahOl(r)])
+        ]));
       });
     });
+    jt.appendChild(jb);
+    report.appendChild(el('div',{class:'tbl-wrap'},[jt]));
   }
   panel.appendChild(report);
 
   var actions = el('div',{class:'btn-row no-print'});
   actions.appendChild(el('button',{class:'btn secondary', onclick:function(){ window.print(); }},['Cetak / simpan sebagai PDF']));
+  actions.appendChild(el('button',{class:'btn ghost', onclick:function(){
+    var aoa = [['Tahun','No','Dimensi','Program','Langkah kegiatan']];
+    [1,2,3,4].forEach(function(y){
+      s.rkjm.filter(function(r){ return r.tahun === y; }).forEach(function(r,i){
+        aoa.push(['Tahun '+y, i+1, r.dimensi, r.judul, langkahPlain(r)]);
+      });
+    });
+    downloadXlsx(aoa, 'RKJM', 'RKJM_'+safeName(s.nama)+'.xlsx', [10,5,18,45,70]);
+  }},['Unduh Excel (RKJM)']));
   actions.appendChild(el('button',{class:'btn ghost', onclick:function(){
     var el2 = document.getElementById('rkjm-report-'+s.id);
     var txt = el2.innerText;
@@ -2009,6 +2089,30 @@ function renderRecapTable(){
   actions.appendChild(el('button',{class:'btn ghost', onclick:function(){ window.print(); }},['Cetak rekapitulasi']));
   panel.appendChild(actions);
   return panel;
+}
+
+/* ---------- tabel & ekspor Excel ---------- */
+function twText(v){
+  return (v && TRIWULAN_LABEL[Number(v)]) ? 'Triwulan ' + TRIWULAN_LABEL[Number(v)].roman : '\u2014';
+}
+function langkahOl(r){
+  if(!r.langkah || !r.langkah.length) return el('span',{style:'color:var(--ink-soft)'},['\u2014']);
+  var ol = el('ol',{});
+  r.langkah.forEach(function(st){ ol.appendChild(el('li',{},[st])); });
+  return ol;
+}
+function langkahPlain(r){
+  return (r.langkah||[]).map(function(st,i){ return (i+1)+'. '+st; }).join('\n');
+}
+function safeName(str){ return (str||'sekolah').replace(/[^A-Za-z0-9]+/g,'_').replace(/^_+|_+$/g,'') || 'sekolah'; }
+function downloadXlsx(aoa, sheetName, fileName, widths){
+  try{
+    var ws = XLSX.utils.aoa_to_sheet(aoa);
+    if(widths) ws['!cols'] = widths.map(function(w){ return { wch:w }; });
+    var wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, sheetName);
+    XLSX.writeFile(wb, fileName);
+  }catch(e){ console.error(e); alert('Gagal membuat file Excel. Pastikan koneksi internet aktif (library XLSX dimuat dari internet).'); }
 }
 
 /* ---------- RKA / RKAS ---------- */
@@ -2122,13 +2226,13 @@ function renderRkas(){
   } else {
     var table = el('table',{class:'rkas'});
     table.appendChild(el('thead',{},[el('tr',{},[
-      el('th',{},['Kegiatan']), el('th',{},['Komponen/Dimensi']), el('th',{},['Sumber Dana']),
+      el('th',{style:'width:36px'},['No']), el('th',{},['Kegiatan']), el('th',{},['Komponen/Dimensi']), el('th',{},['Sumber Dana']),
       el('th',{},['Triwulan']),
       el('th',{},['Volume']), el('th',{},['Satuan']), el('th',{},['Harga Satuan (Rp)']),
       el('th',{},['Jumlah (Rp)']), el('th',{},[''])
     ])]));
     var tbody = el('tbody',{});
-    visibleRkas.forEach(function(r){
+    visibleRkas.forEach(function(r, rowIdx){
       var kegIn = el('input',{class:'rkas-cell-input', type:'text', value:r.kegiatan, placeholder:'Nama kegiatan', oninput:function(e){ r.kegiatan=e.target.value; save(); }});
       var komIn = el('input',{class:'rkas-cell-input', type:'text', value:r.komponen, placeholder:'Komponen', oninput:function(e){ r.komponen=e.target.value; save(); }});
       var sumSel = el('select',{class:'rkas-cell-input', onchange:function(){ r.sumberDana=sumSel.value; save(); render(); }});
@@ -2147,6 +2251,7 @@ function renderRkas(){
         twSel.appendChild(o);
       });
       var tds = [
+        el('td',{class:'num', style:'text-align:center'},[String(rowIdx+1)]),
         el('td',{},[kegIn, r.sourceKey ? el('span',{class:'rkas-source-tag'},[r.sourceKey.indexOf('rapor:')===0?'Dari Rapor Pendidikan':'Dari RKT']) : null]),
         el('td',{},[komIn]),
         el('td',{},[sumSel]),
@@ -2167,7 +2272,7 @@ function renderRkas(){
     var grandTotal = visibleRkas.reduce(function(acc,r){ return acc + rkasTotal(r); }, 0);
     var totalLabel = state.rkasFilterQ === 'semua' ? 'Total keseluruhan' : 'Total Triwulan ' + TRIWULAN_LABEL[Number(state.rkasFilterQ)].roman;
     table.appendChild(el('tfoot',{},[el('tr',{},[
-      el('td',{colspan:'7'},[totalLabel]), el('td',{class:'num'},[rupiah(grandTotal)]), el('td',{},[])
+      el('td',{colspan:'8'},[totalLabel]), el('td',{class:'num'},[rupiah(grandTotal)]), el('td',{},[])
     ])]));
     tablePanel.appendChild(table);
 
@@ -2181,6 +2286,14 @@ function renderRkas(){
 
     var actions = el('div',{class:'btn-row no-print'});
     actions.appendChild(el('button',{class:'btn ghost', onclick:function(){ window.print(); }},['Cetak tabel RKAS']));
+    actions.appendChild(el('button',{class:'btn ghost', onclick:function(){
+      var aoa = [['No','Kegiatan','Komponen/Dimensi','Sumber Dana','Triwulan','Volume','Satuan','Harga Satuan (Rp)','Jumlah (Rp)']];
+      visibleRkas.forEach(function(r,i){
+        aoa.push([i+1, r.kegiatan, r.komponen, r.sumberDana, twText(r.triwulan), Number(r.volume)||0, r.satuan, Number(r.hargaSatuan)||0, rkasTotal(r)]);
+      });
+      aoa.push(['','','','','','','','Total', grandTotal]);
+      downloadXlsx(aoa, 'RKAS', 'RKAS_'+safeName(s.nama)+'.xlsx', [5,45,28,16,14,9,12,18,18]);
+    }},['Unduh Excel (RKAS)']));
     tablePanel.appendChild(actions);
   }
   wrap.appendChild(tablePanel);
